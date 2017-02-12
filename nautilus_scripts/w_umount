@@ -1,0 +1,2 @@
+#!/bin/bash
+gnome-terminal -e '/home/engells/ktws/scripts/my_lunch.sh um'

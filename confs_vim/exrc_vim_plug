@@ -1,0 +1,18 @@
+" vim:tabstop=8
+" made by: Engells
+" date: Jan 31, 2017
+" content: call vim-plug to manage plugins
+
+" Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
+call plug#begin('~/.vim/plugs')
+
+" Make sure you use single quotes
+
+" On-demand loading
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'vim-airline/vim-airline'
+Plug 'davidhalter/jedi'
+Plug 'Valloric/YouCompleteMe'
+Plug 'mattn/emmet-vim'
+call plug#end()
+

@@ -1,0 +1,7 @@
+#! /bin/bash
+# program: Using to clean system
+# made by: Engells
+# date: Dec 21, 2011
+# content: 
+
+gnome-terminal -e '/home/engells/ktws/scripts/my_lunch.sh cs'

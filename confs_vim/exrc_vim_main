@@ -1,0 +1,25 @@
+" vim:tabstop=4
+" made by: Engells
+" date: Nov 29, 2012
+" content: major configures of vim
+
+" call pathogen#infect() " 以 https://github.com/junegunn/vim-plug 取代
+
+syntax on
+
+filetype plugin indent on
+
+set guifontset=Consolas,STHeiti_TC
+
+" 設定檔案格式
+set fileformats=unix,dos fileformat=unix
+
+" read/write a .viminfo file, don’t store more than 50 lines of registers
+set viminfo='20,<50
+
+" 方便中文重排設定
+set formatoptions=mtcql
+" m => 處理超過一 byte 長度文字
+" t => 內文自動換行,	c => 注釋自動換行並在行首添加注釋標記
+" q => 允許使用 gq 來格式化文本,	l => 在插入模式下不換行,只用 gq 來完成相應的工作
+" let g:Powerline_symbols = 'fancy'

@@ -1,0 +1,4 @@
+#! /bin/bash
+#gvim
+gnome-terminal --geometry=124x48+30+30 -e 'vim'
+#gnome-terminal --geometry=124x48+30+30 -x vim		# work just as the above line

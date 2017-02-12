@@ -1,0 +1,12 @@
+#! /bin/bash
+# program: Using to clean system
+# made by: Engells
+# date: Dec 21, 2011
+# content: 
+
+gnome-terminal -e '/home/engells/ktws/scripts/avails/back_dropbox.sh'
+
+echo "waiting 10 seconds"; sleep 10
+
+/home/engells/.dropbox-dist/dropboxd
+

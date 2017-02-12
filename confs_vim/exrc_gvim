@@ -1,0 +1,9 @@
+" vim:tabstop=8
+" made by: Engells
+" date: Nov 29, 2012
+" content: configures of gvim export to ~/.gvim
+
+"source /home/engells/.vim/conf/exrc_shared
+source /home/engells/.vim/conf/exrc_gvim_main
+"source /home/engells/.vim/conf/exrc_gvim_hl
+

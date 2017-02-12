@@ -1,0 +1,14 @@
+
+#設定羅技軌跡球模擬滾輪及中鍵
+#本檔位置及名稱 ~/.xsessionrc
+
+xinput set-prop 'Logitech USB Trackball' "Evdev Wheel Emulation" 1
+	# 啟用滾輪模擬: 啟用後，按住滾輪模擬鍵再滾動軌跡球，即等於滾輪滾動。
+xinput set-prop 'Logitech USB Trackball' "Evdev Wheel Emulation Button" 9
+	# 指定滾輪模擬鍵: 8 是小左鍵，9是小右鍵。在 GPointing Settings 中，不能指定第9鍵。
+xinput set-prop 'Logitech USB Trackball' "Evdev Wheel Emulation Axes" 6 7 4 5
+	# 允許水平與垂直方向滾動。
+xinput set-prop 'Logitech USB Trackball' "Evdev Wheel Emulation Timeout" 200
+xinput set-prop 'Logitech USB Trackball' "Evdev Middle Button Emulation" 1
+	# 啟用中鍵模擬：啟用後，同時點擊左鍵與右鍵等於點擊中鍵。
+xinput set-prop 'Logitech USB Trackball' "Evdev Middle Button Timeout" 50

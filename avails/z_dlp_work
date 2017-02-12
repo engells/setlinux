@@ -1,0 +1,107 @@
+#!/bin/bash
+# vim:ts=4
+# program: to download many files form internet
+# made by: Engells
+# date: Nov 23, 2012
+# content: to download photos form http://cdn.eroluv.com/
+
+#====副函式======================
+
+_init_dl()
+{
+work_dir="/home/engells/downloads"	#"/home/engells/mnt/buf/photos"
+file_prefix="火影2"
+url_prefix="http://bhmmcgp.servik.com/01/02/"
+_build_sur
+_mode_select
+}
+
+_build_sur()
+{
+[ -d $work_dir ] || mkdir -p $work_dir
+[ -d $work_dir/$file_prefix ] || mkdir -p $work_dir/$file_prefix
+cd $work_dir/$file_prefix
+}
+
+_mode_select()
+{
+case $way1 in
+	a)
+		_dl_files ;;
+	b)
+		_dl_list ;;
+	*)
+		echo " " > /dev/null
+esac
+}
+
+_dl_files()
+{
+for ((i=1; i<=22; i=i+1))
+do
+	if (($i<10)); then
+	 url_full=${url_prefix}00${i}.jpg
+	elif (($i<100)); then
+	 url_full=${url_prefix}0${i}.jpg
+	else
+	 url_full=${url_prefix}${i}.jpg
+	fi
+
+	wget $url_full
+done
+
+rename 's/pics//' *.jpg
+#rename 's/0//' *.jpg
+#rename 's/^0//' *.jpg
+}
+
+_dl_list()
+{
+# for http://setsdb.org/ NudeTeensArt
+sed 's/<\/a>\ /\n/g' /home/engells/mnt/buf/photos/dlp_list | sed 's/<a.*ank>//' | sed 's/<img\ src=\"http:\/\/t/http:\/\/i/' | sed 's/\"\ .*$//' | sed 's/\.com/\.net/' > /home/engells/mnt/buf/photos/dl
+
+for ii in $(cat /home/engells/mnt/buf/photos/dl)
+do
+	wget $ii
+done
+}
+
+_rename_file_digit()
+{
+echo ''; echo 'start to add digit to file name ...'; echo ''; sleep 2
+
+cd $work_dir/$file_prefix
+
+for f in $(ls ./)
+do
+	pre_fix=${f%.*}	# 取 1.jpg 的 1
+	suf_fix=${f#*.}	# 取 1.jpg 的 jpg
+
+	if (( $pre_fix < 10)); then
+		mv $f $file_prefix-000$pre_fix.$suf_fix
+	else
+		mv $f $file_prefix-00$pre_fix.$suf_fix
+	fi
+done
+cd $work_dir
+}
+
+#====程式主體=====================
+
+if [ -z $1 ]; then 
+	Des1='請輸入處理方式 a:路徑下載 b:清單下載'
+	printf "%s\n" "$Des1"
+	read way1
+	if [ -z "$way1" ]; then way1='a' ; fi
+
+else
+	way1=$1
+fi
+
+
+_init_dl
+#_rename_file_digit
+
+unset work_dir; unset file_prefix; unset url_prefix; unset url_full
+unset f; unset i
+

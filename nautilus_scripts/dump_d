@@ -1,0 +1,11 @@
+#!/bin/bash
+# 將已經下載完成之檔案由 ~/downloads 移至 ~/mnt/buf ,注意 firefox 及 jdownload 下載中檔案附檔名為 .part , chromium 則為 .crdownload
+cd /home/engells/downloads
+SAVEIFS=$IFS		#新增變數 SAVEIFS，把原本的IFS值儲存起來。
+IFS=$'\t\n'		#將IFS的值改掉
+for f in $( ls . | grep -v '.part$' | grep -v '.crdownload$' )
+do
+	echo $f
+	if [ ! -d $f ]; then mv $f /home/engells/mnt/buf/$f; fi
+done
+IFS=$SAVEIFS

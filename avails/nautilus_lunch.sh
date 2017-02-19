@@ -24,8 +24,8 @@ _bak_data()
 	sudo mount -t ext4 $device_4 ~/mnt/dump4
 	sudo chown engells:engells -R ~/mnt/dump3
 	sudo chown engells:engells -R ~/mnt/dump4
-	rm -r ~/mnt/dump3/* ; cd ~/ktws && cp -av . ~/mnt/dump3
-	rm -r ~/mnt/dump4/* ; cd ~/mmedia && cp -av . ~/mnt/dump4
+	rm -r -f ~/mnt/dump3/* ; cd ~/ktws && cp -av . ~/mnt/dump3
+	rm -r -f ~/mnt/dump4/* ; cd ~/mmedia && cp -av . ~/mnt/dump4
 }
 
 _bak_data2()
@@ -44,8 +44,8 @@ _bak_data2()
 	sudo mount -t ext4 $device_4 ~/mnt/dump4
 	sudo chown engells:engells -R ~/mnt/dump3
 	sudo chown engells:engells -R ~/mnt/dump4
-	rm -r ~/mnt/dump3/* ; cd ~/mnt/dump1 && cp -av . ~/mnt/dump3
-	rm -r ~/mnt/dump4/* ; cd ~/mnt/dump2 && cp -av . ~/mnt/dump4
+	rm -r -f ~/mnt/dump3/* ; cd ~/mnt/dump1 && cp -av . ~/mnt/dump3
+	rm -r -f ~/mnt/dump4/* ; cd ~/mnt/dump2 && cp -av . ~/mnt/dump4
 }
 
 if [ -z $1 ]; then 

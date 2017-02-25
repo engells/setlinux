@@ -1,3 +1,10 @@
 #!/bin/bash
 cd $NAUTILUS_SCRIPT_SELECTED_FILE_PATHS
-gnome-terminal --geometry=124x48+30+30 -e "tmux"
+gnome-terminal --geometry=184x56+30+30 -e "tmux"
+#gnome-terminal --maximize
+#gnome-terminal --full-screen
+#gnome-terminal --title="new title"
+#gnome-terminal --window --window			# 開啟兩個 window
+#gnome-terminal --window --tab --window --tab --tab	# 開啟兩個 window，第一個 window 兩個分頁，第二個 window 為三個分頁
+#gnome-terminal --geometry=80x25+10+10			# 寬度x長度x左側偏移x上方偏移
+

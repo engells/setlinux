@@ -10,8 +10,9 @@ _bak_vir_disks()
 	[ -d ~/mnt/dump1 ] || sudo mkdir -p ~/mnt/dump1
 	sudo umount ~/mnt/dump1 2>/dev/null
 	sudo mount -t ext4 $device_1 ~/mnt/dump1
-	rm -r ~/mnt/dump1/virtual/{Linux_Web.img,WinXP_Work.vdi}
-	cd ~/virtual/vir_disks	&& cp -av ./{Linux_Web.img,WinXP_Work.vdi} ~/mnt/dump1/virtual/
+	rm -r -f ~/mnt/dump1/*
+	sudo dd if=/dev/sdb4 of=/dev/sdc4 status=progress conv=noerror,sync bs=4k
+	# sudo pv -tpreb /dev/sdb4 | dd of=/dev/sdc4 bs=4096 conv=notrunc,noerror
 }
 
 _bak_data()
@@ -87,15 +88,25 @@ case $way in
 		sudo umount /media/WareHouse1
 		sudo umount /media/WareHouse2 ;;
 
-	dc)
+	dc1)
+
+		echo '2秒後開始將資料備份至外接式硬碟' && sleep 2
+
+		device_1="/dev/sdc4"
+		device_3="/dev/sdc6" 
+		device_4="/dev/sdc7"
+		#_bak_vir_disks
+		_bak_data ;;
+
+	dc2)
 
 		echo '2秒後開始將資料備份至外接式硬碟' && sleep 2
 		
-		device_1="/dev/sdc2"
-		device_2="/dev/sdc3" 
-		device_3="/dev/sdc4"
-		_bak_vir_disks
-		_bak_data ;;
+		device_1="/dev/sdb7"
+		device_2="/dev/sdb8" 
+		device_3="/dev/sdc8"
+		device_4="/dev/sdc9"
+		_bak_data2 ;;
 
 	dk)
 

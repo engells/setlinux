@@ -37,7 +37,6 @@ install_apt	p7zip-full
 install_apt	unrar
 install_apt	xz-utils
 install_apt	squashfs-tools
-#install_apt	p7zip-rar
 #-- multi media --
 install_apt	mplayer
 install_apt	smplayer
@@ -60,7 +59,7 @@ install_apt	youtube-dl			# youtube download
 install_apt	gnome-tweak-tool
 install_apt	bleachbit
 install_apt	sysstat				# system status
-install_apt	sysv-rc-conf
+install_apt	sysv-rc-conf			# manage boot service
 install_apt	indicator-multiload
 install_apt	libgnomekbd-common
 install_apt	gtkorphan
@@ -78,6 +77,7 @@ install_apt	vim
 install_apt	vim-gnome
 install_apt	lo-menubar
 install_apt	sqlite3
+install_apt	fbreader
 #-- locale --
 install_apt	language-pack-zh-hant
 install_apt	ibus-chewing
@@ -96,7 +96,7 @@ install_apt	qemu-kvm
 install_apt	virt-manager
 install_apt	uml-utilities
 install_apt	bridge-utils
-install_apt	kpartx
+install_apt	kpartx				# create device mappings for partitions
 
 
 # to install packages via dpkg

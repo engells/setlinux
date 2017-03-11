@@ -108,7 +108,7 @@ case $way in
 		device_4="/dev/sdc9"
 		_bak_data2 ;;
 
-	dk)
+	dk1)
 
 		echo '2秒後開始將資料備份至本地硬碟' && sleep 2
 
@@ -116,7 +116,7 @@ case $way in
 		device_4="/dev/sda6"
 		_bak_data ;;
 
-	dl)
+	dk2)
 
 		echo '2秒後開始將資料備份至本地硬碟' && sleep 2
 

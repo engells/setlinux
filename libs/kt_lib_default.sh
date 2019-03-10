@@ -16,7 +16,8 @@ _clean_apt()
 _clean_bash()
 {
 	echo '2秒後開始清除bash歷史指令' && sleep 2
-	cat /dev/null > ~/.bash_history
+	[ -f ~/.bash_history ] && cat /dev/null > ~/.bash_history
+	[ -f ~/.zsh_history ] && cat /dev/null > ~/.zsh_history
 }
 
 _set_trackball()

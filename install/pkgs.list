@@ -49,6 +49,10 @@ install_apt	comix
 install_apt	lame				# wave 2 mp3
 install_apt	flac				# wave 2 flac
 install_apt	vorbis-tools			# wave 2 ogg
+install_apt	gnash				# swf player
+install_apt	geeqie				# duplicate photos
+install_apt	avidemux			# edit video, work with ffmpeg winff 
+
 #-- internet utils --
 install_apt	chromium-browser
 install_apt	w3m				# command-line browser
@@ -71,13 +75,17 @@ install_apt	ecryptfs-utils
 install_apt	gtk2-engines-pixbuf		# 解決 Gtk: Unable to locate theme engine in module_path: "pixmap"
 install_apt	zsh
 install_apt	tmux				# terminal multiplexer
+install_apt	exfat-utils
+install_apt	fuse-exfat
 #-- office utils --
 install_apt	poppler-data			# default installed
 install_apt	vim
 install_apt	vim-gnome
 install_apt	lo-menubar
 install_apt	sqlite3
-install_apt	fbreader
+install_apt	fbreader			# epub
+install_apt	texlive-full
+install_apt	git
 #-- locale --
 install_apt	language-pack-zh-hant
 install_apt	ibus-chewing
@@ -93,6 +101,7 @@ install_apt	lxc
 install_apt	systemd-services
 install_apt	uidmap
 install_apt	qemu-kvm
+install_apt	ovmf				# enable UEFI mode in KVM/QEMU
 install_apt	virt-manager
 install_apt	uml-utilities
 install_apt	bridge-utils

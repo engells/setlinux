@@ -1,2 +1,2 @@
 #!/bin/bash
-gnome-terminal -e '/home/engells/ktws/scripts/my_lunch.sh dk1'
+gnome-terminal -e '/home/engells/ktws/scripts/my_lunch.sh dk2'

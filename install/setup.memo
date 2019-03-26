@@ -43,4 +43,25 @@
   設定開檔語系：gsettings set org.gnome.gedit.preferences.encodings auto-detected "['UTF-8', 'BIG5', 'GBK', 'GB18030', 'GB2312', 'CURRENT', 'UTF-16']" 或以 dconf-editor 編輯
  -設定 Gnome Terminal 之佈景主題為 Gray on black，字體為 Monaco 12 + 顏色 #2E8B57
 
+6.問題解決
+ -沒有聲音輸出
+  *安裝 pavucontrol，在終端機執行 pavucontrol => Configuration => Build-in Audio => Analog Stereo Output (Unplugged)
+  *若上述步驟未解決問題，apt remove --purge alsa-base pulseaudio，apt install alsa-base pavucontrol，killall pulseaudio, rm -r ~/.config/pulse/*
+  *參考指令 aplay -l，alsamixer，sudo alsa force-reload
+ -SWAP 缺 RESUME 參數
+  *sudoedit /etc/initramfs-tools/conf.d/resume，加入 RESUME=UUID=02ea9a0d-7bb4-48a5-836b-8cdc0c50a9d7
+  *sudo update-initramfs -u -k all，重新產生 initramfs image
+
+7.關於 ZFS
+ -設定載入 ZFS 等待時間
+   *Boot from a Ubuntu Live CD (or any other recovery media)
+   *Import the pool to /mnt using zpool import rpool -R /mnt
+   *Bind the necessary filesyststems mount --rbind /dev  /mnt/dev; mount --rbind /proc /mnt/proc; mount --rbind /sys  /mnt/sys
+   *Chroot into /mnt: chroot /mnt /bin/bash --login
+   *Edit /etc/default/zfs to change the value ZFS_INITRD_POST_MODPROBE_SLEEP='0' from 0 to 15
+   *Run update-initramfs and update-grub
+   *Exit the Chroot environment and reboot
+
+
+
 

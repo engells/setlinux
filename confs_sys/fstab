@@ -5,13 +5,14 @@
 # that works even if disks are added and removed. See fstab(5).
 #
 # <file system>					<mount point>		<type>	<options>		<dump>	<pass>
-proc						/proc			proc	nodev,noexec,nosuid	0	0
+#proc						/proc			proc	nodev,noexec,nosuid	0	0
 tmp						/tmp			tmpfs	defaults,mode=1777	0	0
 log						/var/log		tmpfs	defaults,mode=1777	0	0
 download					/home/engells/downloads	tmpfs	defaults,mode=1777	0	0
 cache						/home/engells/.cache/	tmpfs	defaults,mode=1777	0	0
-UUID=b95654f4-e047-404f-b883-5d946f5d22e4	/			ext4	errors=remount-ro	0       1
+UUID=7e902915-229e-479f-a2f7-28e333e64499	/			ext4	errors=remount-ro	0	1
 UUID=6F3B-0181					/boot/efi		vfat	utf8,umask=007,gid=46	0	1
-UUID=8b736f4f-95a4-4e19-8236-7d80ed536657	/home			ext4	defaults		0	2
-UUID=71166291-1d6e-457d-841a-ef4c8d4fa76c	/home/engells/ktws	ext4	defaults		0	2
-UUID=b9929fdb-ee31-4c22-9269-a13874605805	/home/engells/mmedia	ext4	defaults		0	2
+UUID=cb739e4f-c499-4097-bf7d-b47da16b5e22	/home			ext4	defaults		0	2
+UUID=a899e194-eb35-45c0-b3fe-a18e7bf69dc7	/home/engells/ktws	ext4	defaults		0	2
+UUID=58963ca6-8a03-4df8-8676-3c9f560cb6cd	/home/engells/mmedia	ext4	defaults		0	2
+UUID=02ea9a0d-7bb4-48a5-836b-8cdc0c50a9d7	none			swap	sw			0	0

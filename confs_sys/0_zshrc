@@ -30,7 +30,7 @@ export PATH=$PATH:~/mnt/scripts
 
 # 設定彩色顯示 ls 指令結果
 alias ls='ls --color=auto'
-alias ll='ls -l'
-alias la='ls -al'
+alias ll='ls -l --color=auto'
+alias la='ls -al --color=auto'
 
 

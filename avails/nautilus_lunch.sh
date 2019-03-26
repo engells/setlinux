@@ -102,8 +102,8 @@ case $way in
 
 		echo '2秒後開始將資料備份至外接式硬碟' && sleep 2
 		
-		device_1="/dev/sdb7"
-		device_2="/dev/sdb8" 
+		device_1="/dev/sdb8"
+		device_2="/dev/sdb9" 
 		device_3="/dev/sdc8"
 		device_4="/dev/sdc9"
 		_bak_data2 ;;
@@ -120,8 +120,8 @@ case $way in
 
 		echo '2秒後開始將資料備份至本地硬碟' && sleep 2
 
-		device_1="/dev/sdb7"
-		device_2="/dev/sdb8"
+		device_1="/dev/sdb8"
+		device_2="/dev/sdb9"
 		device_3="/dev/sda7"
 		device_4="/dev/sda8"
 		_bak_data2 ;;

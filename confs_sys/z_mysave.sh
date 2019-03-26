@@ -7,15 +7,15 @@
 
 _dump2bak()
 {
-rm -rf $tardir/*
+sudo rm -rf $tardir/*
 cd $surdir
-cp -R . $tardir
+sudo cp -R . $tardir
 }
 
 _chg_owner()
 {
-chown -R engells:engells $surdir
-chown -R engells:engells $tardir
+sudo chown -R engells:engells $surdir
+sudo chown -R engells:engells $tardir
 }
 
 for way in varlog userdl

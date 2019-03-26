@@ -1,10 +1,10 @@
 # vim:ts=4
-# lib: Using to install Ubuntu 12.04
+# lib: Using to install Ubuntu 18.04
 # made by: Engells
-# date: June 05, 2012
+# date: Mar 25, 2019
 # content: 
 
-cfgDir="/home/engells/ktws/scripts/configs"
+cfgDir="/home/engells/ktws/scripts/confs_sys"
 
 _chg_aptsur()
 {
@@ -29,24 +29,29 @@ _mnt_dirs()
 		[ -d /home/engells/mnt/$DIR ] || mkdir -p /home/engells/mnt/$DIR
 	done
 
-	[ -d /home/engells/virtual ] || mkdir /home/engells/virtual
+	sudo chown -R engells:engells /home/engells/mnt
 
-	for DIR in shared vir_discs vir_disks vir_machines
+	for DIR in dosbox lxcd lxcu virt
 	do
-		[ -d /home/engells/virtual/$DIR ] || mkdir -p /home/engells/virtual/$DIR
+		[ -d /home/$DIR ] || sudo mkdir -p /home/$DIR
+		sudo chown -R engells:engells /home/$DIR
+	done
+
+	for DIR in discs disks share
+	do
+		[ -d /home/virt/$DIR ] || sudo mkdir -p /home/virt/$DIR
+		sudo chown -R engells:engells /home/virt/$DIR
 	done
 
 	[ -d /home/engells/downloads ] || mkdir /home/engells/downloads
 
-	sudo chown -R engells:engells /home/engells/mnt
-	sudo chown -R engells:engells /home/engells/virtual
 	sudo chown -R engells:engells /home/engells/downloads
 }
 
 _user_dirs()
 {
 	mv /home/engells/.config/user-dirs.dirs /home/engells/.config/user-dirs.dirs.bak
-	cp $cfgDir/user-dirs.dirs /home/engells/.config/
+	cp $cfgDir/user_dirs.dirs /home/engells/.config/user-dirs.dirs
 
 	for DIR in Documents Downloads Music Pictures Public Templates Videos
 	do
@@ -60,31 +65,16 @@ _user_dirs()
 _cp_files()
 {
 	tDir="/home/engells/mnt/tmpfs"
-	sDir="/home/engells/ktws/0_sur_linux"
 
-	#cp $sDir/editor/madedit-0.2.9.1-luna.deb $tDir/madedit.deb
-	#cp $sDir/virtual/VirtualBox-4.2.16-86992-precise-amd64.deb $tDir/vb.deb
-	#cp $sDir/security_monitor/truecrypt-7.1a-setup-x64 $tDir/truecrypt.sh
-	cp $sDir/themes/Theme-Elementary-Gtk-3.x.tar.gz $tDir/themes.tar.gz
-	cp $sDir/themes/Cursor-Mac-Lion-Gtk-3.x.tar.gz $tDir/cursors.tar.gz
-	cp $sDir/themes/Icon-Mac-Lion-Gtk-3.x.tar.gz $tDir/icons.tar.gz
+	sDir="/home/engells/ktws/0_sur_linux"
+	#cp $sDir/themes/Theme-Elementary-Gtk-3.x.tar.gz $tDir/themes.tar.gz
 
 	sDir="/home/engells/ktws/0_sur_fonts"
-	cp $sDir/Apple_OSX/Heiti-SC-Medium-6.1-d23.ttf $tDir/Heiti.ttf
-	cp $sDir/Apple_OSX/Monaco.ttf $tDir/Monaco.ttf
+	cp $sDir/Apple/Heiti-SC-Medium-6.1-d23.ttf $tDir/Heiti.ttf
+	cp $sDir/Apple/Monaco.ttf $tDir/Monaco.ttf
 	cp $sDir/TW_Gov/TW-Kai-98.1.ttf $tDir/TW-Kai.ttf
 	cp $sDir/TW_Gov/TW-Sung-98.1.ttf $tDir/TW-Sung.ttf
-	cp $sDir/MS_Win8/consola.ttf $tDir/Consola.ttf
-}
-
-_install_dropbox()
-{
-	cp /home/engells/ktws/0_sur_linux/dropbox-1.6.10.tar.gz /home/engells/dropbox.tar.gz
-	tar zxvf /home/engells/dropbox.tar.gz
-	rm /home/engells/dropbox.tar.gz
-	#cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
-	#~/.dropbox-dist/dropboxd
-	#依提示的連結，丟到瀏覽器裡，輸入 dropbox 帳號密碼，登入成功後，就把 daemon 跟這個帳號連結在一起
+	cp $sDir/Microsoft/consola.ttf $tDir/Consola.ttf
 }
 
 _add_themes()
@@ -101,16 +91,27 @@ _add_themes()
 
 _nautilus_scripts()
 {
-	#ln -s /home/engells/ktws/scripts/nautilus_scripts/* /home/engells/.gnome2/nautilus-scripts/
 	ln -s /home/engells/ktws/scripts/nautilus_scripts/* /home/engells/.local/share/nautilus/scripts
-	sudo ln -s /home/engells/ktws/scripts/avails/kthcrypt_dir.sh /usr/local/bin/kthd
-	sudo ln -s /home/engells/ktws/scripts/avails/kthcrypt_part.sh /usr/local/bin/kthp
 }
 
 _bash_conf()
 {
-	cp $cfgDir/0.bash_profile /home/engells/.bash_profile
-	cp $cfgDir/0.bashrc /home/engells/.bashrc
+	cp $cfgDir/0_bash_profile /home/engells/.bash_profile
+	cp $cfgDir/0_bashrc /home/engells/.bashrc
+	. /home/engells/.bashrc
+}
+
+_zsh_conf()
+{
+	git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+	cp $cfgDir/0_zshrc ~/.zshrc
+	sudo chsh -s $(which zsh) $(whoami)
+}
+
+_tmux_conf()
+{
+	git clone https://github.com/jimeh/tmuxifier.git ~/.tmuxifier
+	cp $cfgDir/0_tmux_conf ~/.tmux.conf
 }
 
 _vim_conf()
@@ -127,11 +128,6 @@ _vim_conf()
 	git clone https://github.com/scrooloose/nerdtree.git
 	git clone git://github.com/Lokaltog/vim-powerline.git
 	git clone https://github.com/sukima/xmledit.git
-}
-
-_enable_ibus()
-{
-	sudo cp $cfgDir/ibus-daemon.desktop /etc/xdg/autostart/
 }
 
 _set_locale()
@@ -170,11 +166,6 @@ _set_zhfonts()
 	sudo ln -s /etc/fonts/conf.avail/30-cjk-aliases.conf /etc/fonts/conf.d/
 }
 
-_disable_utc()
-{
-	sudo sed -i 's/UTC=yes/UTC=no/g' /etc/default/rcS
-}
-
 _ebable_sysrq()
 {
 	sudo sed -i '$a kernel.sysrq = 1' /etc/sysctl.d/10-console-messages.conf
@@ -188,28 +179,10 @@ _set_fstab()
 	sudo cp $cfgDir/fstab /etc
 }
 
-_bak_tmpfs_dir()
-{
-	sudo cp $cfgDir/z.mysave.sh /etc/init.d/
-	sudo cp $cfgDir/z.myload.sh /etc/init.d/
-	sudo chmod +x /etc/init.d/z.my*
-	sudo ln -s /etc/init.d/z.mysave.sh /etc/rc0.d/K10mysave.sh
-	sudo ln -s /etc/init.d/z.mysave.sh /etc/rc6.d/K10mysave.sh
-	cd /etc/init.d && sudo update-rc.d z.myload.sh defaults 
-	sudo rm /etc/rc0.d/K*z.myload.sh
-	sudo rm /etc/rc1.d/K*z.myload.sh
-	sudo rm /etc/rc4.d/S*z.myload.sh
-	sudo rm /etc/rc6.d/K*z.myload.sh
-	sudo mv /etc/rc2.d/S20z.myload.sh /etc/rc2.d/S29myload.sh
-	sudo mv /etc/rc3.d/S20z.myload.sh /etc/rc3.d/S29myload.sh
-	sudo mv /etc/rc5.d/S20z.myload.sh /etc/rc5.d/S29myload.sh
-	sudo cp /etc/rc2.d/S29myload.sh /etc/rc1.d/
-}
-
 _set_crontab()
 {
-	sudo cp $cfgDir/cron-engells /var/spool/cron/crontabs/engells
-	sudo chown engells:engells /var/spool/cron/crontabs/engells
+	sudo cp $cfgDir/cron_engells /var/spool/cron/crontabs/engells
+	sudo chown engells:crontab /var/spool/cron/crontabs/engells
 	sudo chmod a+w /var/spool/cron/crontabs/engells
 }
 
@@ -218,39 +191,61 @@ _disable_reclog()
 	sudo chattr +i ~/.local/share/recently-used.xbel
 }
 
+_bak_tmpfs_dir()
+{
+	[ -d "/opt/engells"] || sudo mkdir -p /opt/engells
+	sudo cp $cfgDir/z_mysave.sh /opt/engells
+	sudo cp $cfgDir/z_myload.sh /opt/engells
+	sudo chmod +x /opt/engells/z_my*
+
+	[ -f "/lib/systemd/system/z.mysave.service" ] || sudo cp $cfgDir/z_mysave_service /lib/systemd/system/z.mysave.service
+	sudo systemctl enable z.mysave.service
+
+	[ -d "/var/backups/log"] || sudo mkdir -p /var/backups/log
+}
+
 _set_firewall()
 {
 	[ -d "/opt/security/iptables" ] || sudo mkdir -p /opt/security/iptables
 	sudo cp $cfgDir/iptables.* /opt/security/iptables/
 	sudo chmod a+x /opt/security/iptables/iptables.*
-	sudo sed -i '$a bash /opt/security/iptables/iptables.rule' /etc/init.d/rc.local
+
+	[ -f "/lib/systemd/system/rc.local.service" ] && sudo mv /lib/systemd/system/rc.local.service /lib/systemd/system/rc.local.service.bak
+	sudo cp $cfgDir/rc_local_service /lib/systemd/system/rc.local.service
+
+	[ -f "/etc/rc.local" ] && sudo mv /etc/rc.local /etc/rc.local.bak
+	sudo cp $cfgDir/rc_local /etc/rc.local
+	sudo chmod +x /etc/rc.local
+	sudo systemctl enable rc.local.service
 }
 
 _shortcut_utils()
 {
-	sudo ln -s ~/ktws/scripts/avails/kthcrypt_bak.sh /usr/local/bin/kthb
-	sudo ln -s ~/ktws/scripts/avails/virt_module.sh /usr/local/bin/virtm
-	sudo ln -s ~/ktws/scripts/avails/virt_net.sh /usr/local/bin/virtn
+	sudo ln -s /home/engells/ktws/scripts/avails/kthcrypt_dir.sh /usr/local/bin/kthd
+	sudo ln -s /home/engells/ktws/scripts/avails/kthcrypt_part.sh /usr/local/bin/kthp
+	sudo ln -s /home/ktws/scripts/avails/kthcrypt_bak.sh /usr/local/bin/kthb
+	sudo ln -s /home/ktws/scripts/avails/virt_module.sh /usr/local/bin/virtm
+	sudo ln -s /home/ktws/scripts/avails/virt_net.sh /usr/local/bin/virtn
 }
 
-_android_utils()
+_lxc_conf()
 {
-	#sudo apt-get install lib32ncurses5 lib32stdc++6	# included in pkgs.list
-	strDev='SUBSYSTEM=="usb", ATTR{idVendor}=="0bb4", ATTR{idProduct}=="0c03", ATTR{product}=="ZP900S",'
-	strDev="$strDev "'MODE="0666", SYMLINK+="9300plus", GROUP="plugdev"'
-	echo $strDev | sudo tee /etc/udev/rules.d/71-android.rules 
-	sudo service udev restart
+	[ -d "/var/lib/lxc" ] && sudo rm -R /var/lib/lxc
+	sudo ln -s /home/lxcd /var/lib/lxc
+
+	[ -d "/home/engells/.local/share/lxc" ] && rm -R /home/engells/.local/share/lxc
+	ln -s /home/lxcu ~/.local/share/lxc
+
+	[ -f "/etc/lxc/lxc-usernet" ] && sudo mv /etc/lxc/lxc-usernet /etc/lxc/lxc-usernet.bak
+	sudo cp $cfgDir/lxc_usernet /etc/lxc/lxc-usernet
+
+	[ -f "/home/engells/.config/lxc/default.conf" ] && mv ~/.config/lxc/default.conf ~/.config/lxc/default.conf.bak
+	cp $cfgDir/lxc_default_conf ~/.config/lxc/default.conf
+
+	chmod a+x ~/.local
+	chmod a+x ~/.local/share
+	chmod a+x /home/lxcu
 }
 
-_java_chi()
-{
-	sed -i '$a export _JAVA_OPTIONS="-Dfile.encoding=BIG5"' ~/.profile	# 修正 java 的中文顯示, 需重新登入
-}
 
-_java_upgrade()
-{
-	sudo apt-get install openjdk-7-jdk openjdk-7-jre	# 升級 java 版本
-	sudo update-alternatives --config java			# 啟用新版 java
-	#java -version						# 查詢運作之 java 版本
-}
 

@@ -29,6 +29,9 @@ install_apt	chromium-browser
 install_apt	curl
 #-- system and desktop --
 install_apt	gnome-tweaks
+install_apt	gnome-shell-extensions
+install_apt	gnome-shell-extension-dashtodock 
+install_apt	gnome-shell-extension-system-monitor
 install_apt	bleachbit
 install_apt	sysstat
 install_apt	indicator-multiload

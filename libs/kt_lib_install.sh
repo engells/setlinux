@@ -24,7 +24,7 @@ _mnt_dirs()
 {
 	[ -d /home/engells/mnt ] || mkdir -p /home/engells/mnt
 
-	for DIR in bak buf cache doc dump1 dump2 dump3 iso scripts ramfs tmpfs
+	for DIR in bak buf cache doc dump1 dump2 dump3 dump4 iso scripts ramfs tmpfs
 	do
 		[ -d /home/engells/mnt/$DIR ] || mkdir -p /home/engells/mnt/$DIR
 	done
@@ -178,6 +178,15 @@ _ebable_sysrq()
 	#sudo sed -i '$a kernel.sysrq = 1' /etc/sysctl.d/10-magic-sysrq.conf. # for 12.10 and later
 }
 
+_disable_automount()
+{
+	sudo gsettings set org.gnome.desktop.media-handling automount false
+	sudo gsettings set org.gnome.desktop.media-handling automount-open false
+	# sudo gsettings set org.gnome.desktop.media-handlingautomount true
+	# sudo gsettings set org.gnome.desktop.media-handling automount-open true
+
+}
+
 _set_fstab()
 {
 	sudo mv /etc/fstab /etc/fstab.bak
@@ -253,6 +262,4 @@ _lxc_conf()
 	chmod a+x ~/.local/share
 	chmod a+x /home/lxcu
 }
-
-
 

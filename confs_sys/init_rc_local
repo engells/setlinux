@@ -12,5 +12,9 @@
 # By default this script does nothing.
 
 bash /opt/security/iptables/iptables.rule
+bash /opt/engells/z_myload.sh
+
+date >> /home/engells/my_boot.log
+systemctl restart lxc-net
 
 exit 0

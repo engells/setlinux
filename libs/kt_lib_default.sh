@@ -1,101 +1,49 @@
 # vim:ts=2
 # lib: Using to clean system and config trackball
 # made by: Engells
-# date: Mar 30, 2019
+# date: Mar 31, 2019
 # content: 
 # note: the arguments could be deliverd by lunch shcripts
 
-_bak_vir_disks()
-{
-	[ -d ~/mnt/dump1 ] || sudo mkdir -p ~/mnt/dump1
-	sudo umount ~/mnt/dump1 2>/dev/null
-	sudo mount -t ext4 $device_1 ~/mnt/dump1
-	rm -r -f ~/mnt/dump1/*
-	sudo dd if=/dev/sdb4 of=/dev/sdc4 status=progress conv=noerror,sync bs=4k
-	# sudo pv -tpreb /dev/sdb4 | dd of=/dev/sdc4 bs=4096 conv=notrunc,noerror
-}
-
-_bak_data_setdir()
-{
-	[ -d ~/mnt/dump1 ] || sudo mkdir -p ~/mnt/dump1
-	[ -d ~/mnt/dump2 ] || sudo mkdir -p ~/mnt/dump2
-	[ -d ~/mnt/dump3 ] || sudo mkdir -p ~/mnt/dump3
-	[ -d ~/mnt/dump2 ] || sudo mkdir -p ~/mnt/dump4
-	sudo umount ~/mnt/dump1 2>/dev/null
-	sudo umount ~/mnt/dump2 2>/dev/null
-	sudo umount ~/mnt/dump3 2>/dev/null
-	sudo umount ~/mnt/dump4 2>/dev/null
-}
-
 _bak_data_import_pool()
 {
-	echo 'importing pool xpl ' && sudo zpool import -d /dev/disk/by-id xpl &&  sleep 5
-}
+	echo 'clearing dataset mountpoint of pool xpl'
 
-_bak_data_mount_sur()
-{
-	if [ -z $1 ] && return
+	sudo zpool export xpl 2>/dev/null
 
-	case $1 in
-		sdc)
-			sudo mount -t ext4 $device_1 ~/mnt/dump1
-			sudo mount -t ext4 $device_2 ~/mnt/dump2
-			sudo mount -t ext4 $device_3 ~/mnt/dump3
-			sudo mount -t ext4 $device_4 ~/mnt/dump4
-			;;
-		sda)
-			sudo mount -t ext4 $device_1 ~/mnt/dump1
-			sudo mount -t ext4 $device_2 ~/mnt/dump2
-			;;
-		*)
-			echo 'mounted nothing!'
-			;;
-	esac
-}
+	for DIR in ktws mmedia ktwsb mmediab
+	do
+		sudo rm -r -f ~/mnt/$DIR
+	done
 
-_bak_data_main()
-{
-	sudo chown engells:engells -R ~/mnt/dump3
-	sudo chown engells:engells -R ~/mnt/dump4
-	rm -r -f ~/mnt/dump3/* ; cd ~/mnt/dump1 && cp -av . ~/mnt/dump3
-	rm -r -f ~/mnt/dump4/* ; cd ~/mnt/dump2 && cp -av . ~/mnt/dump4
+	echo 'importing pool xpl ' && sudo zpool import -d /dev/disk/by-id xpl && sleep 5
 }
 
 _bak_data_to_portable()
 {
-	_bak_data_setdir
-	_bak_data_mount_sur sdc
-	_bak_data_main
+	for DIR in $mnt_sur $mnt_tar
+	do
+		[ -d $DIR ] || sudo mkdir -p $DIR
+			sudo umount $DIR 2>/dev/null
+	done
+
+	sudo mount -t ext4 $device_sur $mnt_sur
+	sudo mount -t ext4 $device_tar $mnt_tar
+	rm -r -f $mnt_tar/* ; cd $mnt_sur && cp -av . $mnt_tar
 }
 
 _bak_data_to_local()
 {
-	_bak_data_setdir
-	_bak_data_mount_sur sda
 
-	case $1 in
-		step1)
-			sudo zfs set mountpoint=/home/engells/mnt/dump3 xpl/ktws &&  sleep 2
-			sudo zfs set mountpoint=/home/engells/mnt/dump4 xpl/mmedia &&  sleep 2
-			echo 'mounting dadaset ktws' $$ sudo zfs mount xpl/ktws &&  sleep 5
-			echo 'mounting dadaset mmedia' $$ sudo zfs mount xpl/mmedia &&  sleep 5
-			_bak_data_main
-			sudo zfs set mountpoint=/home/engells/mnt/ktws xpl/ktws &&  sleep 2
-			sudo zfs set mountpoint=/home/engells/mnt/mmedia xpl/mmedia &&  sleep 2
-			;;
-		step2)
-			sudo zfs set mountpoint=/home/engells/mnt/dump3 xpl/ktwsb &&  sleep 2
-			sudo zfs set mountpoint=/home/engells/mnt/dump4 xpl/mmediab &&  sleep 2
-			echo 'mounting dadaset ktws' $$ sudo zfs mount xpl/ktws &&  sleep 5
-			echo 'mounting dadaset mmedia' $$ sudo zfs mount xpl/mmedia &&  sleep 5
-			_bak_data_main
-			sudo zfs set mountpoint=/home/engells/mnt/ktwsb xpl/ktwsb &&  sleep 2
-			sudo zfs set mountpoint=/home/engells/mnt/mmediab xpl/mmediab &&  sleep 2
-			;;
-		*)
-			echo 'done nothing!'
-			;;
-	esac
+	[ -d $mnt_sur ] || sudo mkdir -p $mnt_sur
+	sudo umount $mnt_sur 2>/dev/null
+
+	sudo mount -t ext4 $device_sur $mnt_sur
+	echo "mounting dadaset $device_tar" 
+	sudo zfs umount $device_tar 2>/dev/null && sudo zfs mount $device_tar && sleep 5
+
+	rm -r -f $mnt_tar/* ; cd $mnt_sur && cp -av . $mnt_tar
+
 }
 
 _clean_apt()

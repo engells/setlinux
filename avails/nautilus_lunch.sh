@@ -51,10 +51,15 @@ case $way in
 		echo '2秒後開始將資料備份至外接式硬碟' && sleep 2
 
 		. /home/engells/ktws/scripts/libs/kt_lib_default.sh
-		device_1="/dev/sdb6"
-		device_2="/dev/sdb7"
-		device_3="/dev/sdc6" 
-		device_4="/dev/sdc7"
+		mnt_sur="/home/engells/mnt/dump1"
+		mnt_tar="/home/engells/mnt/dump3"
+
+		device_sur="/dev/sdb6"
+		device_tar="/dev/sdc6"
+		_bak_data_to_portable
+
+		device_sur="/dev/sdb7"
+		device_tar="/dev/sdc7"
 		_bak_data_to_portable ;;
 
 	dc2)
@@ -62,10 +67,15 @@ case $way in
 		echo '2秒後開始將資料備份至外接式硬碟' && sleep 2
 
 		. /home/engells/ktws/scripts/libs/kt_lib_default.sh
-		device_1="/dev/sdb8"
-		device_2="/dev/sdb9"
-		device_3="/dev/sdc8"
-		device_4="/dev/sdc9"
+		mnt_sur="/home/engells/mnt/dump1"
+		mnt_tar="/home/engells/mnt/dump3"
+
+		device_sur="/dev/sdb8"
+		device_tar="/dev/sdc8"
+		_bak_data_to_portable
+
+		device_sur="/dev/sdb9"
+		device_tar="/dev/sdc9"
 		_bak_data_to_portable ;;
 
 	dk1)
@@ -73,22 +83,30 @@ case $way in
 		echo '2秒後開始將資料備份至本地硬碟' && sleep 2
 
 		. /home/engells/ktws/scripts/libs/kt_lib_default.sh
-		_bak_data_import_pool
-		device_1="/dev/sdb6"
-		device_2="/dev/sdb7"
+		mnt_sur="/home/engells/mnt/dump1"
 
-		_bak_data_to_local step1 ;;
+		device_sur="/dev/sdb6"
+		device_tar="xpl/ktws"
+		_bak_data_to_local
+
+		device_sur="/dev/sdb7"
+		device_tar="xpl/mmedia"
+		_bak_data_to_local ;;
 
 	dk2)
 
 		echo '2秒後開始將資料備份至本地硬碟' && sleep 2
 
 		. /home/engells/ktws/scripts/libs/kt_lib_default.sh
-		#_bak_data_import_pool
-		device_1="/dev/sdb8"
-		device_2="/dev/sdb9"
+		mnt_sur="/home/engells/mnt/dump1"
 
-		_bak_data_to_local step2 ;;
+		device_sur="/dev/sdb8"
+		device_tar="xpl/ktwsb"
+		_bak_data_to_local
+
+		device_sur="/dev/sdb9"
+		device_tar="xpl/mmediab"
+		_bak_data_to_local ;;
 
 	*)
 

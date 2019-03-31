@@ -51,7 +51,7 @@ _mnt_dirs()
 _user_dirs()
 {
 	mv /home/engells/.config/user-dirs.dirs /home/engells/.config/user-dirs.dirs.bak
-	cp $cfgDir/user_dirs.dirs /home/engells/.config/user-dirs.dirs
+	cp $cfgDir/xdg_user_dirs_dirs /home/engells/.config/user-dirs.dirs
 
 	for DIR in Documents Downloads Music Pictures Public Templates Videos
 	do
@@ -87,6 +87,11 @@ _add_themes()
 
 	[ -d "/home/engells/.icons" ] || mkdir /home/engells/.icons
 	tar -xzvf /home/engells/mnt/tmpfs/icons.tar.gz -C /home/engells/.icons
+
+	[ -d /usr/share/gnome-shell/theme/ubuntu.css] && \
+		sudo cp /usr/share/gnome-shell/theme/ubuntu.css /usr/share/gnome-shell/theme/ubuntu.css.bak
+	sudo cp $sDir/gdm_ubuntu_css /usr/share/gnome-shell/theme/ubuntu.css
+	# /etc/alternatives/default.plymouth
 }
 
 _nautilus_scripts()
@@ -156,14 +161,14 @@ _set_zhfonts()
 	sudo fc-cache -f -v
 
 	[ -e "/etc/fonts/conf.avail/69-language-selector-zh-tw.conf" ] || \
-	sudo cp $cfgDir/69_language_selector_zh_tw.conf /etc/fonts/conf.avail/69-language-selector-zh-tw.conf
+	sudo cp $cfgDir/font_69_language_selector_zh_tw.conf /etc/fonts/conf.avail/69-language-selector-zh-tw.conf
 
-	sudo ln -s /etc/fonts/conf.avail/69-language-selector-zh-tw.conf /etc/fonts/conf.d/
+	#sudo ln -s /etc/fonts/conf.avail/69-language-selector-zh-tw.conf /etc/fonts/conf.d/
 
 	[ -e "/etc/fonts/conf.avail/30-cjk-aliases.conf" ] || \
-	sudo cp $cfgDir/30_cjk_aliases.conf /etc/fonts/conf.avail/30-cjk-aliases.conf
+	sudo cp $cfgDir/font_30_cjk_aliases.conf /etc/fonts/conf.avail/30-cjk-aliases.conf
 
-	sudo ln -s /etc/fonts/conf.avail/30-cjk-aliases.conf /etc/fonts/conf.d/
+	#sudo ln -s /etc/fonts/conf.avail/30-cjk-aliases.conf /etc/fonts/conf.d/
 }
 
 _ebable_sysrq()
@@ -176,7 +181,7 @@ _ebable_sysrq()
 _set_fstab()
 {
 	sudo mv /etc/fstab /etc/fstab.bak
-	sudo cp $cfgDir/fstab /etc
+	sudo cp $cfgDir/init_fstab /etc/fstab
 }
 
 _set_crontab()
@@ -207,14 +212,16 @@ _bak_tmpfs_dir()
 _set_firewall()
 {
 	[ -d "/opt/security/iptables" ] || sudo mkdir -p /opt/security/iptables
-	sudo cp $cfgDir/iptables.* /opt/security/iptables/
+	sudo cp $cfgDir/secre_iptables.rule /opt/security/iptables/iptables.rule
+	sudo cp $cfgDir/secre_iptables.allow /opt/security/iptables/iptables.allow
+	sudo cp $cfgDir/secre_iptables.deny /opt/security/iptables/iptables.deny
 	sudo chmod a+x /opt/security/iptables/iptables.*
 
 	[ -f "/lib/systemd/system/rc.local.service" ] && sudo mv /lib/systemd/system/rc.local.service /lib/systemd/system/rc.local.service.bak
-	sudo cp $cfgDir/rc_local_service /lib/systemd/system/rc.local.service
+	sudo cp $cfgDir/init_rc_local_service /lib/systemd/system/rc.local.service
 
 	[ -f "/etc/rc.local" ] && sudo mv /etc/rc.local /etc/rc.local.bak
-	sudo cp $cfgDir/rc_local /etc/rc.local
+	sudo cp $cfgDir/init_rc_local /etc/rc.local
 	sudo chmod +x /etc/rc.local
 	sudo systemctl enable rc.local.service
 }

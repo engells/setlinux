@@ -5,50 +5,6 @@
 # date: Dec 21, 2011
 # content: 
 
-_bak_vir_disks()
-{
-	[ -d ~/mnt/dump1 ] || sudo mkdir -p ~/mnt/dump1
-	sudo umount ~/mnt/dump1 2>/dev/null
-	sudo mount -t ext4 $device_1 ~/mnt/dump1
-	rm -r -f ~/mnt/dump1/*
-	sudo dd if=/dev/sdb4 of=/dev/sdc4 status=progress conv=noerror,sync bs=4k
-	# sudo pv -tpreb /dev/sdb4 | dd of=/dev/sdc4 bs=4096 conv=notrunc,noerror
-}
-
-_bak_data()
-{
-	[ -d ~/mnt/dump3 ] || sudo mkdir -p ~/mnt/dump3
-	[ -d ~/mnt/dump4 ] || sudo mkdir -p ~/mnt/dump4
-	sudo umount ~/mnt/dump3 2>/dev/null
-	sudo umount ~/mnt/dump4 2>/dev/null
-	sudo mount -t ext4 $device_3 ~/mnt/dump3
-	sudo mount -t ext4 $device_4 ~/mnt/dump4
-	sudo chown engells:engells -R ~/mnt/dump3
-	sudo chown engells:engells -R ~/mnt/dump4
-	rm -r -f ~/mnt/dump3/* ; cd ~/ktws && cp -av . ~/mnt/dump3
-	rm -r -f ~/mnt/dump4/* ; cd ~/mmedia && cp -av . ~/mnt/dump4
-}
-
-_bak_data2()
-{
-	[ -d ~/mnt/dump1 ] || sudo mkdir -p ~/mnt/dump1
-	[ -d ~/mnt/dump2 ] || sudo mkdir -p ~/mnt/dump2
-	[ -d ~/mnt/dump3 ] || sudo mkdir -p ~/mnt/dump3
-	[ -d ~/mnt/dump2 ] || sudo mkdir -p ~/mnt/dump4
-	sudo umount ~/mnt/dump1 2>/dev/null
-	sudo umount ~/mnt/dump2 2>/dev/null
-	sudo umount ~/mnt/dump3 2>/dev/null
-	sudo umount ~/mnt/dump4 2>/dev/null
-	sudo mount -t ext4 $device_1 ~/mnt/dump1
-	sudo mount -t ext4 $device_2 ~/mnt/dump2
-	sudo mount -t ext4 $device_3 ~/mnt/dump3
-	sudo mount -t ext4 $device_4 ~/mnt/dump4
-	sudo chown engells:engells -R ~/mnt/dump3
-	sudo chown engells:engells -R ~/mnt/dump4
-	rm -r -f ~/mnt/dump3/* ; cd ~/mnt/dump1 && cp -av . ~/mnt/dump3
-	rm -r -f ~/mnt/dump4/* ; cd ~/mnt/dump2 && cp -av . ~/mnt/dump4
-}
-
 if [ -z $1 ]; then 
 	Des='請輸入處理方式 c:清除系統 h:清除bash歷史指令 m:設定羅技軌跡球 u:卸載 /dev/sdc'
 	printf "%s\n" "$Des"
@@ -79,53 +35,60 @@ case $way in
 	m)
 
 		. /home/engells/ktws/scripts/libs/kt_lib_default.sh
-		_set_trackball ;;
+		_set_trackball
+		;;
 
 	um)
 
-		sudo umount /media/Linux
-		sudo umount /media/Profile
-		sudo umount /media/WareHouse1
-		sudo umount /media/WareHouse2 ;;
+		for mnt_dir in $(ls /media/engells)
+		do
+				sudo umount $mnt_dir
+		done
+		;;
 
 	dc1)
 
 		echo '2秒後開始將資料備份至外接式硬碟' && sleep 2
 
-		device_1="/dev/sdc4"
+		. /home/engells/ktws/scripts/libs/kt_lib_default.sh
+		device_1="/dev/sdb6"
+		device_2="/dev/sdb7"
 		device_3="/dev/sdc6" 
 		device_4="/dev/sdc7"
-		#_bak_vir_disks
-		_bak_data ;;
+		_bak_data_to_portable ;;
 
 	dc2)
 
 		echo '2秒後開始將資料備份至外接式硬碟' && sleep 2
-		
+
+		. /home/engells/ktws/scripts/libs/kt_lib_default.sh
 		device_1="/dev/sdb8"
-		device_2="/dev/sdb9" 
+		device_2="/dev/sdb9"
 		device_3="/dev/sdc8"
 		device_4="/dev/sdc9"
-		_bak_data2 ;;
+		_bak_data_to_portable ;;
 
 	dk1)
 
 		echo '2秒後開始將資料備份至本地硬碟' && sleep 2
 
-		device_3="/dev/sda5"
-		device_4="/dev/sda6"
-		_bak_data ;;
+		. /home/engells/ktws/scripts/libs/kt_lib_default.sh
+		_bak_data_import_pool
+		device_1="/dev/sdb6"
+		device_2="/dev/sdb7"
+
+		_bak_data_to_local step1 ;;
 
 	dk2)
 
 		echo '2秒後開始將資料備份至本地硬碟' && sleep 2
 
+		. /home/engells/ktws/scripts/libs/kt_lib_default.sh
+		#_bak_data_import_pool
 		device_1="/dev/sdb8"
 		device_2="/dev/sdb9"
-		device_3="/dev/sda7"
-		device_4="/dev/sda8"
-		_bak_data2 ;;
 
+		_bak_data_to_local step2 ;;
 
 	*)
 

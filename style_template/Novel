@@ -1,0 +1,13 @@
+
+@namespace url(http://www.w3.org/1999/xhtml);
+
+@-moz-document url-prefix(file:///)
+{
+
+body {
+  font-family:'STHeiti TC', 'Monaco';
+  color:#000000 !important;
+  background-color:#757575 !important;
+  line-height:175%;
+}
+}

@@ -75,3 +75,29 @@
 
 
 
+基本資料
+====================
+im-config
+PIME 輸入法
+/usr/share/fonts/opentype/noto/
+/usr/share/fonts/truetype/noto
+ ibus 新酷音英文模式 ^; 輸入表情符號
+
+
+
+
+補充資料
+====================
+Debian
+	deb http://ftp.tw.debian.org/debian/ stretch main contrib non-free
+	deb-src http://ftp.tw.debian.org/debian/ stretch main contrib non-free
+	deb http://security.debian.org/ stretch/updates main contrib non-free
+	deb-src http://security.debian.org/ stretch/updates main contrib non-free
+
+	dpkg-reconfigure locales tzdata
+	apt -y install linux-headers-$(uname -r); ln -s /bin/rm /usr/bin/rm; apt-get -y install zfs-dkms <= 可考慮
+	/sbin/modprobe zfs && \
+	systemctl restart zfs-import-cache; systemctl restart zfs-import-scan; systemctl restart zfs-mount; systemctl restart zfs-share
+
+
+

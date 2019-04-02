@@ -11,4 +11,4 @@ set autoindent
 set history=50
 set ruler | set number	" | 字元表示接續下一個設定，如同 bash 的 ; 分隔兩個指令
 set showcmd
-
+"set cursorline

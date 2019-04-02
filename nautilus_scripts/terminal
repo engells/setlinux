@@ -6,7 +6,7 @@
 
 cd $NAUTILUS_SCRIPT_SELECTED_FILE_PATHS
 gnome-terminal --geometry=186x56+30+30  -e "tmux new -s session_0"
-tmux select-window -t session_0:0
+tmux select-window -t session_0:0 && sleep 1
 tmux split-window -h -p 50
 tmux split-window -v -p 40
 tmux select-pane -t 0

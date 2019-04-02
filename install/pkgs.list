@@ -21,6 +21,8 @@ install_apt	squashfs-tools
 #-- multi media --
 install_apt	mplayer
 install_apt	smplayer
+install_apt	gstreamer1.0-plugins-base
+install_apt	gstreamer1.0-plugins-good
 install_apt	gstreamer1.0-plugins-ugly
 install_apt	gstreamer1.0-plugins-bad
 install_apt	gstreamer1.0-libav

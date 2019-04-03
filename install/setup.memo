@@ -1,7 +1,7 @@
 # vim:ts=4
 # program: Using to memo Ubuntu 18.04 installion
 # made by: Engells
-# date: Mar 29, 2019
+# date: Apr 3, 2019
 # content: Just for memo
 
 
@@ -52,6 +52,11 @@
  -設定 Gedit 之佈景主題為 Oblivion，取消自動存檔，及標示游標所在行，字體選 Monaco 13。
   設定開檔語系：gsettings set org.gnome.gedit.preferences.encodings auto-detected "['UTF-8', 'BIG5', 'GBK', 'GB18030', 'GB2312', 'CURRENT', 'UTF-16']" 或以 dconf-editor 編輯
  -設定 Gnome Terminal 之佈景主題為 Gray on black，字體為 Consola 或 Monaco 12 + 顏色 #2E8B57
+ -移除 snapd
+  *systemctl list-unit-files | grep snap; sudo systemctl disable snap-xxx	# 只停用，不移除 snapd
+  *sudo apt remove --purge gnome-software-plugin-snap	# 只在軟體中心移除 snap 來源軟體清單，但保留 snapd
+  *sudo apt remove --purge snapd						# 完整移除 snapd
+  *rm -fr ~/snap
 
 6.問題解決
  -沒有聲音輸出
@@ -61,6 +66,8 @@
  -SWAP 缺 RESUME 參數
   *sudoedit /etc/initramfs-tools/conf.d/resume，加入 RESUME=UUID=02ea9a0d-7bb4-48a5-836b-8cdc0c50a9d7
   *sudo update-initramfs -u -k all，重新產生 initramfs image
+ -recently-used.xbel 權限設定異常
+  *lsof | grep recently-used.xbel; sudo chattr -i ~/.local/share/recently-used.xbel
 
 7.關於 ZFS
  -設定載入 ZFS 等待時間
@@ -95,9 +102,24 @@ Debian
 	deb-src http://security.debian.org/ stretch/updates main contrib non-free
 
 	dpkg-reconfigure locales tzdata
-	apt -y install linux-headers-$(uname -r); ln -s /bin/rm /usr/bin/rm; apt-get -y install zfs-dkms <= 可考慮
+	apt -y install linux-headers-$(uname -r); ln -s /bin/rm /usr/bin/rm; apt -y install zfs-dkms <= 可考慮
 	/sbin/modprobe zfs && \
 	systemctl restart zfs-import-cache; systemctl restart zfs-import-scan; systemctl restart zfs-mount; systemctl restart zfs-share
+
+	ZFS on Debian 9 (stretch) with Kernel 4.18 url: https://medium.com/@slappyjam/zfs-on-debian-9-stretch-with-kernel-4-18-4de90ad090b3
+		sudo apt remove zfs-dkms
+		echo "deb http://ftp.us.debian.org/debian/ stretch-backports main contrib non-free" | \
+			sudo tee /etc/apt/sources.list.d/debian_stretch_backports.list
+		sudo apt update; sudo apt -t stretch-backports upgrade
+		sudo apt -t stretch-backports install linux-image-4.18.0-0.bpo.3-amd64
+		sudo apt -t stretch-backports install linux-headers-4.18.0-0.bpo.3-amd64
+		sudo apt -t stretch-backports install zfs-dkms
+		sudo /sbin/modprobe zfs
+		sudo systemctl restart zfs-import-cache
+		sudo systemctl restart zfs-import-scan
+		sudo systemctl restart zfs-mount
+		sudo systemctl restart zfs-share
+		sudo zpool upgrade -a
 
 
 

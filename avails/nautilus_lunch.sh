@@ -58,28 +58,14 @@ case $way in
 		mnt_tar="/home/engells/mnt/dump1"
 		_bak_data_to_portable
 
-<<<<<<< HEAD
 		dev_sur="kpl/mmedia"
 		dev_tar="/dev/sdc7"
 		mnt_sur="/home/engells/mmedia"
 		mnt_tar="/home/engells/mnt/dump2"
-=======
-		. /home/engells/ktws/scripts/libs/kt_lib_default.sh
-		mnt_sur="/home/engells/mnt/dump1"
-		mnt_tar="/home/engells/mnt/dump3"
-
-		device_sur="/dev/sdb6"
-		device_tar="/dev/sdc6"
-		_bak_data_to_portable
-
-		device_sur="/dev/sdb7"
-		device_tar="/dev/sdc7"
->>>>>>> 7dc64d84764170782caeda80aab802e4722557ef
 		_bak_data_to_portable ;;
 
 	dc2)
 
-<<<<<<< HEAD
 		echo '2 秒後開始將資料備份至外接式硬碟' && sleep 2
 
 		. /home/engells/ktws/scripts/libs/kt_lib_default.sh
@@ -94,20 +80,6 @@ case $way in
 		dev_tar="/dev/sdc9"
 		mnt_sur="/home/engells/mnt/mmediab"
 		mnt_tar="/home/engells/mnt/dump4"
-=======
-		echo '2秒後開始將資料備份至外接式硬碟' && sleep 2
-
-		. /home/engells/ktws/scripts/libs/kt_lib_default.sh
-		mnt_sur="/home/engells/mnt/dump1"
-		mnt_tar="/home/engells/mnt/dump3"
-
-		device_sur="/dev/sdb8"
-		device_tar="/dev/sdc8"
-		_bak_data_to_portable
-
-		device_sur="/dev/sdb9"
-		device_tar="/dev/sdc9"
->>>>>>> 7dc64d84764170782caeda80aab802e4722557ef
 		_bak_data_to_portable ;;
 
 	dk1)
@@ -116,28 +88,16 @@ case $way in
 
 		. /home/engells/ktws/scripts/libs/kt_lib_default.sh
 
-		dev_sur="kpl/ktwsb"
-		dev_tar="ppl/ktwsb"
-		mnt_sur="/home/engells/mnt/ktwsb"
-		mnt_tar="/home/engells/mnt/xktwsb"
+		dev_sur="kpl/ktws"
+		dev_tar="xpl/ktws"
+		mnt_sur="/home/engells/ktws"
+		mnt_tar="/home/engells/mnt/xktws"
 		_bak_data_to_local
 
-<<<<<<< HEAD
-		dev_sur="kpl/mmediab"
-		dev_tar="ppl/mmediab"
-		mnt_sur="/home/engells/mnt/mmediab"
-		mnt_tar="/home/engells/mnt/xmmediab"
-=======
-		. /home/engells/ktws/scripts/libs/kt_lib_default.sh
-		mnt_sur="/home/engells/mnt/dump1"
-
-		device_sur="/dev/sdb6"
-		device_tar="xpl/ktws"
-		_bak_data_to_local
-
-		device_sur="/dev/sdb7"
-		device_tar="xpl/mmedia"
->>>>>>> 7dc64d84764170782caeda80aab802e4722557ef
+		dev_sur="kpl/mmedia"
+		dev_tar="xpl/mmedia"
+		mnt_sur="/home/engells/mmedia"
+		mnt_tar="/home/engells/mnt/xmmedia"
 		_bak_data_to_local ;;
 
 	dk2)
@@ -145,14 +105,17 @@ case $way in
 		echo '2秒後開始將資料備份至本地硬碟' && sleep 2
 
 		. /home/engells/ktws/scripts/libs/kt_lib_default.sh
-		mnt_sur="/home/engells/mnt/dump1"
 
-		device_sur="/dev/sdb8"
-		device_tar="xpl/ktwsb"
+		dev_sur="kpl/ktwsb"
+		dev_tar="xpl/ktwsb"
+		mnt_sur="/home/engells/mnt/ktwsb"
+		mnt_tar="/home/engells/mnt/xktwsb"
 		_bak_data_to_local
 
-		device_sur="/dev/sdb9"
-		device_tar="xpl/mmediab"
+		dev_sur="kpl/mmediab"
+		dev_tar="xpl/mmediab"
+		mnt_sur="/home/engells/mnt/mmediab"
+		mnt_tar="/home/engells/mnt/xmmediab"
 		_bak_data_to_local ;;
 
 	*)

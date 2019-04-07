@@ -12,9 +12,17 @@
 # By default this script does nothing.
 
 bash /opt/security/iptables/iptables.rule
-bash /opt/engells/z_myload.sh
+sudo systemctl restart lxc-net
 
-echo "Set firewall and restore log files on $(date)" >> /home/engells/my_boot.log
-systemctl restart lxc-net
+#bash /opt/engells/z_myload.sh
+
+for SUBDIR in z_cache z_downloads z_tmpfs
+do
+	[ -d /tmp/$SUBDIR ] || mkdir /tmp/$SUBDIR
+	chown -R engells:engells /tmp/$SUBDIR
+	chmod 1777 /tmp/$SUBDIR
+done
+
+echo "Something done while booting on $(date)" >> /home/engells/z_boot.log
 
 exit 0

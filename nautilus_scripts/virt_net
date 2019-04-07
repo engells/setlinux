@@ -1,2 +1,7 @@
 #! /bin/bash
+# program: Using to add or remove virtual bridge
+# made by: Engells
+# date: Mar 30, 2019
+# content: 
+
 gnome-terminal -e '/home/engells/ktws/scripts/avails/virt_net.sh'

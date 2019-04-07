@@ -3,6 +3,8 @@
 # to remove some packages
 # cat pkgs.list | grep '^remove' | awk '{ print $2 }'
 
+install_remove	totem	
+
 
 # to add some package repositories
 # cat pkgs.list | grep '^add_repo' | awk '{ print $2 }'
@@ -19,6 +21,8 @@ install_apt	squashfs-tools
 #-- multi media --
 install_apt	mplayer
 install_apt	smplayer
+install_apt	gstreamer1.0-plugins-base
+install_apt	gstreamer1.0-plugins-good
 install_apt	gstreamer1.0-plugins-ugly
 install_apt	gstreamer1.0-plugins-bad
 install_apt	gstreamer1.0-libav
@@ -32,16 +36,12 @@ install_apt	gnome-tweaks
 install_apt	gnome-shell-extensions
 install_apt	gnome-shell-extension-dashtodock 
 install_apt	gnome-shell-extension-system-monitor
-install_apt	bleachbit
+#install_apt	gnome-shell-extension-autohidetopbar
+#install_apt	bleachbit
 install_apt	sysstat
 install_apt	indicator-multiload
--install_apt	libgnomekbd-common
 install_apt	gtkorphan
 install_apt	git
--install_apt	dconf-tools
-?install_apt	dmsetup				# dm-crypt
--install_apt	cryptsetup
--install_apt	ecryptfs-utils
 install_apt	zsh
 install_apt	tmux
 install_apt	exfat-utils
@@ -72,4 +72,5 @@ install_apt	virt-manager
 install_apt	uml-utilities
 install_apt	bridge-utils
 install_apt	kpartx
+install_apt	dosbox
 

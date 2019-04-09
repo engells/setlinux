@@ -9,6 +9,11 @@ set encoding=utf-8
 set nobackup
 set autoindent
 set history=50
-set ruler | set number	" | 字元表示接續下一個設定，如同 bash 的 ; 分隔兩個指令
+set ruler
+set number
 set showcmd
-"set cursorline
+set cursorline
+highlight cursorline cterm=none ctermbg=Black ctermfg=DarkGreen
+set laststatus=2
+set statusline=%#filepath#[%{expand('%:p')}]%#filetype#[%{strlen(&fenc)?&fenc:&enc},\ %{&ff},\ %{strlen(&filetype)?&filetype:'plain'}]\ [%l/%L]\ [%3p%%]
+

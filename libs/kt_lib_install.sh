@@ -121,10 +121,10 @@ _tmux_conf()
 
 _vim_conf()
 {
-	[ -d /home/engells/.vim/conf ] || mkdir -p /home/engells/.vim/conf
+	[ -d /home/engells/.vim/confs ] || mkdir -p /home/engells/.vim/confs
 	cp $cfgDir/exrc* /home/engells/.vim/conf/
-	ln -s /home/engells/.vim/conf/exrc_vim /home/engells/.vimrc
-	ln -s /home/engells/.vim/conf/exrc_gvim /home/engells/.gvimrc
+	ln -s /home/engells/.vim/confs/exrc_vim /home/engells/.vimrc
+	ln -s /home/engells/.vim/confs/exrc_gvim /home/engells/.gvimrc
 
 	mkdir /home/engells/.vim/{autoload,bundle}
 	curl -Sso /home/engells/.vim/autoload/pathogen.vim \

@@ -42,7 +42,7 @@ case $way in
 
 		for mnt_dir in $(ls /media/engells)
 		do
-				sudo umount $mnt_dir
+				sudo umount /media/engells/$mnt_dir
 		done
 		;;
 

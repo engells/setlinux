@@ -3,18 +3,18 @@
 " date: Nov 29, 2012
 " content: highlight configures of vim
 
-hi Comment	term=bold ctermfg=darkcyan
-hi Constant	term=underline ctermfg=Red
-hi Special	term=bold ctermfg=Magenta
-hi Identifier	term=underline ctermfg=cyan
-hi Statement	term=bold ctermfg=Brown
-hi PreProc	term=bold ctermfg=DarkYellow
-hi Type		term=bold ctermfg=DarkGreen
-hi Ignore	ctermfg=white
-hi Error	term=reverse ctermbg=Red ctermfg=White
-hi Todo		term=standout ctermbg=Yellow ctermfg=Red
-hi ErrorMsg	term=reverse ctermbg=Red ctermfg=White
-hi StatusLine	ctermfg=darkblue ctermbg=gray
-hi StatusLineNC	ctermfg=brown ctermbg=darkblue
-hi Search	term=standout ctermbg=Yellow ctermfg=Black
+highlight Comment	term=bold ctermfg=darkcyan
+highlight Constant	term=underline ctermfg=Red
+highlight Special	term=bold ctermfg=Magenta
+highlight Identifier	term=underline ctermfg=cyan
+highlight Statement	term=bold ctermfg=Brown
+highlight PreProc	term=bold ctermfg=DarkYellow
+highlight Type		term=bold ctermfg=DarkGreen
+highlight Ignore	ctermfg=white
+highlight Error		term=reverse ctermbg=Red ctermfg=White
+highlight Todo		term=standout ctermbg=Yellow ctermfg=Red
+highlight ErrorMsg	term=reverse ctermbg=Red ctermfg=White
+highlight StatusLine	ctermfg=darkblue ctermbg=gray
+highlight StatusLineNC	ctermfg=brown ctermbg=darkblue
+highlight Search	term=standout ctermbg=Yellow ctermfg=Black
 

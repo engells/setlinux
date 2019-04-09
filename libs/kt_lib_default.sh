@@ -73,17 +73,17 @@ _clean_bash()
 
 _rm_zfs_mnt_dir()
 {
-	for $zfs_set in $(sudo zfs mount | awk '{ print $1 }' | grep -E 'xpl/')
+	for zfs_set in $(sudo zfs mount | awk '{ print $1 }' | grep -E 'xpl/')
 	do
 		sudo zfs umount $zfs_set 2>/dev/null
 	done
 
-	for $zfs_set in $(sudo zfs mount | awk '{ print $1 }' | grep -E 'zpl/')
+	for zfs_set in $(sudo zfs mount | awk '{ print $1 }' | grep -E 'zpl/')
 	do
 		sudo zfs umount $zfs_set 2>/dev/null
 	done
 
-	for $mnt_dir in xktws xktwsb xmmedia xmmediab zktws zktwsb zmmedia zmmediab
+	for mnt_dir in xktws xktwsb xmmedia xmmediab zktws zktwsb zmmedia zmmediab
 	do
 		sudo rm -rf /home/engells/mnt/$mnt_dir 2>/dev/null
 	done

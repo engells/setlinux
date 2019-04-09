@@ -62,7 +62,8 @@ case $way in
 		dev_tar="/dev/sdc7"
 		mnt_sur="/home/engells/mmedia"
 		mnt_tar="/home/engells/mnt/dump2"
-		_bak_data_to_portable ;;
+		_bak_data_to_portable
+		;;
 
 	dc2)
 
@@ -80,7 +81,8 @@ case $way in
 		dev_tar="/dev/sdc9"
 		mnt_sur="/home/engells/mnt/mmediab"
 		mnt_tar="/home/engells/mnt/dump4"
-		_bak_data_to_portable ;;
+		_bak_data_to_portable
+		;;
 
 	dk1)
 
@@ -98,7 +100,8 @@ case $way in
 		dev_tar="xpl/mmedia"
 		mnt_sur="/home/engells/mmedia"
 		mnt_tar="/home/engells/mnt/xmmedia"
-		_bak_data_to_local ;;
+		_bak_data_to_local 
+		;;
 
 	dk2)
 
@@ -116,7 +119,8 @@ case $way in
 		dev_tar="xpl/mmediab"
 		mnt_sur="/home/engells/mnt/mmediab"
 		mnt_tar="/home/engells/mnt/xmmediab"
-		_bak_data_to_local ;;
+		_bak_data_to_local
+		;;
 
 	*)
 

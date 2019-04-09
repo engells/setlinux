@@ -50,6 +50,7 @@ install_apt	rename
 #-- office utils --
 install_apt	poppler-data
 install_apt	vim
+install_apt	vim-gtk3
 install_apt	fbreader
 install_apt	texlive-full
 #-- locale --

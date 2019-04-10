@@ -3,17 +3,30 @@
 " date: Nov 29, 2012
 " content: shared configures of vim and gvim
 
+" general set
 colorscheme torte
 set nocompatible
-set encoding=utf-8
+set noswapfile
 set nobackup
 set autoindent
 set history=50
+
+" set coding format to utf-8
+set encoding=utf-8
+set fileencoding=utf-8
+set fileformat=unix
+
+" enable cursor line
+set cursorline
+highlight cursorline cterm=none ctermbg=Black ctermfg=DarkGreen
+
+" set up status line
 set ruler
 set number
 set showcmd
-set cursorline
-highlight cursorline cterm=none ctermbg=Black ctermfg=DarkGreen
 set laststatus=2
-set statusline=%#filepath#[%{expand('%:p')}]%#filetype#[%{strlen(&fenc)?&fenc:&enc},\ %{&ff},\ %{strlen(&filetype)?&filetype:'plain'}]\ [%l/%L]\ [%3p%%]
+set statusline=[%l:%c/%L]\ [%3p%%]
+set statusline+=%=
+set statusline+=%#filepath#[%{expand('%:p')}]\ 
+set statusline+=%#filetype#[%{strlen(&fenc)?&fenc:&enc},\ %{&ff},\ %{strlen(&filetype)?&filetype:'plain'}]
 

@@ -1,7 +1,7 @@
 # vim:ts=4
 # program: Using to memo Ubuntu 18.04 installion
 # made by: Engells
-# date: Apr 3, 2019
+# date: Apr 11, 2019
 # content: Just for memo
 
 
@@ -50,7 +50,9 @@
   Chromium Add-on: Script Defender, uBlock, stylus + 自 FireFox 複製 styles
  -設定 SMPlayer 對應之 Mplayer 版本 1.0rc4 ，以及取消 screenshot 功能，Options(M) / Preferences / General / Screenshots
  -設定 Gedit 之佈景主題為 Oblivion，取消自動存檔，及標示游標所在行，字體選 Monaco 13。
-  設定開檔語系：gsettings set org.gnome.gedit.preferences.encodings auto-detected "['UTF-8', 'BIG5', 'GBK', 'GB18030', 'GB2312', 'CURRENT', 'UTF-16']" 或以 dconf-editor 編輯
+ -設定開檔語系：
+    gsettings set org.gnome.gedit.preferences.encodings auto-detected "['UTF-8', 'BIG5', 'GBK', 'GB18030', 'GB2312', 'CURRENT', 'UTF-16']"
+    或以 dconf-editor 編輯
  -設定 Gnome Terminal 之佈景主題為 Gray on black，字體為 Consola 或 Monaco 12 + 顏色 #2E8B57
  -移除 snapd
   *systemctl list-unit-files | grep snap; sudo systemctl disable snap-xxx	# 只停用，不移除 snapd
@@ -64,7 +66,7 @@
   *若上述步驟未解決問題，apt remove --purge alsa-base pulseaudio，apt install alsa-base pavucontrol，killall pulseaudio, rm -r ~/.config/pulse/*
   *參考指令 aplay -l，alsamixer，sudo alsa force-reload
  -SWAP 缺 RESUME 參數
-  *sudoedit /etc/initramfs-tools/conf.d/resume，加入 RESUME=UUID=02ea9a0d-7bb4-48a5-836b-8cdc0c50a9d7
+  *sudoedit /etc/initramfs-tools/conf.d/resume，加入 RESUME=UUID=463f3378-766c-48e2-ad51-79dbfa344a72
   *sudo update-initramfs -u -k all，重新產生 initramfs image
  -recently-used.xbel 權限設定異常
   *lsof | grep recently-used.xbel; sudo chattr -i ~/.local/share/recently-used.xbel

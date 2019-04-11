@@ -174,8 +174,9 @@ _set_zhfonts()
 _ebable_sysrq()
 {
 	sudo sed -i '$a kernel.sysrq = 1' /etc/sysctl.d/10-console-messages.conf
-	#sudo sed -i '$a kernel.sysrq = 1' /etc/sysctl.conf
-	#sudo sed -i '$a kernel.sysrq = 1' /etc/sysctl.d/10-magic-sysrq.conf. # for 12.10 and later
+	sudo sed -i '/kernel.sysrq = 176/s/176/1/' /etc/sysctl.d/10-magic-sysrq.conf # for 12.10 and later
+	sudo sed -i '/kernel.sysrq=1/s/#//' /etc/sysctl.d/99-sysctl.conf
+	sudo sed -i '/kernel.sysrq=1/s/#//' /etc/sysctl.conf
 }
 
 _disable_automount()

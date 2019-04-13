@@ -83,7 +83,7 @@ _rm_zfs_mnt_dir()
 		sudo zfs umount $zfs_set 2>/dev/null
 	done
 
-	for mnt_dir in xktws xktwsb xmmedia xmmediab zktws zktwsb zmmedia zmmediab
+	for mnt_dir in xktws xktwsb xmmedia xmmediab xvir zktws zktwsb zmmedia zmmediab zvir
 	do
 		sudo rm -rf /home/engells/mnt/$mnt_dir 2>/dev/null
 	done

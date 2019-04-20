@@ -26,6 +26,7 @@ install_apt	gstreamer1.0-plugins-good
 install_apt	gstreamer1.0-plugins-ugly
 install_apt	gstreamer1.0-plugins-bad
 install_apt	gstreamer1.0-libav
+install_apt	ffmpeg
 install_apt	gnash
 install_apt	geeqie
 #-- internet utils --
@@ -42,6 +43,8 @@ install_apt	sysstat
 install_apt	indicator-multiload
 install_apt	gtkorphan
 install_apt	git
+install_apt	dmsetup
+install_apt	cryptsetup
 install_apt	zsh
 install_apt	tmux
 install_apt	exfat-utils
@@ -52,7 +55,7 @@ install_apt	poppler-data
 install_apt	vim
 install_apt	vim-gtk3
 install_apt	fbreader
-install_apt	texlive-full
+#install_apt	texlive-full
 #-- locale --
 install_apt	language-pack-zh-hant
 install_apt	ibus-chewing
@@ -68,6 +71,7 @@ install_apt	lxc
 install_apt	systemd
 install_apt	uidmap
 install_apt	qemu-kvm
+install_apt	qemu-system-arm
 install_apt	ovmf
 install_apt	virt-manager
 install_apt	uml-utilities

@@ -71,7 +71,7 @@ install_apt	git
 install_apt	dconf-tools
 install_apt	dmsetup				# dm-crypt
 install_apt	cryptsetup
-install_apt	ecryptfs-utils
+install_apt	ecryptfs-utils			# remove from Ubuntu 18.04?, repalce by fscrypt
 install_apt	gtk2-engines-pixbuf		# 解決 Gtk: Unable to locate theme engine in module_path: "pixmap"
 install_apt	zsh
 install_apt	tmux				# terminal multiplexer
@@ -85,7 +85,6 @@ install_apt	lo-menubar
 install_apt	sqlite3
 install_apt	fbreader			# epub
 install_apt	texlive-full
-install_apt	git
 #-- locale --
 install_apt	language-pack-zh-hant
 install_apt	ibus-chewing

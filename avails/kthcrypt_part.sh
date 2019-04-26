@@ -7,8 +7,8 @@
 
 _mount_crypt()
 {
-	sudo modprobe aes
-	sudo modprobe dm-crypt
+	#sudo modprobe aes
+	#sudo modprobe dm-crypt
 	sudo losetup $dev_name $img_name
 	sudo cryptsetup luksOpen $dev_name $crypt_name
 	[ -d $dir_mnt ] || sudo mkdir -p $dir_mnt
@@ -22,8 +22,8 @@ _umount_crypt()
 	sudo cryptsetup luksClose $crypt_name
 	sudo losetup -d $dev_name
 	sudo rmdir $dir_mnt
-	sudo modprobe -r dm-crypt
-	sudo modprobe -r aes
+	#sudo modprobe -r dm-crypt
+	#sudo modprobe -r aes
 }
 
 #-建立變數--------------

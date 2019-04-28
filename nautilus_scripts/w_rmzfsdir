@@ -1,0 +1,7 @@
+#!/bin/bash
+# program: Using to umount zfs mount point folders
+# made by: Engells
+# date: Apr 27, 2019
+# content: 
+
+gnome-terminal -e '/home/engells/ktws/scripts/avails/nautilus_lunch.sh rzd'

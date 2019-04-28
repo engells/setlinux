@@ -40,11 +40,11 @@ _bak_data_to_local()
 
 	echo "mounting source device ..." && sleep 2
 	sudo zpool list | grep $pool_sur 1>/dev/null 2>/dev/null || sudo zpool import -d /dev/disk/by-id $pool_sur
-	sudo zfs mount | grep $dev_sur 1>/dev/null 2>/dev/null || sudo zfs mount $dev_sur # echo "---"
+	sudo zfs mount | grep $dev_sur 1>/dev/null 2>/dev/null || sudo zfs mount $dev_sur
 
 	echo "mounting target device ..." && sleep 2
 	sudo zpool list | grep $pool_tar 1>/dev/null 2>/dev/null || sudo zpool import -d /dev/disk/by-id $pool_tar
-	sudo zfs mount | grep $dev_tar 1>/dev/null 2>/dev/null || sudo zfs mount $dev_tar #echo "---"
+	sudo zfs mount | grep $dev_tar 1>/dev/null 2>/dev/null || sudo zfs mount $dev_tar
 
 	echo "empting target device ..." && sleep 2
 	cd $mnt_tar && _empty_dev_tar
@@ -73,19 +73,21 @@ _clean_bash()
 
 _rm_zfs_mnt_dir()
 {
-	for zfs_set in $(sudo zfs mount | awk '{ print $1 }' | grep -E 'xpl/')
+	for zfs_set in ktwsb mmediab
+	do
+		sudo zfs umount kpl/$zfs_set 2>/dev/null
+	done
+
+	for zfs_set in $(sudo zfs mount | awk '{ print $1 }' | grep -E 'xpl|zpl')
 	do
 		sudo zfs umount $zfs_set 2>/dev/null
 	done
 
-	for zfs_set in $(sudo zfs mount | awk '{ print $1 }' | grep -E 'zpl/')
-	do
-		sudo zfs umount $zfs_set 2>/dev/null
-	done
-
-	for mnt_dir in xktws xktwsb xmmedia xmmediab xvir zktws zktwsb zmmedia zmmediab zvir
+	for mnt_dir in ktws mmedia ktwsb mmediab virt
 	do
 		sudo rm -rf /home/engells/mnt/$mnt_dir 2>/dev/null
+		sudo rm -rf /home/engells/mnt/x$mnt_dir 2>/dev/null
+		sudo rm -rf /home/engells/mnt/z$mnt_dir 2>/dev/null
 	done
 }
 

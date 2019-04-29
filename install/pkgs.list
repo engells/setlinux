@@ -4,6 +4,7 @@
 # cat pkgs.list | grep '^remove' | awk '{ print $2 }'
 
 install_remove	totem	
+install_remove	grub-pc
 
 
 # to add some package repositories
@@ -33,6 +34,8 @@ install_apt	geeqie
 install_apt	chromium-browser
 install_apt	curl
 #-- system and desktop --
+install_apt	grub-efi-amd64-signed
+install_apt	shim-signed
 install_apt	gnome-tweaks
 install_apt	gnome-shell-extensions
 install_apt	gnome-shell-extension-dashtodock 

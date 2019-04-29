@@ -73,17 +73,20 @@ _clean_bash()
 
 _rm_zfs_mnt_dir()
 {
+	echo '卸載 kpl dataset'
 	for zfs_set in ktwsb mmediab
 	do
 		sudo zfs umount kpl/$zfs_set 2>/dev/null
 	done
 
+	echo '卸載 xpl 以及 zpl dataset'
 	for zfs_set in $(sudo zfs mount | awk '{ print $1 }' | grep -E 'xpl|zpl')
 	do
 		sudo zfs umount $zfs_set 2>/dev/null
 	done
 
-	for mnt_dir in ktws mmedia ktwsb mmediab virt
+	echo '2 秒後開始移除 dataset 掛載點' && sleep 2
+	for mnt_dir in ktws mmedia ktwsb mmediab virt warehouse
 	do
 		sudo rm -rf /home/engells/mnt/$mnt_dir 2>/dev/null
 		sudo rm -rf /home/engells/mnt/x$mnt_dir 2>/dev/null

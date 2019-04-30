@@ -248,10 +248,10 @@ _shortcut_utils()
 _lxc_conf()
 {
 	[ -d "/var/lib/lxc" ] && sudo rm -R /var/lib/lxc
-	sudo ln -s /home/lxcd /var/lib/lxc
+	sudo ln -s /zvir/lxcd /var/lib/lxc
 
 	[ -d "/home/engells/.local/share/lxc" ] && rm -R /home/engells/.local/share/lxc
-	ln -s /home/lxcu ~/.local/share/lxc
+	ln -s /zvir/lxcu ~/.local/share/lxc
 
 	[ -f "/etc/lxc/lxc-usernet" ] && sudo mv /etc/lxc/lxc-usernet /etc/lxc/lxc-usernet.bak
 	sudo cp $cfgDir/lxc_usernet /etc/lxc/lxc-usernet

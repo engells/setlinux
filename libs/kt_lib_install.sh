@@ -261,6 +261,6 @@ _lxc_conf()
 
 	chmod a+x ~/.local
 	chmod a+x ~/.local/share
-	chmod a+x /home/lxcu
+	chmod a+x /zvir/lxcu
 }
 

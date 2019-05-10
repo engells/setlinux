@@ -47,10 +47,10 @@ _bak_data_to_local()
 	sudo zfs mount | grep $dev_tar 1>/dev/null 2>/dev/null || sudo zfs mount $dev_tar
 
 	echo "empting target device ..." && sleep 2
-	cd $mnt_tar && _empty_dev_tar
+	cd $mnt_tar && _empty_dev_tar && sudo chown $(whoami):$(whoami) -R $mnt_tar
 
 	echo "dumping from source device to target device ..." && sleep 2
-	cd $mnt_sur && cp -av . $mnt_tar
+	cd $mnt_sur && sudo rsync -avAHX . $mnt_tar
 }
 
 _clean_apt()

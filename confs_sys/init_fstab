@@ -7,6 +7,6 @@
 # <file system>	<mount point>           <type>  <options>            <dump> <pass>
 tmp             /tmp                    tmpfs   defaults,mode=1777      0   0
 log             /var/log                tmpfs   defaults,mode=1777      0   0
-download        /home/engells/downloads tmpfs   defaults,mode=1777      0   0
-cache           /home/engells/.cache/   tmpfs   defaults,mode=1777      0   0
+#download       /home/engells/downloads tmpfs   defaults,mode=1777      0   0
+#cache          /home/engells/.cache/   tmpfs   defaults,mode=1777      0   0
 UUID=6F3B-0181  /boot/efi               vfat    utf8,umask=007,gid=46   0   1

@@ -23,3 +23,4 @@ tmux select-pane -t 0
 #gnome-terminal --geometry=80x25+10+10			# 寬度x長度x左側偏移x上方偏移
 #gnome-terminal -e "command 1" -e "command 2"
 #gnome-terminal -x "command"				# 開啟終端機，並執行指令，-x 參數只能使用一次，-e 參數可使用多次
+#script -qfc tmux /dev/null

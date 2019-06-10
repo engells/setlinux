@@ -101,15 +101,16 @@ _nautilus_scripts()
 
 _bash_conf()
 {
-	cp $cfgDir/0_bash_profile /home/engells/.bash_profile
-	cp $cfgDir/0_bashrc /home/engells/.bashrc
+	cp $cfgDir/shell_bash_profile /home/engells/.bash_profile
+	cp $cfgDir/shell_bashrc /home/engells/.bashrc
+	cp $cfgDir/shell_bashrc /home/engells/.config/z_my_conf/shell_basic
 	. /home/engells/.bashrc
 }
 
 _zsh_conf()
 {
 	git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
-	cp $cfgDir/0_zshrc ~/.zshrc
+	cp $cfgDir/shell_zshrc ~/.zshrc
 	sudo chsh -s $(which zsh) $(whoami)
 }
 

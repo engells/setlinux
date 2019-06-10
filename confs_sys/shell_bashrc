@@ -1,0 +1,9 @@
+# This profile is for my customization
+# This file is at ~/.bashrc
+# vim:ts=2
+
+source ~/.config/z_my_confs/shell_basic
+source ~/.config/z_my_confs/shell_alias
+
+# 設定提示符號
+PS1='[\u@\h \W]\$ '

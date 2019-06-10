@@ -1,0 +1,6 @@
+alias dfh='clear; df -h'
+alias lstart='lxc-start'
+alias lstop='lxc-stop'
+alias sshp='ssh -p62 -YC4'
+alias sshpu18b='ssh -p62 -YC4 admit@172.25.3.11'
+alias vimsd='vim -S ~/.vim/sessions/default.vim'

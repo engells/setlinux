@@ -46,7 +46,7 @@
  -以 gnome-tweaks 程式選定佈景主題
  -以 gnome-tweaks 程式選定 STHeiti 為系統字型，注意字型檔的權限
  -進入 Firefox 及 Chromium 設定首頁、字型及下載位置等，並設定 Cache 至 tmpfs
-  Firefox Add-on: NoScript, uBlock, stylus, Flash Video Downloader
+  Firefox Add-on: HTTPS Everyehere, Privacy Badger, NoScript, uBlock, stylus, Video DownloadHelper
   Chromium Add-on: Script Defender, uBlock, stylus + 自 FireFox 複製 styles
  -設定 SMPlayer 對應之 Mplayer 版本 1.0rc4 ，以及取消 screenshot 功能，Options(M) / Preferences / General / Screenshots
  -設定 Gedit 之佈景主題為 Oblivion，取消自動存檔，及標示游標所在行，字體選 Monaco 13。

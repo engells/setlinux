@@ -1,0 +1,13 @@
+" vim:tabstop=8
+" made by: Engells
+" date: Feb 10, 2021
+" content: lunched configures of coding pythob in vim
+
+au BufNewFile,BufRead *.py
+    \ set tabstop=4
+    \ set softtabstop=4
+    \ set shiftwidth=4
+    \ set textwidth=79
+    \ set expandtab
+    \ set autoindent
+    \ set fileformat=unix

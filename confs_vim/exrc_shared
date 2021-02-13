@@ -8,17 +8,22 @@ colorscheme torte
 set nocompatible
 set noswapfile
 set nobackup
-set autoindent
+"set autoindent
 set history=50
+
+" << 和 >> 指令移動寬度 4，backspace 一次刪除 4 個空格，新行自動縮進
+" tab 寬度為 4，雙字寬度顯示以顯示特殊字元，tab 轉換為空格
+set shiftwidth=4 
+set softtabstop=4 
+set smartindent 
+set tabstop=4 
+set ambiwidth=double
+set expandtab
 
 " set coding format to utf-8
 set encoding=utf-8
 set fileencoding=utf-8
 set fileformat=unix
-
-" enable cursor line
-set cursorline
-highlight cursorline cterm=none ctermbg=Black ctermfg=DarkGreen
 
 " set up status line
 set ruler
@@ -29,4 +34,22 @@ set statusline=[%l:%c/%L]\ [%3p%%]
 set statusline+=%=
 set statusline+=%#filepath#[%{expand('%:p')}]\ 
 set statusline+=%#filetype#[%{strlen(&fenc)?&fenc:&enc},\ %{&ff},\ %{strlen(&filetype)?&filetype:'plain'}]
+
+" enable cursor line
+set cursorline
+highlight cursorline cterm=none ctermbg=Black ctermfg=DarkGreen
+
+" always show tab line
+set showtabline=2
+
+" open a new window below or right current
+set splitbelow
+set splitright
+
+" setting about search: highligt search, ignore upper or lower case, increasing search mode
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+
 

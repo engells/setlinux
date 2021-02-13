@@ -3,16 +3,17 @@
 " date: Jan 31, 2017
 " content: lunched configures of vim
 
-source /home/engells/.vim/confs/exrc_shared
-"source /home/engells/.vim/confs/exrc_vim_plug_add
-"source /home/engells/.vim/confs/exrc_vim_main
-source /home/engells/.vim/confs/exrc_vim_kmap
-"source /home/engells/.vim/confs/exrc_vim_hl
-"source /home/engells/.vim/confs/exrc_vim_plug_airline
-"source /home/engells/.vim/confs/exrc_vim_plug_ycm
+source $HOME/.vim/confs/exrc_shared
+"source $HOME/.vim/confs/exrc_vim_plug_add
+"source $HOME/.vim/confs/exrc_vim_main
+source $HOME/.vim/confs/exrc_vim_kmap
+"source $HOME/.vim/confs/exrc_vim_hl
+"source $HOME/.vim/confs/exrc_vim_plug_airline
+"source $HOME/.vim/confs/exrc_vim_plug_ycm
+"source $HOME/.vim/confs/exrc_theme_onedark
 
 " memo for load many configure files
-"for CFG_Branch in split(glob('~/.vim/conf/*.vim'), '\n')
-"	exe 'source' CFG_Branch
+"for CFG_Branch in split(globpath("$HOME/.vim/confs/","*"), '\n')
+"	exec 'source' CFG_Branch
 "endfor
 

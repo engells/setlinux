@@ -1,0 +1,12 @@
+#!/bin/sh -e
+
+for SUBDIR in z_cache z_downloads z_tmpfs
+do
+        [ -d /tmp/$SUBDIR ] || mkdir /tmp/$SUBDIR
+        chown -R admit:admit /tmp/$SUBDIR
+        chmod 1777 /tmp/$SUBDIR
+done
+
+echo "Something done while booting on $(date)" >> /home/engells/z_boot.log
+
+exit 0

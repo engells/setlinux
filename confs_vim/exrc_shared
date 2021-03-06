@@ -5,6 +5,7 @@
 
 " general set
 colorscheme torte
+"colorscheme nord
 set nocompatible
 set noswapfile
 set nobackup
@@ -38,6 +39,7 @@ set statusline+=%#filetype#[%{strlen(&fenc)?&fenc:&enc},\ %{&ff},\ %{strlen(&fil
 " enable cursor line
 set cursorline
 highlight cursorline cterm=none ctermbg=Black ctermfg=DarkGreen
+highlight matchparen ctermfg=cyan guifg=DarkCyan ctermbg=black guibg=white
 
 " always show tab line
 set showtabline=2

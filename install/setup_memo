@@ -54,7 +54,7 @@
  -設定開檔語系：
     gsettings set org.gnome.gedit.preferences.encodings auto-detected "['UTF-8', 'BIG5', 'GBK', 'GB18030', 'GB2312', 'CURRENT', 'UTF-16']"
     或以 dconf-editor 編輯
- -設定 Gnome Terminal 之佈景主題為 Gray on black，字體為 Consola 或 Monaco 12 + 顏色 #2E8B57
+ -設定 Gnome Terminal 之佈景主題為 Gray on black，字體為 Consola 或 Monaco 12 + 顏色 #2E8B57，背景色為 #101010
  -移除 snapd
   *systemctl list-unit-files | grep snap; sudo systemctl disable snap-xxx	# 只停用，不移除 snapd
   *sudo apt remove --purge gnome-software-plugin-snap	# 只在軟體中心移除 snap 來源軟體清單，但保留 snapd

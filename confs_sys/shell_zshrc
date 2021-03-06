@@ -1,13 +1,18 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-export ZSH=/home/engells/.oh-my-zsh
+export ZSH=$HOME/.local/share/oh_my_zsh
+export ZSH_CUSTOM=$ZSH/custom
+export ZSH_CACHE_DIR=$ZSH/cache
+#export ZSH=$HOME/.oh-my-zsh
 
 ZSH_THEME="robbyrussell"
+#ZSH_THEME="powerlevel10k/powerlevel10k"
 
 plugins=(git)
 
-source $ZSH/oh-my-zsh.sh
+[[ ! -f $HOME/.config/z_my_confs/shell_basic ]] || source $HOME/.config/z_my_confs/shell_basic
+[[ ! -f $HOME/.config/z_my_confs/shell_alias ]] || source $HOME/.config/z_my_confs/shell_alias
 
-source ~/.config/z_my_confs/shell_basic
-source ~/.config/z_my_confs/shell_alias
+[[ ! -f $ZSH/oh-my-zsh.sh ]] || source $ZSH/oh-my-zsh.sh
+

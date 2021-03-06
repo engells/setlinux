@@ -1,0 +1,13 @@
+[Unit]
+Description=RFKill Unblock WiFi Devices
+Requires=wpa_supplicant.service
+After=wpa_supplicant.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/rfkill unblock wifi
+ExecStop=
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,128 @@
+  !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ !!  RXVT-unicode setting  !!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+!! 視窗標題名稱
+URxvt.title: URxvrt
+!URxvt.title: lepoke-rxvt-unicode
+
+!! 加速 urxvt 啟動
+URxvt.preeditType: Root
+
+!! 輸入法
+Rxvt.multichar_encoding: utf-8
+Rxvt.imLocale: zh_TW.UTF-8
+URxvt.inputMethod: ibus
+URxvt.saveLines: 500
+
+!! 字型
+Xft.dpi:96
+Xft.hinting: 1
+Xft.hintstyle: hintslight
+Xft.antialias: 1
+Xft.rgba: rgb
+URxvt.font: xft:Consolas:size=15:style=Regular:antialias=true,xft:STHeiti TC:size=15:antialias=True
+URxvt.boldfont: xft:Consolas:size=15:style=Bold:antialias=true,xft:STHeiti TC:size=15:antialias=True
+!URxvt.letterSpace: -1
+
+!! 視窗大小
+URxvt.geometry: 90x25+180+200
+
+!! 游標
+URxvt.cursorBlink: True
+URxvt.cursorUnderline： True
+
+!! 邊框
+URxvt.borderLess: False
+
+!! 透明度
+URxvt.inheritPixmap: True
+URxvt.tintColor: grey
+URxvt.shading: 80
+
+!! URL
+!URxvt.urlLauncher: firefox
+!URxvt.matcher.button: 1
+
+!! 標籤
+URxvt.perl-ext-common: default,tabbed
+URxvt.tabbed.tab-fg: 12
+URxvt.tabbed.tab-bg: 0
+URxvt.tabbed.tabbar-fg: 4
+
+!! 控制條
+URxvt.scrollBar:False
+URxvt.scrollBar_right:True
+URxvt.scrollBar_floating:False
+URxvt.scrollstyle:plain
+URxvt.saveLines:5000
+
+!! 畫面移動
+URxvt.mouseWheelScrollPage: True
+URxvt.scrollTtyOutput: False
+URxvt.scrollWithBuffer: True
+URxvt.scrollTtyKeypress: True
+
+!! ctrl+shift+c / v 的複製貼上
+!! https://unix.stackexchange.com/questions/444773/how-to-disable-the-ctrlshift-binding-iso-14755-in-urxvt
+!! https://unix.stackexchange.com/questions/294337/rebinding-ctrl-alt-cv-to-ctrl-shift-cv-in-urxvt-9-20
+URxvt.iso14755: false
+URxvt.iso14755_52: false
+
+!! 要求全名及大寫的 C / V,否則無效
+!! Shift / Control 順序無關
+URxvt.keysym.Shift-Control-V: eval:paste_clipboard
+URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
+
+!! 禁用預設的複製貼上
+URxvt.keysym.Control-Meta-c: builtin-string:
+URxvt.keysym.Control-Meta-v: builtin-string:
+
+!! 顏色
+URxvt.depth: 32
+URxvt.background: [60]Black
+URxvt.foreground: LightGray
+URxvt.colorBD: Gray95
+URxvt.colorUL: Green
+
+!! 顏色重定義
+!Black
+URxvt.color0: #000000
+URxvt.color8: #555753
+!Red
+URxvt.color1: #CC0000
+URxvt.color9: #EF2929
+!Green
+URxvt.color2: #4E9A06
+URxvt.color10: #8AE234
+!Yellow
+URxvt.color3: #C4A000
+URxvt.color11: #FCE94F
+!Blue
+URxvt.color4: #3465A4
+URxvt.color12: #729FCF
+!Magenta
+URxvt.color5: #75507B
+URxvt.color13: #AD7FA8
+!Cyan
+URxvt.color6: #06989A
+URxvt.color14: #34E2E2
+!White
+URxvt.color7: #D3D7CF
+URxvt.color15: #EEEEEC
+
+!URxvt.color1:Red2
+!URxvt.color4:RoyalBlue
+!URxvt.color5:Magenta2
+!URxvt.color8:Gray50
+!URxvt.color10:Green2
+!URxvt.color12:DodgerBlue
+!URxvt.color14:Cyan2
+!URxvt.color15:Gray95
+
+! Disable Perl extension
+! If you do not use the Perl extension features, you can improve the security
+! and speed by disabling Perl extensions completely. 
+!URxvt.perl-ext:
+!URxvt.perl-ext-common:
+

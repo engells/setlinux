@@ -1,0 +1,45 @@
+# This profile is for my customization
+# This file is at $HOME/.confog/z_my_config
+# vim:ts=2
+
+
+# status-line general
+set-option -g status-position bottom
+set-option -g status-justify left
+set-option -g status-interval 15  # 15 sec refresh
+set-option -g status-bg black
+set-option -g status-fg white
+#set-option -g status-style bg=colour235,fg=colour75
+#colour https://unix.stackexchange.com/questions/308094/print-a-256-color-test-pattern-in-the-terminal
+
+# status-left-line
+set-option -g status-left-length 15
+set-option -g status-left "#[fg=white,bg=blue] > #S < #[default] |"         # session-name
+#set-option -g status-left "#[fg=white,bg=blue] > #I #W < #[default] |"     # 0:bash
+
+# status-right-line
+set-option -g status-right-length 55
+set-option -g status-right "#[fg=red,bright][ #[fg=cyan]#H #[fg=red]]#[default] #[fg=yellow,bright]- %Y.%m.%d #[fg=green]%H:%M" #[default]#[fg=magenta,bright](load: #(cat /proc/loadavg | cut -d \" \" -f 1,2,3))#[default]"
+
+# window-status general
+#set-window-option -g pane-base-index 0
+set-window-option -g monitor-activity on
+set-window-option -g clock-mode-style 24
+set-window-option -g clock-mode-colour colour184
+set-window-option -g window-status-separator " "
+
+# window-status
+set-window-option -g window-status-style fg=colour99
+set-window-option -g window-status-format "(#I:#{=10:pane_current_command}:#F)"
+
+# window-status-current
+set-window-option -g window-status-current-style bg=colour245,fg=colour88
+set-window-option -g window-status-current-format "(#I:#{=10:pane_current_command}:#F)"
+#set-window-option -g window-status-current-fg colour88
+#set-window-option -g window-status-current-bg colour245
+#set-window-option -g window-status-current-attr default # bright
+
+# window-status-activity
+set-window-option -g window-status-activity-style fg=yellow,blink
+
+

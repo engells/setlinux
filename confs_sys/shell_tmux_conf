@@ -1,192 +1,51 @@
-# example: /usr/share/doc/tmux/examples/
-# {{{ screen-keys.conf
-# $Id: screen-keys.conf,v 1.7 2010/07/31 11:39:13 nicm Exp $
-#
-# By Nicholas Marriott. Public domain.
-#
-# This configuration file binds many of the common GNU screen key bindings to
-# appropriate tmux key bindings. Note that for some key bindings there is no
-# tmux analogue and also that this set omits binding some commands available in
-# tmux but not in screen.
-#
-# Note this is only a selection of key bindings and they are in addition to the
-# normal tmux key bindings. This is intended as an example not as to be used
-# as-is.
+# This profile is for my customization
+# This file is at $HOME
+# vim:ts=2
+# example: /usr/share/doc/tmux/examples/, by Nicholas Marriott. Public domain.
 
-# set Zsh as default Tmux shell
-set-option -g default-shell /bin/zsh
 
-# Set the prefix to ^A.
+# 256 colors, in case to set "tmux -2"
+set-option -g default-terminal "screen-256color"
+set-option -g display-time 3000
+
+# set the prefix to ^A.
 unbind C-b
 set -g prefix ^A
 bind a send-prefix
 
-# Bind appropriate commands similar to screen.
-# lockscreen ^X x
-unbind ^X
-bind ^X lock-server
-unbind x
-bind x lock-server
+# vi-style controls for copy mode
+setw -g mode-keys vi
 
-# screen ^C c
-unbind ^C
-bind ^C new-window
-# bind c
-bind c new-window
+# bind : to command-prompt like vim
+bind : command-prompt
+
+# bind a reload key
+#bind R source-file ~/.tmux.conf ; display-message "Config reloaded.."
+#bind r source-file ${HOME}/.tmux.conf \; display-message "source-file reloaded"
+
+# set Zsh as default Tmux shell
+set-option -g default-shell /bin/zsh
 
 # detach ^D d
 unbind ^D
 bind ^D detach
 
-# displays *
-unbind *
-bind * list-clients
+# window and panel # start with 1
+set -g base-index 1
+set -g pane-base-index 1
 
-# next ^@ ^N sp n
-unbind ^@
-bind ^@ next-window
-unbind ^N
-bind ^N next-window
-unbind " "
-bind " " next-window
-unbind n
-bind n next-window
+source-file $HOME/.config/z_my_confs/tmux_conf_apperance
+source-file $HOME/.config/z_my_confs/tmux_conf_panel
+source-file $HOME/.config/z_my_confs/tmux_conf_window
+source-file $HOME/.config/z_my_confs/tmux_conf_z_others
 
-# title A
-unbind A
-bind A command-prompt "rename-window %%"
 
-# other ^A
-unbind ^A
-bind ^A last-window
+## memo 
+##----------
+##  set-option -s       # sever option
+##  set-option          # session option
+##  set-window-option   # window option
+##  set-option -g       # global option
+##  set-option -g status-position top
 
-# prev ^H ^P p ^?
-unbind ^H
-bind ^H previous-window
-unbind ^P
-bind ^P previous-window
-unbind p
-bind p previous-window
-unbind BSpace
-bind BSpace previous-window
-
-# windows ^W w
-unbind ^W
-bind ^W list-windows
-unbind w
-bind w list-windows
-
-# quit \
-unbind \
-bind \ confirm-before "kill-server"
-
-# kill K k
-unbind K
-bind K confirm-before "kill-window"
-unbind k
-bind k confirm-before "kill-window"
-
-# redisplay ^L l
-unbind ^L
-bind ^L refresh-client
-unbind l
-bind l refresh-client
-
-# split -v |
-unbind |
-bind | split-window
-
-# :kB: focus up
-unbind Tab
-bind Tab select-pane -t:.+
-unbind BTab
-bind BTab select-pane -t:.-
-
-# " windowlist -b
-unbind '"'
-bind '"' choose-window
-# }}}
-# {{{ vim-keys.conf
-# $Id: vim-keys.conf,v 1.2 2010/09/18 09:36:15 nicm Exp $
-#
-# vim-keys.conf, v1.2 2010/09/12
-#
-# By Daniel Thau.  Public domain.
-#
-# This configuration file binds many vi- and vim-like bindings to the
-# appropriate tmux key bindings.  Note that for many key bindings there is no
-# tmux analogue.  This is intended for tmux 1.3, which handles pane selection
-# differently from the previous versions
-
-# split windows like vim
-# vim's definition of a horizontal/vertical split is reversed from tmux's
-bind s split-window -v
-bind v split-window -h
-
-# move around panes with hjkl, as one would in vim after pressing ctrl-w
-bind h select-pane -L
-bind j select-pane -D
-bind k select-pane -U
-bind l select-pane -R
-
-# resize panes like vim
-# feel free to change the "1" to however many lines you want to resize by, only
-# one at a time can be slow
-bind < resize-pane -L 1
-bind > resize-pane -R 1
-bind - resize-pane -D 1
-bind + resize-pane -U 1
-
-# bind : to command-prompt like vim
-# this is the default in tmux already
-bind : command-prompt
-
-# vi-style controls for copy mode
-setw -g mode-keys vi
-# }}}
-
-# bind a reload key
-bind R source-file ~/.tmux.conf ; display-message "Config reloaded.."
-
-set-option -g default-terminal "screen-256color" # + "tmux -2" => 256 color
-set-option -g display-time 3000
-
-# status-line
-set-option -g status-position bottom
-set-option -g status-justify left
-set-option -g status-interval 15                                           # 15 sec refresh
-set-option -g status-bg black
-set-option -g status-fg white
-#set-option -g status-style bg=colour235,fg=colour75
-#colour https://unix.stackexchange.com/questions/308094/print-a-256-color-test-pattern-in-the-terminal
-
-# status-left-line
-set-option -g status-left-length 15
-set-option -g status-left "#[fg=white,bg=blue] > #S < #[default] |"         # session-name
-#set-option -g status-left "#[fg=white,bg=blue] > #I #W < #[default] |"     # 0:bash
-
-# status-right-line
-set-option -g status-right-length 55
-set-option -g status-right "#[fg=red,bright][ #[fg=cyan]#H #[fg=red]]#[default] #[fg=yellow,bright]- %Y.%m.%d #[fg=green]%H:%M" #[default]#[fg=magenta,bright](load: #(cat /proc/loadavg | cut -d \" \" -f 1,2,3))#[default]"
-
-# window-status general option
-set-window-option -g pane-base-index 0
-set-window-option -g monitor-activity on
-set-window-option -g clock-mode-style 24
-set-window-option -g clock-mode-colour colour184
-set-window-option -g window-status-separator " "
-
-# window-status
-set-window-option -g window-status-style fg=colour99
-set-window-option -g window-status-format "(#I:#{=10:pane_current_command}:#F)"
-
-# window-status-current
-set-window-option -g window-status-current-style bg=colour245,fg=colour88
-set-window-option -g window-status-current-format "(#I:#{=10:pane_current_command}:#F)"
-#set-window-option -g window-status-current-fg colour88
-#set-window-option -g window-status-current-bg colour245
-#set-window-option -g window-status-current-attr default # bright
-
-# window-status-activity
-set-window-option -g window-status-activity-style fg=yellow,blink
 

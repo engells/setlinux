@@ -1,0 +1,31 @@
+# This profile is for my customization
+# This file is at ~/.confog/z_my_config
+# vim:ts=2
+
+# 設定umask
+umask 022
+
+# 設定不存入歷史指令檔的指令
+export HISTIGNORE=shutdown:exit:df:clear:\&
+
+# 不紀錄重複指令
+HISTCONTROL=ignoredups:ignorespace
+
+# 設定路徑，加入~/ktws/scripts
+#if [ ! $(echo $PATH | grep "$HOME/mnt/scripts") ] ; then export PATH=$HOME/mnt/scripts:$PATH ; fi
+[[ $(echo $PATH | grep "$HOME/mnt/scripts") ]] && export PATH=$HOME/mnt/scripts:$PATH
+
+# 設定提示符號，與 oh my zsh 衝突，停用
+#PS1='[\u@\h \W]\$ '
+#PS1='\033[01;32m\]\u@\h \033[01;34m\]\W\033[0m\]\$ '
+
+# 設定彩色顯示 ls 指令結果
+alias ls='ls --color=auto'
+alias ll='ls -lh'
+alias la='ls -alh'
+
+# 設定 tmuxifier
+[[ -s "$HOME/.tmuxifier/init.sh" ]] && source "$HOME/.tmuxifier/init.sh"
+export EDITOR=vim
+#export TERM="xterm-256color" # 設定 tmux 256 色
+

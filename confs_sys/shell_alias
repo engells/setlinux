@@ -1,6 +1,25 @@
+# This profile is for my customed alias
+# This file is at ~/.confog/z_my_config
+# vim:ts=2
+
+# disk storage
 alias dfh='clear; df -h'
-alias lstart='lxc-start'
-alias lstop='lxc-stop'
+alias dfm='clear; df -m'
+
+# lxc container
+alias lst='lxc-start'
+alias lsp='lxc-stop'
 alias sshp='ssh -p62 -YC4'
 alias sshpu18b='ssh -p62 -YC4 admit@172.25.3.11'
+alias sshpu18p='ssh -p62 -YC4 admit@172.25.3.12'
+alias sshpu18z='ssh -p62 -YC4 admit@172.25.3.14'
+
+# respberry pi
+alias sshpi3='ssh -p62 admit@192.168.1.123'
+alias sshppi3='ssh -p62 -YC4 admit@192.168.1.123'
+alias sshpi4='ssh -p62 admit@192.168.1.125'
+alias sshppi4='ssh -p62 -YC4 admit@192.168.1.125'
+
+# others
 alias vimsd='vim -S ~/.vim/sessions/default.vim'
+alias aptcc='sudo apt autoremove; sudo apt remove; sudo apt autoclean; sudo apt clean'

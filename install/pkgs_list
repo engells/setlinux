@@ -31,7 +31,7 @@ install_apt	ffmpeg
 install_apt	gnash
 install_apt	geeqie
 #-- internet utils --
-install_apt	chromium-browser
+#install_apt	chromium-browser
 install_apt	curl
 #-- system and desktop --
 install_apt	grub-efi-amd64-signed
@@ -55,7 +55,7 @@ install_apt	exfat-fuse
 install_apt	rename
 #-- office utils --
 install_apt	poppler-data
-install_apt	vim
+install_apt	vim-nox
 install_apt	vim-gtk3
 install_apt	fbreader
 #install_apt	texlive-full
@@ -66,9 +66,6 @@ install_apt	localepurge
 #-- disk utils --
 install_apt	gdisk
 install_apt	smartmontools
-#-- android --
-install_apt	lib32ncurses5
-install_apt	lib32stdc++6
 #-- virtual --
 install_apt	lxc
 install_apt	systemd
@@ -81,4 +78,6 @@ install_apt	uml-utilities
 install_apt	bridge-utils
 install_apt	kpartx
 install_apt	dosbox
+#-- remote control --
+install_apt	remmina
 

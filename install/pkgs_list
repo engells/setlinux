@@ -53,11 +53,13 @@ install_apt	tmux
 install_apt	exfat-utils
 install_apt	exfat-fuse
 install_apt	rename
+install_apt	htop
 #-- office utils --
 install_apt	poppler-data
 install_apt	vim-nox
 install_apt	vim-gtk3
 install_apt	fbreader
+install_apt	html2text
 #install_apt	texlive-full
 #-- locale --
 install_apt	language-pack-zh-hant

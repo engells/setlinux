@@ -99,13 +99,13 @@ case $way in
 		. /home/engells/ktws/scripts/libs/kt_lib_default.sh
 
 		dev_sur="kpl/ktws"
-		dev_tar="ktws"
+		dev_tar="xpl/ktws"
 		mnt_sur="/home/engells/ktws"
 		mnt_tar="/home/engells/mnt/xktws"
 		_bak_data_to_local
 
 		dev_sur="kpl/mmedia"
-		dev_tar="mmedia"
+		dev_tar="xpl/mmedia"
 		mnt_sur="/home/engells/mmedia"
 		mnt_tar="/home/engells/mnt/xmmedia"
 		_bak_data_to_local 
@@ -118,13 +118,13 @@ case $way in
 		. /home/engells/ktws/scripts/libs/kt_lib_default.sh
 
 		dev_sur="kpl/ktwsb"
-		dev_tar="ktwsb"
+		dev_tar="xpl/ktwsb"
 		mnt_sur="/home/engells/mnt/ktwsb"
 		mnt_tar="/home/engells/mnt/xktwsb"
 		_bak_data_to_local
 
 		dev_sur="kpl/mmediab"
-		dev_tar="mmediab"
+		dev_tar="xpl/mmediab"
 		mnt_sur="/home/engells/mnt/mmediab"
 		mnt_tar="/home/engells/mnt/xmmediab"
 		_bak_data_to_local

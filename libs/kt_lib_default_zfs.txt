@@ -36,15 +36,15 @@ _bak_data_to_portable()
 _bak_data_to_local()
 {
 	pool_sur=$(echo $dev_sur | awk -F"/" '{ print $1 }')
+	pool_tar=$(echo $dev_tar | awk -F"/" '{ print $1 }')
 
 	echo "mounting source device ..." && sleep 2
 	sudo zpool list | grep $pool_sur 1>/dev/null 2>/dev/null || sudo zpool import -d /dev/disk/by-id $pool_sur
 	sudo zfs mount | grep $dev_sur 1>/dev/null 2>/dev/null || sudo zfs mount $dev_sur
 
 	echo "mounting target device ..." && sleep 2
-	sudo umount $mnt_tar 1>/dev/null 2>/dev/null
-  [ -d $mnt_tar ] || sudo mkdir -p $mnt_tar
-  sudo mount -t btrfs -o subvol=$dev_tar,noatime,space_cache,commit=120,compress=zstd /dev/sdb4 $mnt_tar 1>/dev/null 2>/dev/null
+	sudo zpool list | grep $pool_tar 1>/dev/null 2>/dev/null || sudo zpool import -d /dev/disk/by-id $pool_tar
+	sudo zfs mount | grep $dev_tar 1>/dev/null 2>/dev/null || sudo zfs mount $dev_tar
 
 	echo "empting target device ..." && sleep 2
 	cd $mnt_tar && _empty_dev_tar && sudo chown $(whoami):$(whoami) -R $mnt_tar

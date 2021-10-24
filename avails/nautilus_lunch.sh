@@ -64,13 +64,13 @@ case $way in
 		dev_tar="zpl/ktws"
 		mnt_sur="/home/engells/ktws"
 		mnt_tar="/home/engells/mnt/zktws"
-		_bak_data_to_local
+		_bak_data_to_portable
 
 		dev_sur="kpl/mmedia"
 		dev_tar="zpl/mmedia"
 		mnt_sur="/home/engells/mmedia"
 		mnt_tar="/home/engells/mnt/zmmedia"
-		_bak_data_to_local 
+		_bak_data_to_portable 
 		;;
 
 	dc2)
@@ -83,13 +83,13 @@ case $way in
 		dev_tar="zpl/ktwsb"
 		mnt_sur="/home/engells/mnt/ktwsb"
 		mnt_tar="/home/engells/mnt/zktwsb"
-		_bak_data_to_local
+		_bak_data_to_portable
 
 		dev_sur="kpl/mmediab"
 		dev_tar="zpl/mmediab"
 		mnt_sur="/home/engells/mnt/mmediab"
 		mnt_tar="/home/engells/mnt/zmmediab"
-		_bak_data_to_local
+		_bak_data_to_portable
 		;;
 
 	dk1)

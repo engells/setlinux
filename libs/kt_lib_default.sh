@@ -17,20 +17,21 @@ _empty_dev_tar()
 _bak_data_to_portable()
 {
 	pool_sur=$(echo $dev_sur | awk -F"/" '{ print $1 }')
+	pool_tar=$(echo $dev_tar | awk -F"/" '{ print $1 }')
 
 	echo "mounting source device ..." && sleep 2
-	sudo zpool list | grep kpl 1>/dev/null 2>/dev/null || sudo zpool import -d /dev/disk/by-id kpl
-	sudo zfs list | grep $dev_sur 1>/dev/null 2>/dev/null || sudo zfs mount $dev_sur
+	sudo zpool list | grep $pool_sur 1>/dev/null 2>/dev/null || sudo zpool import -d /dev/disk/by-id $pool_sur
+	sudo zfs mount | grep $dev_sur 1>/dev/null 2>/dev/null || sudo zfs mount $dev_sur
 
 	echo "mounting target device ..." && sleep 2
-	sudo umount $mnt_tar 2>/dev/null
-	sudo mount $dev_tar $mnt_tar 2>/dev/null
+	sudo zpool list | grep $pool_tar 1>/dev/null 2>/dev/null || sudo zpool import -d /dev/disk/by-id $pool_tar
+	sudo zfs mount | grep $dev_tar 1>/dev/null 2>/dev/null || sudo zfs mount $dev_tar
 
 	echo "empting target device ..." && sleep 2
-	cd $mnt_tar && _empty_dev_tar
+	cd $mnt_tar && _empty_dev_tar && sudo chown $(whoami):$(whoami) -R $mnt_tar
 
 	echo "dumping from source device to target device ..." && sleep 2
-	cd $mnt_sur && cp -av . $mnt_tar
+	cd $mnt_sur && sudo rsync -avAHX . $mnt_tar
 }
 
 _bak_data_to_local()

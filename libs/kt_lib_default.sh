@@ -30,7 +30,7 @@ _bak_data_to_portable()
 	cd $mnt_tar && _empty_dev_tar
 
 	echo "dumping from source device to target device ..." && sleep 2
-	cd $mnt_sur && cp -av . $mnt_tar
+	cd $mnt_sur && cp -av . $mnt_tar 2>/home/engells/zz
 }
 
 _bak_data_to_local()
@@ -50,7 +50,7 @@ _bak_data_to_local()
 	cd $mnt_tar && _empty_dev_tar && sudo chown $(whoami):$(whoami) -R $mnt_tar
 
 	echo "dumping from source device to target device ..." && sleep 2
-	cd $mnt_sur && sudo rsync -avAHX . $mnt_tar
+	cd $mnt_sur && sudo rsync -avAHX . $mnt_tar 2>/home/engells/zz
 }
 
 _clean_apt()

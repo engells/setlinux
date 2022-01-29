@@ -86,7 +86,7 @@ _rm_zfs_mnt_dir()
 	done
 
 	echo '2 秒後開始移除 dataset 掛載點' && sleep 2
-	for mnt_dir in ktws mmedia ktwsb mmediab virt warehouse
+	for mnt_dir in ktws mmedia ktwsb mmediab virt warehouse home
 	do
 		sudo rm -rf /home/engells/mnt/$mnt_dir 2>/dev/null
 		sudo rm -rf /home/engells/mnt/x$mnt_dir 2>/dev/null

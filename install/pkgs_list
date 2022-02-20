@@ -30,6 +30,8 @@ install_apt	gstreamer1.0-libav
 install_apt	ffmpeg
 install_apt	gnash
 install_apt	geeqie
+install_apt	imagemagick # magick input.webp output.jpg or convert input.webp output.jpg
+install_apt	iat # Converts many CD-ROM image formats to iso9660
 #-- internet utils --
 #install_apt	chromium-browser
 install_apt	curl
@@ -37,10 +39,14 @@ install_apt	curl
 install_apt	grub-efi-amd64-signed
 install_apt	shim-signed
 install_apt	gnome-tweaks
+#install_apt	gnome-tweak-tool
 install_apt	gnome-shell-extensions
-install_apt	gnome-shell-extension-dashtodock 
+#install_apt	gnome-shell-extension-dashtodock 
+install_apt	gnome-shell-extension-dash-to-panel
 install_apt	gnome-shell-extension-system-monitor
+install_apt	gnome-shell-extension-hide-activities
 #install_apt	gnome-shell-extension-autohidetopbar
+#install_apt	stacer
 #install_apt	bleachbit
 install_apt	sysstat
 install_apt	indicator-multiload

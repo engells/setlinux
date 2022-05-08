@@ -19,6 +19,7 @@ install_apt	p7zip-full
 install_apt	unrar
 install_apt	xz-utils
 install_apt	squashfs-tools
+install_apt	archivemount
 #-- multi media --
 install_apt	mplayer
 install_apt	smplayer
@@ -28,6 +29,8 @@ install_apt	gstreamer1.0-plugins-ugly
 install_apt	gstreamer1.0-plugins-bad
 install_apt	gstreamer1.0-libav
 install_apt	ffmpeg
+install_apt	lame # mp3 utilities
+install_apt	flac # flac utilities
 install_apt	gnash
 install_apt	geeqie
 install_apt	imagemagick # magick input.webp output.jpg or convert input.webp output.jpg
@@ -35,6 +38,7 @@ install_apt	iat # Converts many CD-ROM image formats to iso9660
 #-- internet utils --
 #install_apt	chromium-browser
 install_apt	curl
+install_apt	aria2
 #-- system and desktop --
 install_apt	grub-efi-amd64-signed
 install_apt	shim-signed
@@ -60,6 +64,8 @@ install_apt	exfat-utils
 install_apt	exfat-fuse
 install_apt	rename
 install_apt	htop
+install_apt	ncdu 
+#candidate: autojump fd ag exa bat jq hub fzf mosh
 #-- office utils --
 install_apt	poppler-data
 install_apt	vim-nox

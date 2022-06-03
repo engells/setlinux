@@ -8,3 +8,4 @@ deb http://security.ubuntu.com/ubuntu bionic-security universe multiverse
 
 # deb http://archive.canonical.com/ubuntu bionic partner
 # deb-src
+# deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main

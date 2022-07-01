@@ -33,7 +33,7 @@
 
 4.執行 ~/ktws/scripts/avails/ubuntu_install.sh c，參數 c 代表作系統微調。
  -自訂使用者目錄，包括 ~/mnt、/home/virt、/home/lxcu 等
- -增加佈景主題，圖示採用 Mojave_Dark，GTK 佈景採用 McOS_MJV_Dark_Gn3.32_V.2.0。此部份是額外以 gnome-tweaks 程式選定
+ -增加佈景主題，圖示採用 MkOS_Big_Sur ，GTK 佈景採用 McOS_CTLina_Gnome_Dark_1.3.2。此部份是額外以 gnome-tweaks 程式選定
  -將自定的 bash script 複製至  ~/.local/share/nautilus/scripts，如此在 nautilus 中可以滑鼠右鍵執行
  -將自定的 bash 設定檔複製到 ~/.vim，以建立 bash 使用環境
  -語系設定，取代系統設定檔後，執行 locale-gen --purge，參閱 Locale.Fonts.html in ~/ktws/0.know_linux/contents_bak.tar.bz2
@@ -50,7 +50,7 @@
   Firefox Add-on: HTTPS Everyehere, Privacy Badger, NoScript, uBlock, stylus, Video DownloadHelper
   Chromium Add-on: Script Defender, uBlock, stylus + 自 FireFox 複製 styles
  -設定 SMPlayer 對應之 Mplayer 版本 1.0rc4 ，以及取消 screenshot 功能，Options(M) / Preferences / General / Screenshots
- -設定 Gedit 之佈景主題為 Oblivion，取消自動存檔，及標示游標所在行，字體選 Monaco 13。
+ -設定 Gedit 之佈景主題為 Oblivion，取消自動存檔，及標示游標所在行，字體選 Monaco 16。
  -設定開檔語系：
     gsettings set org.gnome.gedit.preferences.encodings auto-detected "['UTF-8', 'BIG5', 'GBK', 'GB18030', 'GB2312', 'CURRENT', 'UTF-16']"
     或以 dconf-editor 編輯

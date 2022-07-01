@@ -1,4 +1,5 @@
 #!/bin/bash
+# vim:ts=2
 # program: to add lines into txt file
 # made by: Engells
 # date: Oct 6, 2012

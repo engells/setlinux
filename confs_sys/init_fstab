@@ -4,9 +4,10 @@
 # device; this may be used with UUID= as a more robust way to name devices
 # that works even if disks are added and removed. See fstab(5).
 #
-# <file system>	<mount point>           <type>  <options>            <dump> <pass>
-tmp             /tmp                    tmpfs   defaults,mode=1777      0   0
-log             /var/log                tmpfs   defaults,mode=1777      0   0
-#download       /home/engells/downloads tmpfs   defaults,mode=1777      0   0
-#cache          /home/engells/.cache/   tmpfs   defaults,mode=1777      0   0
-UUID=6F3B-0181  /boot/efi               vfat    utf8,umask=007,gid=46   0   1
+# <file system>	                   <mount point> <type>  <options>            <dump> <pass>
+UUID=bb6c3490-2c75-43a6-973f-787ef770ca34 /             ext4    errors=remount-ro       0   1
+UUID=7C14-51E7                            /boot/efi     vfat    umask=0077              0   1
+#/swapfile                                none          swap    sw                      0   0
+tmp                                       /tmp          tmpfs   defaults,mode=1777      0   0
+log                                       /var/log      tmpfs   defaults,mode=1777      0   0
+

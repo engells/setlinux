@@ -1,5 +1,5 @@
 #!/bin/bash
-# vim:ts=4
+# vim:ts=2
 
 if [ -z $1 ]; then 
 	Des='請輸入轉換語系 tw:繁體中文 us:美式英文'

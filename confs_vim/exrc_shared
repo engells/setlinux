@@ -4,13 +4,16 @@
 " content: shared configures of vim and gvim
 
 " general set
-colorscheme torte
-"colorscheme nord
+"colorscheme torte
+colorscheme nord
 set nocompatible
 set noswapfile
 set nobackup
 "set autoindent
 set history=50
+set viminfo=""
+"set viminfo+=n~/.vim/viminfo
+"set viminfo='50,<300,s100,:20,%,n~/.vim/viminfo :: '50 => markers -- <300 registers --s100 100K bytes -- :20 command lines -- % buffer list
 
 " << 和 >> 指令移動寬度 4，backspace 一次刪除 4 個空格，新行自動縮進
 " tab 寬度為 4，雙字寬度顯示以顯示特殊字元，tab 轉換為空格

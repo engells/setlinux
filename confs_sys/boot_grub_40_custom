@@ -14,3 +14,16 @@ menuentry "Install Ubuntu 18.04.2 from /dev/sdb" {
 	linux (loop)/casper/vmlinuz boot=casper iso-scan/filename=/Bionic_x64.iso noeject nopromt
 	initrd (loop)/casper/initrd
 }
+
+menuentry "Install Ubuntu 20.04.4 from sda5" {
+  loopback loop (hd0,5)/Focal.iso
+  linux (loop)/casper/vmlinuz boot=casper iso-scan/filename=/Focal.iso noeject nopromt
+  initrd (loop)/casper/initrd
+}
+
+menuentry "Install Ubuntu 20.04.4 from sdb6" {
+  loopback loop (hd1,6)/Focal.iso
+  linux (loop)/casper/vmlinuz boot=casper iso-scan/filename=/Focal.iso noeject nopromt
+  initrd (loop)/casper/initrd
+}
+

@@ -29,32 +29,32 @@ install_apt	gstreamer1.0-plugins-ugly
 install_apt	gstreamer1.0-plugins-bad
 install_apt	gstreamer1.0-libav
 install_apt	ffmpeg
-install_apt	lame # mp3 utilities
-install_apt	flac # flac utilities
-install_apt	gnash
-install_apt	geeqie
-install_apt	imagemagick # magick input.webp output.jpg or convert input.webp output.jpg
-install_apt	iat # Converts many CD-ROM image formats to iso9660
+#install_apt	lame # mp3 utilities
+#install_apt	flac # flac utilities
+#install_apt	gnash
+#install_apt	geeqie
+#install_apt	imagemagick # magick input.webp output.jpg or convert input.webp output.jpg
+#install_apt	iat # Converts many CD-ROM image formats to iso9660
 #-- internet utils --
 #install_apt	chromium-browser
 install_apt	curl
 install_apt	aria2
-#-- system and desktop --
-install_apt	grub-efi-amd64-signed
-install_apt	shim-signed
+#-- gnome desktop --
 install_apt	gnome-tweaks
 #install_apt	gnome-tweak-tool
 install_apt	gnome-shell-extensions
-#install_apt	gnome-shell-extension-dashtodock 
+install_apt	gnome-shell-extension-prefs
 install_apt	gnome-shell-extension-dash-to-panel
 install_apt	gnome-shell-extension-system-monitor
 install_apt	gnome-shell-extension-hide-activities
 #install_apt	gnome-shell-extension-autohidetopbar
+#-- system --
 #install_apt	stacer
 #install_apt	bleachbit
+install_apt	grub-efi-amd64-signed
+install_apt	shim-signed
 install_apt	sysstat
 install_apt	indicator-multiload
-install_apt	gtkorphan
 install_apt	git
 install_apt	dmsetup
 install_apt	cryptsetup
@@ -64,7 +64,8 @@ install_apt	exfat-utils
 install_apt	exfat-fuse
 install_apt	rename
 install_apt	htop
-install_apt	ncdu 
+install_apt	ncdu
+#install_apt	gtkorphan
 #candidate: autojump fd ag exa bat jq hub fzf mosh
 #-- office utils --
 install_apt	poppler-data

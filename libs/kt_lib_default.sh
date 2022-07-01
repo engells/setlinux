@@ -1,7 +1,7 @@
 # vim:ts=2
 # lib: Using to clean system and config trackball
 # made by: Engells
-# date: Mar 31, 2019
+# date: Jun 29, 2022
 # content: 
 # note: the arguments could be deliverd by lunch shcripts
 
@@ -30,7 +30,8 @@ _bak_data_to_portable()
 	cd $mnt_tar && _empty_dev_tar
 
 	echo "dumping from source device to target device ..." && sleep 2
-	cd $mnt_sur && cp -av . $mnt_tar 2>/home/engells/zz
+	cd $mnt_sur && rsync -avAH . $mnt_tar 2>/home/engells/zz
+	#cd $mnt_sur && cp -av . $mnt_tar 2>/home/engells/zz
 }
 
 _bak_data_to_local()

@@ -34,10 +34,10 @@ bind ^D detach
 set -g base-index 1
 set -g pane-base-index 1
 
-source-file $HOME/.config/z_my_confs/tmux_conf_apperance
-source-file $HOME/.config/z_my_confs/tmux_conf_panel
-source-file $HOME/.config/z_my_confs/tmux_conf_window
-source-file $HOME/.config/z_my_confs/tmux_conf_z_others
+source-file $HOME/.config/zz_my_confs/tmux_conf_apperance
+source-file $HOME/.config/zz_my_confs/tmux_conf_panel
+source-file $HOME/.config/zz_my_confs/tmux_conf_window
+source-file $HOME/.config/zz_my_confs/tmux_conf_z_others
 
 
 ## memo 

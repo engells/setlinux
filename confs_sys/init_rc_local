@@ -16,7 +16,7 @@ sudo systemctl restart lxc-net
 
 #bash /opt/engells/z_myload.sh
 
-for SUBDIR in z_cache z_downloads z_tmpfs z_cache_u18b z_cache_u18p
+for SUBDIR in z_cache z_downloads z_tmpfs z_cache_lxcb z_cache_lxcp
 do
 	[ -d /tmp/$SUBDIR ] || mkdir /tmp/$SUBDIR
 	chown -R engells:engells /tmp/$SUBDIR

@@ -5,7 +5,7 @@
 
 let MY_VIM_CONFIG_DIR = "$HOME/.vim/confs"
 
-exec 'source' expand(MY_VIM_CONFIG_DIR) . '/exrc_vim_plug_add'
+"exec 'source' expand(MY_VIM_CONFIG_DIR) . '/exrc_vim_plug_add'
 exec 'source' expand(MY_VIM_CONFIG_DIR) . '/exrc_shared'
 exec 'source' expand(MY_VIM_CONFIG_DIR) . '/exrc_vim_kmap'
 

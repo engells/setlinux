@@ -1,18 +1,10 @@
+##/bin/bash
 # vim:ts=2
 # lib: Using to clean system and config trackball
 # made by: Engells
-# date: Jun 29, 2022
+# date: Jun 30, 2022
 # content: 
 # note: the arguments could be deliverd by lunch shcripts
-
-_empty_dev_tar()
-{
-	for DIR in $(ls $mnt_tar)
-	do
-		[ -d $DIR ] && rm -rvf $DIR
-		[ -f $DIR ] && rm -vf $DIR
-	done
-}
 
 _bak_data_to_portable()
 {
@@ -52,6 +44,8 @@ _bak_data_to_local()
 
 	echo "dumping from source device to target device ..." && sleep 2
 	cd $mnt_sur && sudo rsync -avAHX . $mnt_tar 2>/home/engells/zz
+	
+	sudo sync ; sudo sync
 }
 
 _clean_apt()
@@ -59,6 +53,7 @@ _clean_apt()
 	echo '2 秒後開始清除 APT 系統' && sleep 2
 
 	sudo apt-get autoremove --purge
+  sudo apt-get remove
 	sudo apt-get autoclean
 	sudo apt-get clean
 	sudo localepurge
@@ -68,14 +63,17 @@ _clean_bash()
 {
 	echo '2 秒後開始清除 bash 及 zsh 歷史指令' && sleep 2
 
-	[ -f ~/.bash_history ] && cat /dev/null > ~/.bash_history
-	[ -f ~/.zsh_history ] && cat /dev/null > ~/.zsh_history
+	[ -f $HOME/.bash_history ] && cat /dev/null > $HOME/.bash_history
+	[ -f $HOME/.config/zsh/.zhistory ] && cat /dev/null > $HOME/.config/zsh/.zhistory
 }
 
 _rm_zfs_mnt_dir()
 {
+	echo 'sync dataset'
+  sudo sync ; sudo sync
+
 	echo '卸載 kpl dataset'
-	for zfs_set in ktwsb mmediab
+	for zfs_set in ktwsb mmediab warehouse
 	do
 		sudo zfs umount kpl/$zfs_set 2>/dev/null
 	done
@@ -95,6 +93,15 @@ _rm_zfs_mnt_dir()
 	done
 }
 
+_empty_dev_tar()
+{
+	for DIR in $(ls $mnt_tar)
+	do
+		[ -d $DIR ] && rm -rvf $DIR
+		[ -f $DIR ] && rm -vf $DIR
+	done
+}
+
 _rm_kernel()
 {
 	sudo apt-get purge '^linux-.*-4.18.0-17'
@@ -109,5 +116,4 @@ _add_line_bak()
 		echo >> $f2
 	done < "$f2"
 }
-
 

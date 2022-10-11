@@ -1,282 +1,358 @@
-# vim:ts=4
-# lib: Using to install Ubuntu 18.04
+##!/bin/bash
+# vim:tb=2
+# lib: Using to install Ubuntu 20.04
 # made by: Engells
-# date: Mar 25, 2019
+# date: Jun 30, 2022
 # content: 
 
-cfgDir="$HOME/ktws/scripts"
+cfgDir="$HOME/ktws/scripts" #cfgDir="$HOME/mnt/dump3/scripts"
 
-_chg_aptsur()
+_remove_snap()
 {
-    sudo mv /etc/apt/sources.list /etc/apt/sources.bak
-    sudo cp $cfgDir/confs_sys/sources.list /etc/apt/sources.list
-    sudo chown root:root /etc/apt/sources.list
-    sudo chmod 644 /etc/apt/sources.list
-}
+  sudo snap remove --purge snap-store
+  sudo snap remove --purge gtk-common-themes
+  sudo snap remove --purge gnome-3-38-2004
+  sudo snap remove --purge core20
+  sudo snap remove --purge bare 
+  sudo snap remove --purge snapd
+  sudo apt remove --autoremove snapd
+  sudo rm -rf ~/snap /snap /var/snap /var/lib/snapd
 
-_set_grub()
-{
-    sudo sed -i '/GRUB_CMDLINE_LINUX_DEFAULT/s/quiet splash//' /etc/default/grub
-    sudo update-grub
+  [[ -f /etc/apt/preferences.d/nosnap.pref ]] || sudo touch /etc/apt/preferences.d/nosnap.pref
+  echo '## Disable snap' > /etc/apt/preferences.d/nosnap.pref
+  sudo sed -i '$a Package: snapd'    /etc/apt/preferences.d/nosnap.pref
+  sudo sed -i '$a Pin: release a=*'  /etc/apt/preferences.d/nosnap.pref
+  sudo sed -i '$a Pin-Priority: -10' /etc/apt/preferences.d/nosnap.pref
 }
 
 _mnt_dirs()
 {
-    for DIR in bak buf cache doc dump1 dump2 dump3 dump4 iso scripts ramfs tmpfs xdg
-    do
-        [ -d $HOME/mnt/$DIR ] || mkdir -p $HOME/mnt/$DIR
-    done
-    sudo chown -R engells:engells $HOME/mnt
+  for DIR in bak buf cache doc dump1 dump2 dump3 dump4 iso scripts ramfs tmpfs xdg
+  do
+    [[ -d $HOME/mnt/$DIR ]] || mkdir -p $HOME/mnt/$DIR
+  done
+  sudo chown -R engells:engells $HOME/mnt
 
-    for DIR in dosbox lxcd lxcu virt storage
-    do
-        [ -d /zvir/$DIR ] || sudo mkdir -p /home/$DIR
-        sudo chown -R engells:engells /zvir/$DIR
-    done
+  [[ -d $HOME/.config/zz_dot_files ]] || mkdir -p $HOME/.config/zz_dot_files
+  [[ -d $HOME/.local/state ]] || mkdir -p $HOME/.local/state
 
-    for DIR in discs disks share
-    do
-        [ -d /zvir/storage/$DIR ] || sudo mkdir -p /zvir/storage/$DIR
-        sudo chown -R engells:engells /zvir/storage/$DIR
-    done
+  [[ -d $HOME/downloads ]] && rm -rv $HOME/downloads && ln -sf /tmp/z_downloads $HOME/downloads
 
-    [ -d $HOME/downloads ] || mkdir $HOME/downloads
-    sudo chown -R engells:engells $HOME/downloads
-
-    [ -d $HOME/.config/fontconfig/conf.d ] || mkdir -p $HOME/.config/fontconfig/conf.d
-    [ -d $HOME/.local/share/fonts ] || mkdir -p $HOME/.local/share/fonts
-
-    [ -d $HOME/.local/share/oh_my_zsh ] || mkdir -p $HOME/.local/share/oh_my_zsh
-
-    [ -d $HOME/.config/z_my_confs ] || mkdir -p $HOME/.config/z_my_confs
+  [[ -d $HOME/.cache ]] && mv $HOME/.cache $HOME/cache
+  ln -sf /tmp/z_cache $HOME/.cache && mv $HOME/cache/* $HOME/.cache && rm -rv $HOME/cache
 }
 
 _user_dirs()
 {
-    mv $HOME/.config/user-dirs.dirs $HOME/.config/user-dirs.dirs.old
-    cp $cfgDir/confs_sys/gdm_user_dirs_dirs $HOME/.config/user-dirs.dirs
+  mv $HOME/.config/user-dirs.dirs $HOME/.config/user-dirs.dirs.old
+  cp -v $cfgDir/confs_sys/gdm_user_dirs_dirs $HOME/.config/user-dirs.dirs
 
-    for DIR in Desktop Documents Downloads Music Pictures Public Templates Videos
-    do
-        [ -d $HOME/$DIR ] && rmdir $HOME/$DIR
-        [ -d $HOME/mnt/xdg/$DIR ] || mkdir -p $HOME/mnt/xdg/$DIR
-    done
-}
-
-_cp_files()
-{
-    tDir="$HOME/mnt/tmpfs"
-
-    sDir="$HOME/ktws/0_sur_linux"
-    #cp $sDir/themes/Theme-Elementary-Gtk-3.x.tar.gz $tDir/themes.tar.gz
-
-    sDir="$HOME/ktws/0_sur_fonts"
-    cp $sDir/Apple/Heiti-SC-Medium-6.1-d23.ttf $tDir/Heiti.ttf
-    cp $sDir/Apple/Monaco.ttf $tDir/Monaco.ttf
-    cp $sDir/Microsoft/consola.ttf $tDir/Consola.ttf
-    #cp $sDir/TW_Gov/TW-Kai-98.1.ttf $tDir/TW-Kai.ttf
-    #cp $sDir/TW_Gov/TW-Sung-98.1.ttf $tDir/TW-Sung.ttf
-}
-
-_add_themes()
-{
-    [ -d "/usr/share/icons" ] || sudo mkdir /usr/share/icons
-    sudo tar -xzvf $HOME/mnt/tmpfs/cursors.tar.gz -C /usr/share/icons
-
-    [ -d "$HOME/.themes" ] || mkdir $HOME/.themes
-    sudo tar -xzvf $HOME/mnt/tmpfs/themes.tar.gz -C $HOME/.themes
-
-    [ -d "$HOME/.icons" ] || mkdir $HOME/.icons
-    sudo tar -xzvf $HOME/mnt/tmpfs/icons.tar.gz -C $HOME/.icons
-
-    [ -d /usr/share/gnome-shell/theme/ubuntu.css] && \
-          sudo cp /usr/share/gnome-shell/theme/ubuntu.css /usr/share/gnome-shell/theme/ubuntu.css.bak
-    sudo cp $sDir/gdm_ubuntu_css /usr/share/gnome-shell/theme/ubuntu.css
-    # /etc/alternatives/default.plymouth
-}
-
-_nautilus_scripts()
-{
-    tDir="$HOME/.local/share/nautilus/scripts"
-    [ -d $tDir ] || mkdir -p $tDir
-
-    sDir="$HOME/ktws/scripts/nautilus_scripts"
-    for iFile in $(ls $sDir)
-    do
-        [ -f $iFile ] && ln -s $sDir/$iFile $HOME/.local/share/nautilus/scripts
-    done
+  for DIR in Desktop Documents Downloads Music Pictures Public Templates Videos
+  do
+    [[ -d $HOME/$DIR ]] && rmdir $HOME/$DIR
+    [[ -d $HOME/mnt/xdg/$DIR ]] || mkdir -p $HOME/mnt/xdg/$DIR
+  done
 }
 
 _bash_conf()
 {
-    cp $cfgDir/confs_sys/shell_bash_profile $HOME/.bash_profile
-    cp $cfgDir/confs_sys/shell_bashrc $HOME/.bashrc
-    cp $cfgDir/confs_sys/shell_basic $HOME/.config/z_my_conf/shell_basic
-    cp $cfgDir/confs_sys/shell_basic $HOME/.config/z_my_conf/shell_basic
-    . $HOME/.bashrc
+  [[ -d $HOME/.config/bash ]] || mkdir -p $HOME/.config/bash
+  for dotFile in profile bashrc bash_logout bash_history
+  do
+    [[ -f $cfgDir/confs_sys/shell_$dotFile ]] && cp -v $cfgDir/confs_sys/shell_$dotFile $HOME/.config/bash/$dotFile
+    [[ -f $HOME/.$dotFile ]] && mv $HOME/.$dotFile $HOME/.config/bash/$dotFile.old
+    [[ -f $HOME/.config/bash/$dotFile ]] && ln -sf $HOME/.config/bash/$dotFile $HOME/.$dotFile
+  done
+
+  [[ -d $HOME/.config/zz_my_confs ]] || mkdir -p $HOME/.config/zz_my_confs
+  cp -v $cfgDir/confs_sys/shell_alias $HOME/.config/zz_my_confs/shell_alias
+  cp -v $cfgDir/confs_sys/shell_basic $HOME/.config/zz_my_confs/shell_basic
+   #. $HOME/.bashrc
 }
 
 _zsh_conf()
 {
-    git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.local/share/oh_my_zsh
-    cp $cfgDir/confs_sys/shell_zshrc ~/.zshrc
-    sudo chsh -s $(which zsh) $(whoami)
+  [[ -d $HOME/.local/share/oh_my_zsh ]] || mkdir -p $HOME/.local/share/oh_my_zsh
+  git clone https://github.com/robbyrussell/oh-my-zsh.git $HOME/.local/share/oh_my_zsh
+
+  [[ -d $HOME/.config/zsh ]] || mkdir -p $HOME/.config/zsh
+  cp -v $cfgDir/confs_sys/shell_zshenv $HOME/.zshenv
+  cp -v $cfgDir/confs_sys/shell_zshrc  $HOME/.config/zsh/.zshrc
+  sudo chsh -s $(which zsh) $(whoami)
 }
 
 _tmux_conf()
 {
-    [ -d $HOME/.config/z_my_confs ] || mkdir -p $HOME/.config/z_my_confs
-    tDir="$HOME/.config/z_my_confs"
-    cp $cfgDir/confs_sys/shell_tmux_conf ~/.tmux.conf
-    cp $cfgDir/confs_sys/shell_tmux_conf_panel $tDir/tmux_conf_panel
-    cp $cfgDir/confs_sys/shell_tmux_conf_window $tDir/tmux_conf_window
-    cp $cfgDir/confs_sys/shell_tmux_conf_z_others $tDir/tmux_conf_z_others
-    cp $cfgDir/confs_sys/shell_tmux_conf_apperance $tDir/tmux_conf_apperance
-    #git clone https://github.com/jimeh/tmuxifier.git ~/.tmuxifier
+  [[ -d $HOME/.config/zz_my_confs ]] || mkdir -p $HOME/.config/zz_my_confs
+  [[ -d $HOME/.config/tmux/ ]] || mkdir -p $HOME/.config/tmux/
+
+  tDir="$HOME/.config/zz_my_confs"
+  cp -v $cfgDir/confs_sys/shell_tmux_conf $HOME/.tmux.conf
+  cp -v $cfgDir/confs_sys/shell_tmux_conf_panel     $tDir/tmux_conf_panel
+  cp -v $cfgDir/confs_sys/shell_tmux_conf_window    $tDir/tmux_conf_window
+  cp -v $cfgDir/confs_sys/shell_tmux_conf_z_others  $tDir/tmux_conf_z_others
+  cp -v $cfgDir/confs_sys/shell_tmux_conf_apperance $tDir/tmux_conf_apperance
+
+  #git clone https://github.com/jimeh/tmuxifier.git $HOME/.tmuxifier
 }
 
 _vim_conf()
 {
-    [ -d $HOME/.vim/confs ] || mkdir -p $HOME/.vim/confs
-    cp $cfgDir/confs_sys/exrc* $HOME/.vim/conf/
-    ln -s $HOME/.vim/confs/exrc_vim $HOME/.vimrc
-    ln -s $HOME/.vim/confs/exrc_gvim $HOME/.gvimrc
+  [[ -d $HOME/.vim/confs ]] || mkdir -p $HOME/.vim/confs && cp -v $cfgDir/confs_vim/exrc* $HOME/.vim/confs
+  [[ -f $HOME/.vimrc ]] ||  mv $HOME/.vimrc $HOME/.vimrc.old &&   ln -sf $HOME/.vim/confs/exrc_vim $HOME/.vim/vimrc
+  [[ -f $HOME/.gvimrc ]] || mv $HOME/.gvimrc $HOME/.gvimrc.old && ln -sf $HOME/.vim/confs/exrc_gvim $HOME/.vim/gvimrc
 
-    mkdir $HOME/.vim/{autoload,bundle}
-    curl -Sso $HOME/.vim/autoload/pathogen.vim \
-        https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
-    cd $HOME/.vim/bundle
-    git clone https://github.com/scrooloose/nerdtree.git
-    git clone git://github.com/Lokaltog/vim-powerline.git
-    git clone https://github.com/sukima/xmledit.git
+  [[ -d $HOME/.vim/autoload ]] || mkdir -p $HOME/.vim/autoload
+  [[ -d $HOME/.vim/pack ]] || mkdir -p $HOME/.vim/pack && mkdir -p $HOME/.vim//pack/{start,opt}
+
+  #cd $HOME/.vim/autoload/ && curl -O https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 }
 
-_set_locale()
+_chg_aptsur()
 {
-    sudo mv /var/lib/locales/supported.d/local /var/lib/locales/supported.d/local.bak
-    sudo cp $cfgDir/confs_sys/local /var/lib/locales/supported.d
-    sudo mv /var/lib/locales/supported.d/en /var/lib/locales/supported.d/en.bak
-    sudo mv /var/lib/locales/supported.d/zh-hant /var/lib/locales/supported.d/zh-hant.bak
-    #sudo locale -a
-    #sudo locale-gen zh_TW.UTF-8
-    sudo locale-gen --purge
-    #sudo dpkg-reconfigure locales
-}
-
-_set_zhfonts()
-{
-    [ -d "/usr/share/fonts/engells" ] || sudo mkdir /usr/share/fonts/engells
-
-    for  font_file in Heiti.ttf Monaco.ttf TW-Kai.ttf TW-Sung.ttf Consola.ttf
-    do
-        sudo cp $HOME/mnt/tmpfs/$font_file /usr/share/fonts/engells/
-    done
-
-    sudo chmod 755 /usr/share/fonts/engells/*.ttf
-
-    sudo fc-cache -f -v
-
-    [ -e "/etc/fonts/conf.avail/69-language-selector-zh-tw.conf" ] || \
-    sudo cp $cfgDir/confs_sys/font_69_language_selector_zh_tw.conf /etc/fonts/conf.avail/69-language-selector-zh-tw.conf
-
-    #sudo ln -s /etc/fonts/conf.avail/69-language-selector-zh-tw.conf /etc/fonts/conf.d/
-
-    [ -e "/etc/fonts/conf.avail/30-cjk-aliases.conf" ] || \
-    sudo cp $cfgDir/confs_sys/font_30_cjk_aliases.conf /etc/fonts/conf.avail/30-cjk-aliases.conf
-
-    #sudo ln -s /etc/fonts/conf.avail/30-cjk-aliases.conf /etc/fonts/conf.d/
-}
-
-_ebable_sysrq()
-{
-    sudo sed -i '$a kernel.sysrq = 1' /etc/sysctl.d/10-console-messages.conf
-    sudo sed -i '/kernel.sysrq = 176/s/176/1/' /etc/sysctl.d/10-magic-sysrq.conf # for 12.10 and later
-    sudo sed -i '/kernel.sysrq=1/s/#//' /etc/sysctl.d/99-sysctl.conf
-    sudo sed -i '/kernel.sysrq=1/s/#//' /etc/sysctl.conf
-}
-
-_disable_automount()
-{
-    sudo gsettings set org.gnome.desktop.media-handling automount false
-    sudo gsettings set org.gnome.desktop.media-handling automount-open false
-    # sudo gsettings set org.gnome.desktop.media-handlingautomount true
-    # sudo gsettings set org.gnome.desktop.media-handling automount-open true
-
+  sudo mv /etc/apt/sources.list /etc/apt/sources.old
+  sudo cp -v $cfgDir/confs_sys/apt_sources_list /etc/apt/sources.list
+  sudo chown root:root /etc/apt/sources.list
+  sudo chmod 644 /etc/apt/sources.list
 }
 
 _set_fstab()
 {
-    sudo mv /etc/fstab /etc/fstab.bak
-    sudo cp $cfgDir/confs_sys/init_fstab /etc/fstab
+  sudo mv /etc/fstab /etc/fstab.old
+  sudo cp -v $cfgDir/confs_sys/init_fstab /etc/fstab
+}
+
+_set_grub()
+{
+  sudo sed -i '/GRUB_TIMEOUT_STYLE/s/hidden/menu/'           /etc/default/grub
+  sudo sed -i '/GRUB_CMDLINE_LINUX_DEFAULT/s/quiet splash//' /etc/default/grub
+  sudo sed -i '/GRUB_TIMEOUT/s/0/10/'                        /etc/default/grub
+  sudo update-grub
+}
+
+_nautilus_scripts()
+{
+  tDir="$HOME/.local/share/nautilus/scripts"
+  [[ -d $tDir ]] || mkdir -p $tDir
+
+  sDir="$HOME/ktws/scripts/nautilus_scripts"
+  for iFile in $(ls $sDir)
+  do
+    [[ -f $sDir/$iFile ]] && ln -sf $sDir/$iFile $HOME/.local/share/nautilus/scripts
+  done
+}
+
+_set_locale()
+{
+  sudo mv /var/lib/locales/supported.d/local   /var/lib/locales/supported.d/local.old
+  sudo cp -v $cfgDir/confs_sys/locale_local    /var/lib/locales/supported.d/local
+  sudo mv /var/lib/locales/supported.d/en      /var/lib/locales/supported.d/en.old
+  sudo mv /var/lib/locales/supported.d/zh-hant /var/lib/locales/supported.d/zh-hant.old
+  #sudo locale -a
+  #sudo locale-gen zh_TW.UTF-8
+  sudo locale-gen --purge
+  #sudo dpkg-reconfigure locales
+}
+
+_set_zhfonts()
+{
+  [[ -d $HOME/.config/fontconfig/conf.d ]] || mkdir -p $HOME/.config/fontconfig/conf.d
+  [[ -d $HOME/.local/share/fonts ]] || mkdir -p $HOME/.local/share/fonts
+
+  [[ -d "/usr/share/fonts/z_usr" ]] || sudo mkdir -p /usr/share/fonts/z_usr
+
+  for  font_file in Heiti.ttf Monaco.ttf Consola.ttf
+  do
+    sudo cp -v $HOME/mnt/tmpfs/$font_file /usr/share/fonts/z_usr
+  done
+
+  sudo chmod 755 /usr/share/fonts/z_usr/*.ttf
+
+  sudo fc-cache -f -v
+
+  [[ -e "/etc/fonts/conf.avail/69-language-selector-zh-tw.conf" ]] || \
+  sudo cp -v $cfgDir/confs_sys/font_69_language_selector_zh_tw_conf /etc/fonts/conf.avail/69-language-selector-zh-tw.conf
+
+  #sudo ln -sf /etc/fonts/conf.avail/69-language-selector-zh-tw.conf /etc/fonts/conf.d/
+
+  [[ -e "/etc/fonts/conf.avail/30-cjk-aliases.conf" ]] || \
+  sudo cp -v $cfgDir/confs_sys/font_30_cjk_aliases_conf /etc/fonts/conf.avail/30-cjk-aliases.conf
+
+  #sudo ln -sf /etc/fonts/conf.avail/30-cjk-aliases.conf /etc/fonts/conf.d/
+}
+
+_add_themes()
+{
+  [[ -d "/usr/share/icons" ]] || sudo mkdir -p /usr/share/icons
+  sudo tar -xzvf $HOME/mnt/tmpfs/cursors.tar.gz -C /usr/share/icons
+
+  [[ -d "$HOME/.themes" ]] || mkdir -p $HOME/.themes
+  sudo tar -xzvf $HOME/mnt/tmpfs/themes.tar.gz -C $HOME/.themes
+
+  [[ -d "$HOME/.icons" ]] || mkdir -p $HOME/.icons
+  sudo tar -xzvf $HOME/mnt/tmpfs/icons.tar.gz -C $HOME/.icons
+
+  [[ -d /usr/share/gnome-shell/theme/ubuntu.css ]] && \
+     sudo cp -v /usr/share/gnome-shell/theme/ubuntu.css /usr/share/gnome-shell/theme/ubuntu.css.old
+  sudo cp -v $sDir/gdm_ubuntu_css /usr/share/gnome-shell/theme/ubuntu.css
+  # /etc/alternatives/default.plymouth
+}
+
+_ebable_sysrq()
+{
+  sudo sed -i '$a kernel.sysrq = 1'          /etc/sysctl.d/10-console-messages.conf
+  sudo sed -i '/kernel.sysrq = 176/s/176/1/' /etc/sysctl.d/10-magic-sysrq.conf
+  sudo sed -i '/kernel.sysrq=438/s/#//'      /etc/sysctl.conf
+  sudo sed -i '/kernel.sysrq=438/s/438/1/'   /etc/sysctl.conf
+  # echo 1 > /proc/sys/kernel/sysrq  # enable sysrq right now
+  # sysctl -w kernel.sysrq=1 && echo b > /proc/sysrq-trigger # enable sysrq permanently and reboot right now
+}
+
+_disable_automount()
+{
+  sudo gsettings set org.gnome.desktop.media-handling automount false
+  sudo gsettings set org.gnome.desktop.media-handling automount-open false
+  # sudo gsettings set org.gnome.desktop.media-handlingautomount true
+  # sudo gsettings set org.gnome.desktop.media-handling automount-open true
+
 }
 
 _set_crontab()
 {
-    sudo cp $cfgDir/confs_sys/cron_engells /var/spool/cron/crontabs/engells
-    sudo chown engells:crontab /var/spool/cron/crontabs/engells
-    sudo chmod a+w /var/spool/cron/crontabs/engells
+  crontab -e
+  crontab -l
+  #sudo cp -v $cfgDir/confs_sys/cron_engells /var/spool/cron/crontabs/engells
+  #sudo chown engells:crontab /var/spool/cron/crontabs/engells
+  #sudo chmod a+w /var/spool/cron/crontabs/engells
 }
 
 _disable_reclog()
 {
-    sudo chattr +i ~/.local/share/recently-used.xbel
-}
-
-_bak_tmpfs_dir()
-{
-    [ -d "/opt/engells"] || sudo mkdir -p /opt/engells
-    sudo cp $cfgDir/confs_sys/z_mysave.sh /opt/engells
-    sudo cp $cfgDir/confs_sys/z_myload.sh /opt/engells
-    sudo chmod +x /opt/engells/z_my*
-
-    [ -f "/lib/systemd/system/z.mysave.service" ] || sudo cp $cfgDir/confs_sys/z_mysave_service /lib/systemd/system/z.mysave.service
-    sudo systemctl enable z.mysave.service
-
-    [ -d "/var/backups/log"] || sudo mkdir -p /var/backups/log
+  sudo chattr +i $HOME/.local/share/recently-used.xbel  # the file can't edited /immutable => no write, delete, link and so on
 }
 
 _set_firewall()
 {
-    [ -d "/opt/security/iptables" ] || sudo mkdir -p /opt/security/iptables
-    sudo cp $cfgDir/confs_sys/secre_iptables.rule /opt/security/iptables/iptables.rule
-    sudo cp $cfgDir/confs_sys/secre_iptables.allow /opt/security/iptables/iptables.allow
-    sudo cp $cfgDir/confs_sys/secre_iptables.deny /opt/security/iptables/iptables.deny
-    sudo chmod a+x /opt/security/iptables/iptables.*
+  [[ -d "/opt/security/iptables" ]] || sudo mkdir -p /opt/security/iptables
+  sudo cp -v $cfgDir/confs_sys/secure_iptables_rule  /opt/security/iptables/iptables.rule
+  sudo cp -v $cfgDir/confs_sys/secure_iptables_allow /opt/security/iptables/iptables.allow
+  sudo cp -v $cfgDir/confs_sys/secure_iptables_deny  /opt/security/iptables/iptables.deny
+  sudo chmod a+x /opt/security/iptables/iptables.*
 
-    [ -f "/lib/systemd/system/rc.local.service" ] && sudo mv /lib/systemd/system/rc.local.service /lib/systemd/system/rc.local.service.bak
-    sudo cp $cfgDir/confs_sys/init_rc_local_service /lib/systemd/system/rc.local.service
+  [[ -f "/lib/systemd/system/rc.local.service" ]] && sudo mv /lib/systemd/system/rc.local.service /lib/systemd/system/rc.local.service.old
+  sudo cp -v $cfgDir/confs_sys/init_rc_local_service /lib/systemd/system/rc.local.service
 
-    [ -f "/etc/rc.local" ] && sudo mv /etc/rc.local /etc/rc.local.bak
-    sudo cp $cfgDir/confs_sys/init_rc_local /etc/rc.local
-    sudo chmod +x /etc/rc.local
-    sudo systemctl enable rc.local.service
-}
-
-_shortcut_utils()
-{
-    sudo ln -s $HOME/ktws/scripts/avails/kthcrypt_dir.sh /usr/local/bin/kthd
-    sudo ln -s $HOME/ktws/scripts/avails/kthcrypt_part.sh /usr/local/bin/kthp
-    sudo ln -s /home/ktws/scripts/avails/kthcrypt_bak.sh /usr/local/bin/kthb
-    sudo ln -s /home/ktws/scripts/avails/virt_module.sh /usr/local/bin/virtm
-    sudo ln -s /home/ktws/scripts/avails/virt_net.sh /usr/local/bin/virtn
+  [[ -f "/etc/rc.local" ]] && sudo mv /etc/rc.local /etc/rc.local.old
+  sudo cp -v $cfgDir/confs_sys/init_rc_local /etc/rc.local
+  sudo chmod +x /etc/rc.local
+  sudo systemctl enable rc.local.service
 }
 
 _lxc_conf()
 {
-    [ -d "/var/lib/lxc" ] && sudo rm -R /var/lib/lxc
-    sudo ln -s /zvir/lxcd /var/lib/lxc
+  for DIR in dosbox lxcd lxcu virt storage share
+  do
+    [[ -d /zvir/$DIR ]] || sudo mkdir -p /zvir/$DIR
+    sudo chown -R engells:engells /zvir/$DIR
+  done
 
-    [ -d "$HOME/.local/share/lxc" ] && rm -R $HOME/.local/share/lxc
-    ln -s /zvir/lxcu ~/.local/share/lxc
+  for DIR in discs disks blk_disks blk_parts
+  do
+    [[ -d /zvir/storage/$DIR ]] || sudo mkdir -p /zvir/storage/$DIR
+    sudo chown -R engells:engells /zvir/storage/$DIR
+  done
 
-    [ -f "/etc/lxc/lxc-usernet" ] && sudo mv /etc/lxc/lxc-usernet /etc/lxc/lxc-usernet.bak
-    sudo cp $cfgDir/confs_sys/lxc_usernet /etc/lxc/lxc-usernet
+  [[ -d "/var/lib/lxc" ]] && sudo rm -R /var/lib/lxc
+  sudo ln -sf /zvir/lxcd /var/lib/lxc
 
-    [ -f "$HOME/.config/lxc/default.conf" ] && mv ~/.config/lxc/default.conf ~/.config/lxc/default.conf.bak
-    cp $cfgDir/confs_sys/lxc_default_conf ~/.config/lxc/default.conf
+  [[ -d "$HOME/.local/share/lxc" ]] && rm -R $HOME/.local/share/lxc
+  ln -sf /zvir/lxcu $HOME/.local/share/lxc
 
-    chmod a+x ~/.local
-    chmod a+x ~/.local/share
-    chmod a+x /zvir/lxcu
+  [[ -f "/etc/default/lxc-net" ]] && sudo mv /etc/default/lxc-net /etc/default/lxc-net.old
+  sudo cp -v $cfgDir/confs_sys/lxc_net  /etc/lxc/lxc-net
+
+  [[ -f "/etc/lxc/lxc-usernet" ]] && sudo mv /etc/lxc/lxc-usernet /etc/lxc/lxc-usernet.old
+  sudo cp -v $cfgDir/confs_sys/lxc_usernet /etc/lxc/lxc-usernet
+
+  [[ -d "$HOME/.config/lxc" ]] || mkdir -p $HOME/.config/lxc
+  [[ -f "$HOME/.config/lxc/default.conf" ]] && mv $HOME/.config/lxc/default.conf $HOME/.config/lxc/default.conf.old
+  cp -v $cfgDir/confs_sys/lxc_default_conf $HOME/.config/lxc/default.conf
+
+  chmod a+x $HOME/.local
+  chmod a+x $HOME/.local/share
+  chmod a+x /zvir/lxcu
 }
+
+# libs below are just for backup
+
+_bak_tmpfs_dir()
+{
+  [[ -d "/opt/engells" ]] || sudo mkdir -p /opt/engells
+  sudo cp -v $cfgDir/confs_sys/z_my_save_sh /opt/engells/z_mysave.sh
+  sudo cp -v $cfgDir/confs_sys/z_my_load_sh /opt/engells/z_myload.sh
+  sudo chmod +x /opt/engells/z_my*
+
+  [[ -f "/lib/systemd/system/z_my_save_service" ]] || sudo cp -v $cfgDir/confs_sys/z_my_save_service /lib/systemd/system/z.mysave.service
+  sudo systemctl enable z.mysave.service
+
+  [[ -d "/var/backups/log" ]] || sudo mkdir -p /var/backups/log
+}
+
+_shortcut_utils()
+{
+  sudo ln -sf $cfgDir/avails/kthcrypt_dir.sh  /usr/local/bin/kthd
+  sudo ln -sf $cfgDir/avails/kthcrypt_part.sh /usr/local/bin/kthp
+  sudo ln -sf $cfgDir/avails/kthcrypt_bak.sh  /usr/local/bin/kthb
+  sudo ln -sf $cfgDir/avails/virt_module.sh   /usr/local/bin/virtm
+  sudo ln -sf $cfgDir/avails/virt_net.sh      /usr/local/bin/virtn
+}
+
+_cp_files()
+{
+  tDir="$HOME/mnt/tmpfs"
+
+  sDir="$HOME/ktws/0_sur_fonts"
+  cp -v $sDir/Apple/Heiti-SC-Medium-6.1-d23.ttf $tDir/Heiti.ttf
+  cp -v $sDir/Apple/Monaco.ttf $tDir/Monaco.ttf
+  cp -v $sDir/Apple/Monaco_Linux_Powerline $tDir/Monaco_Linux_Powerline
+  cp -v $sDir/Microsoft/consola.ttf $tDir/Consola.ttf
+  #cp -v $sDir/TW_Gov/TW-Kai-98.1.ttf $tDir/TW-Kai.ttf
+  #cp -v $sDir/TW_Gov/TW-Sung-98.1.ttf $tDir/TW-Sung.ttf
+}
+
+_join_libvirt_group()
+{
+  sudo adduser $(whoami) kvm
+  sudo adduser $(whoami) libvirt
+  sudo adduser $(whoami) libvirt-qemu
+}
+
+_set_netplan()
+{
+  [[ -f /etc/netplan/01-network-manager-all.yaml ]] && sudo mv /etc/netplan/01-network-manager-all.yaml \
+     /etc/netplan/01-network-manager-all.yaml.old
+  sudo cp -v $cfgDir/confs_sys/device_01_network_manager_all_yaml /etc/netplan/01-network-manager-all.yaml
+  sudo netplan apply
+  #sudo systemctl restart NetworkManager
+}
+
+_set_gedit()
+{
+  gsettings set org.gnome.gedit.preferences.editor use-default-font false
+  gsettings set org.gnome.gedit.preferences.editor editor-font 'Monaco Regular 16'
+  gsettings set org.gnome.gedit.plugins.externaltools use-system-font false
+  gsettings set org.gnome.gedit.plugins.externaltools font 'Monaco Regular 16'
+  gsettings set org.gnome.gedit.plugins.pythonconsole use-system-font false
+  gsettings set org.gnome.gedit.plugins.pythonconsole font 'Monaco Regular 16'
+
+  gsettings set org.gnome.gedit.preferences.editor scheme 'Solarized Dark'
+  gsettings set org.gnome.gedit.preferences.editor insert-spaces true
+  gsettings set org.gnome.gedit.preferences.editor tabs-size 2
+  gsettings set org.gnome.gedit.preferences.encodings candidate-encodings "['UTF-8','BIG5','GBK','GB18030','GB2312','CURRENT','UTF-16']"
+  #gsettings set org.gnome.gedit.plugins active-plugins \
+  #  "['filebrowser', 'quickhighlight', 'modelines', 'sort', 'externaltools', 'openlinks', 'docinfo', 'pythonconsole',
+
+  #url: https://github.com/samwhelp/note-about-ubuntu/blob/gh-pages/_demo/adjustment/tool/gedit/config-install.sh
+}
+
 

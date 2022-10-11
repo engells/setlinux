@@ -1,7 +1,0 @@
-#!/bin/bash
-# program: Using to umount portable disk partitions
-# made by: Engells
-# date: Mar 30, 2019
-# content: 
-
-gnome-terminal -e '/home/engells/ktws/scripts/avails/nautilus_lunch.sh um'

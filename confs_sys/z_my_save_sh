@@ -1,8 +1,8 @@
 #!/bin/sh
-# vim:ts=4
+# vim:ts=2
 # program: To backup tmpfs while halting
 # made by: Engells
-# date: Feb 9, 2013
+# date: Jun 30, 2022
 # content: 
 
 _dump2bak()
@@ -47,4 +47,8 @@ do
 done
 
 unset way; unset surdir ; unset tardir
+
+echo "Save log and cache files to local dusk on $(date)" >> /home/engells/z_boot.log
+
+exit 0
 

@@ -1,12 +1,18 @@
 [Unit]
 Description=Save log and download files from tmpfs
-DefaultDependencies=no
-Before=shutdown.target reboot.target halt.target
+Before=umount.target shutdown.target reboot.target halt.target
+#DefaultDependencies=no
 
 [Service]
 Type=oneshot
 ExecStart=/opt/engells/z_mysave.sh
+ExecStop=/bin/true
+#Type=simple
+#ExecStart=/opt/engells/z_mysave.sh
+#RemainAfterExit=true
 
 [Install]
-WantedBy=halt.target reboot.target shutdown.target
+WantedBy=graphical.target
 Alias=z.mysave.service
+#WantedBy=halt.target reboot.target shutdown.target
+#ref: https://www.programminghunter.com/article/4176927423/

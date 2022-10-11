@@ -18,8 +18,8 @@ install_remove	grub-pc
 install_apt	p7zip-full
 install_apt	unrar
 install_apt	xz-utils
-install_apt	squashfs-tools
-install_apt	archivemount
+*install_apt	squashfs-tools
+*install_apt	archivemount
 #-- multi media --
 install_apt	mplayer
 install_apt	smplayer
@@ -49,11 +49,11 @@ install_apt	gnome-shell-extension-system-monitor
 install_apt	gnome-shell-extension-hide-activities
 #install_apt	gnome-shell-extension-autohidetopbar
 #-- system --
-#install_apt	stacer
-#install_apt	bleachbit
-install_apt	grub-efi-amd64-signed
-install_apt	shim-signed
+#install_apt	grub-efi-amd64-signed
+#install_apt	shim-signed
 install_apt	sysstat
+install_apt	zfsutils-linux
+install_apt	btrfs-progs
 install_apt	indicator-multiload
 install_apt	git
 install_apt	dmsetup
@@ -65,6 +65,7 @@ install_apt	exfat-fuse
 install_apt	rename
 install_apt	htop
 install_apt	ncdu
+#install_apt	bleachbit
 #install_apt	gtkorphan
 #candidate: autojump fd ag exa bat jq hub fzf mosh
 #-- office utils --
@@ -89,10 +90,13 @@ install_apt	qemu-kvm
 install_apt	qemu-system-arm
 install_apt	ovmf
 install_apt	virt-manager
+install_apt	libguestfs-tools
 install_apt	uml-utilities
 install_apt	bridge-utils
 install_apt	kpartx
 install_apt	dosbox
 #-- remote control --
 install_apt	remmina
+install_apt	filezilla
+
 

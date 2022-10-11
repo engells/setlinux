@@ -11,8 +11,8 @@ ZSH_THEME="robbyrussell"
 
 plugins=(git)
 
-[[ ! -f $HOME/.config/z_my_confs/shell_basic ]] || source $HOME/.config/z_my_confs/shell_basic
-[[ ! -f $HOME/.config/z_my_confs/shell_alias ]] || source $HOME/.config/z_my_confs/shell_alias
+[[ ! -f $HOME/.config/zz_my_confs/shell_basic ]] || source $HOME/.config/zz_my_confs/shell_basic
+[[ ! -f $HOME/.config/zz_my_confs/shell_alias ]] || source $HOME/.config/zz_my_confs/shell_alias
 
 [[ ! -f $ZSH/oh-my-zsh.sh ]] || source $ZSH/oh-my-zsh.sh
 

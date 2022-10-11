@@ -1,8 +1,8 @@
 #!/bin/sh
-# vim:ts=4
+# vim:ts=2
 # program: To reload files to tmpfs while booting
 # made by: Engells
-# date: Feb 9, 2013
+# date: Jun 30, 2022
 # content: 
 
 _dump2bak()
@@ -43,8 +43,8 @@ do
 			;;
 		samba)
 			# disable samba servive after booting
-			service smbd stop
-			service nmbd stop
+			#service smbd stop
+			#service nmbd stop
 			;;
 		*)
 			echo '' > /dev/null
@@ -52,4 +52,8 @@ do
 done
 
 unset way; unset surdir ; unset tardir
+
+echo "Load log and cache files to tmpfs on $(date)" >> /home/engells/z_boot.log
+
+exit 0
 

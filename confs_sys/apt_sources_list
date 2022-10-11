@@ -1,0 +1,10 @@
+
+deb http://tw.archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse
+deb http://tw.archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse
+
+deb http://tw.archive.ubuntu.com/ubuntu/ focal-backports main restricted universe multiverse
+deb http://security.ubuntu.com/ubuntu focal-security main restricted universe multiverse
+
+# deb http://archive.canonical.com/ubuntu bionic partner
+# deb-src
+# deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main

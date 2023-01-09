@@ -119,6 +119,9 @@ PIME 輸入法
 
 補充資料
 ====================
+Chrome browser repo in Ubuntu
+    deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main
+    
 Debian
     deb http://ftp.tw.debian.org/debian/ stretch main contrib non-free
     deb-src http://ftp.tw.debian.org/debian/ stretch main contrib non-free

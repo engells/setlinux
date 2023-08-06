@@ -11,9 +11,10 @@ export HISTIGNORE=shutdown:exit:df:clear:\&
 # 不紀錄重複指令
 HISTCONTROL=ignoredups:ignorespace
 
-# 設定路徑，加入~/ktws/scripts
+# 設定路徑，加入 $HOME/ktws/scripts, $HOME/.local/bin
+export PATH=$HOME/.local/bin:$PATH
 #if [ ! $(echo $PATH | grep "$HOME/mnt/scripts") ] ; then export PATH=$HOME/mnt/scripts:$PATH ; fi
-[[ $(echo $PATH | grep "$HOME/mnt/scripts") ]] && export PATH=$HOME/mnt/scripts:$PATH
+[[ $(echo $PATH | grep "$HOME/mnt/scripts") ]] || export PATH=$HOME/mnt/scripts:$PATH
 
 # 設定提示符號，與 oh my zsh 衝突，停用
 #PS1='[\u@\h \W]\$ '

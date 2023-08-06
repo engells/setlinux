@@ -3,4 +3,4 @@ UUID=563a3b14-a2f1-4ce9-b30f-2a5c5ae264c7 /               ext4    errors=remount
 UUID=E689-0E57                            /boot/efi       vfat    umask=0077            0       1
 tmp                                       /tmp            tmpfs   defaults,mode=1777    0       0
 log                                       /var/log        tmpfs   defaults,mode=1777    0       0
-
+download                         /home/engells/downloads  tmpfs   defaults,mode=1777    0       0

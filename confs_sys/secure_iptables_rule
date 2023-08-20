@@ -37,9 +37,9 @@
 # ========================================================
 #
 # 歷史紀錄：
-#   2002/08/20    VBird   首次釋出
-#   2003/04/26    VBird   加入砍站軟體的相關執行檔案！
-#   2003/08/25    VBird   修改 INPUT 的 Policy 成為 DROP
+#   2002/08/20  VBird   首次釋出
+#   2003/04/26  VBird   加入砍站軟體的相關執行檔案！
+#   2003/08/25  VBird   修改 INPUT 的 Policy 成為 DROP
 #   2006/09/13	VBird	重新修訂，加入一些核心參數 /proc/sys/net/ipv4/*
 #   2006/09/15	VBird   加入關於 NAT 主機後端伺服器的轉址功能。
 #   2006/09/30	VBird	加入每個設定項目的英文說明！！
@@ -49,11 +49,11 @@
 
 # 請先輸入您的相關參數，不要輸入錯誤了！
 # English: Please input your networks parameters ( including your LAN NIC )
-  EXTIF="enp2s0"			# 這個是可以連上 Public IP 的網路介面，也可能是 ppp0。需確定是 pppo 或 ppp0
+  EXTIF="enp2s0"	# 這個是可以連上 Public IP 的網路介面，也可能是 ppp0。需確定是 pppo 或 ppp0
 					# This is your NIC, connect to internet. Such as ppp0...
-  INIF=""				# 內部 LAN 的連接介面；若無 LAN ，填寫成 INIF=""
+  INIF=""			# 內部 LAN 的連接介面；若無 LAN ，填寫成 INIF=""
 					# This is your LAN NIC.  If you don't have a LAN, input INIF="" please.
-  INNET=""				# 若有兩個以上的網域，可以用 INNET="192.168.1.0/24 192.168.100.0/24"
+  INNET=""			# 若有兩個以上的網域，可以用 INNET="192.168.1.0/24 192.168.100.0/24"
 					# 若無內部網域介面，請填寫成 INNET=""
 					# This is your LAN's Network.  If you have to private network, 
 					# input as INNET="192.168.1.0/24 192.168.100.0/24".
@@ -61,15 +61,16 @@
 
 # 個人化設定啊！請自行填寫您自己想要預先啟動的一些基礎資料。
 # These settings is about yourself's paramters.
-  allowname=""			# 允許登入本機的 hostname ，必須是 Internet 找的到的 hostname。
+# Ex 自 www.google.com 網址查出對應 IP 位址為 142.251.42.228
+  allowname=""		# 允許登入本機的 hostname ，必須是 Internet 找的到的 hostname。
   allowip=""
   if [ "$allowname" != "" ]; then
     for siteiptmp in `echo $allowname`
     do
-          siteip=`/usr/bin/host $siteiptmp 168.95.1.1    | grep address|tail -n 1 | awk '{print $4}'`
-          testip=`echo $siteip | grep [^0-9.]`
+          siteip=$(/usr/bin/host $siteiptmp 168.95.1.1 | grep address | head -n 1 | awk '{print $4}')
+          testip=$(echo $siteip | grep ^"[^0-9]")
           if [ "$testip" == "" ]; then
-               allowip="$allowip  $siteip"
+               allowip="$allowip $siteip"
           fi
     done
   fi

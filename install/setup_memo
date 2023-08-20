@@ -2,7 +2,7 @@
 # vim:ts=4
 # program: Using to memo Ubuntu 18.04 installion
 # made by: Engells
-# date: Jun 30, 2022
+# date: Aug 12, 2023
 # content: Just for memo
 
 
@@ -24,6 +24,7 @@
 3.掛載裝機磁區
   -編輯 /etc/fstab 移除 swap 設定
   -編輯 /etc/default/grub 設定開機時顯示 grub 選單，並以文字模式顯示開機過程
+    GRUB_CMDLINE_LINUX_DEFAULT="intel_iommu=on iommu=pt kvm.ignore_msrs=1"
   -禁用追蹤文件紀錄： sudo chattr +i $HOME/.local/share/recently-used.xbel
   -必要時 chroot 切換至裝機磁區。
     for i in /dev /dev/pts /proc /sys /run; do sudo mount -B $i /target$i; done
@@ -85,7 +86,11 @@
 6.問題解決
  -沒有聲音輸出
   *安裝 pavucontrol，在終端機執行 pavucontrol => Configuration => Build-in Audio => Analog Stereo Output (Unplugged)
-  *若上述步驟未解決問題，apt remove --purge alsa-base pulseaudio，apt install alsa-base pavucontrol，killall pulseaudio, rm -r $HOME/.config/pulse/*
+  *若上述步驟未解決問題，
+    apt remove --purge alsa-base pulseaudio
+    apt install alsa-base pavucontrol
+    killall pulseaudio
+    rm -r $HOME/.config/pulse/*
   *參考指令 aplay -l，alsamixer，sudo alsa force-reload
  -SWAP 缺 RESUME 參數
   *sudo edit /etc/initramfs-tools/conf.d/resume，加入 RESUME=UUID=463f3378-766c-48e2-ad51-79dbfa344a72

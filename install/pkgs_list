@@ -29,6 +29,7 @@ install_apt	gstreamer1.0-plugins-ugly
 install_apt	gstreamer1.0-plugins-bad
 install_apt	gstreamer1.0-libav
 install_apt	ffmpeg
+install_apt	alsa-utils
 #install_apt	lame # mp3 utilities
 #install_apt	flac # flac utilities
 #install_apt	gnash
@@ -87,9 +88,13 @@ install_apt	lxc
 install_apt	systemd
 install_apt	uidmap
 install_apt	qemu-kvm
+install_apt	qemu-utils
 install_apt	qemu-system-arm
-install_apt	ovmf
+install_apt	libvirt-daemon-system
+install_apt	libvirt-clients
 install_apt	virt-manager
+install_apt	ovmf
+install_apt	swtpm  # since 22.04
 install_apt	libguestfs-tools
 install_apt	uml-utilities
 install_apt	bridge-utils

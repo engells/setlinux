@@ -101,6 +101,7 @@ install_apt	bridge-utils
 install_apt	kpartx
 install_apt	dosbox
 install_apt	gameconqueror
+install_apt	spice-vdagent # Spice agent for Linux
 #-- remote control --
 install_apt	remmina
 install_apt	filezilla

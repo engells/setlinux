@@ -1,6 +1,6 @@
 [Unit]
 Description=Load log and download files from tmpfs
-After=zfs-volume-wait.service
+After=zfs-mount.service
 Requires=zfs-volume-wait.service
 #After=network.target
 

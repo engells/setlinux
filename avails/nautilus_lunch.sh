@@ -2,11 +2,11 @@
 # vim:ts=2
 # program: Using to clean system and config trackball
 # made by: Engells
-# date: Apr 27, 2019
+# date: Oct 28, 2023
 # content: 
 
 if [ -z $1 ]; then 
-	Des='請輸入處理方式 c:清除系統 h:清除bash歷史指令 m:設定羅技軌跡球 u:卸載 /dev/sdc'
+	Des='請輸入處理方式 cs:清除系統 sh:清除bash歷史指令 m:設定羅技軌跡球 um:卸載 /dev/sdc'
 	printf "%s\n" "$Des"
 
 	read way
@@ -22,11 +22,15 @@ case $way in
 
 	cs)
 
+		echo '2秒後開始清理 APT 緩存' && sleep 2
+
 		. /home/engells/ktws/scripts/libs/kt_lib_default.sh
 		_clean_apt
 		;;
 
 	ch)
+
+		echo '2秒後開始清理 bash 及 zsh 緩存' && sleep 2
 
 		. /home/engells/ktws/scripts/libs/kt_lib_default.sh
 		_clean_bash

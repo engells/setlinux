@@ -1,6 +1,7 @@
-# <file system>                           <mount point>  <type>  <options>             <dump>   <pass>
-UUID=563a3b14-a2f1-4ce9-b30f-2a5c5ae264c7 /               ext4    errors=remount-ro     0       1
-UUID=E689-0E57                            /boot/efi       vfat    umask=0077            0       1
-tmp                                       /tmp            tmpfs   defaults,mode=1777    0       0
-log                                       /var/log        tmpfs   defaults,mode=1777    0       0
-download                         /home/engells/downloads  tmpfs   defaults,mode=1777    0       0
+# <file system>                           <mount point>           <type>  <options>                     <dump>   <pass>
+UUID=563a3b14-a2f1-4ce9-b30f-2a5c5ae264c7 /                        ext4    noatime,errors=remount-ro     0       1
+UUID=E689-0E57                            /boot/efi                vfat    umask=0077                    0       1
+tmpfs                                     /tmp                     tmpfs   defaults,noatime,mode=1777    0       0
+tmpfs                                     /var/tmp                 tmpfs   defaults,noatime,mode=1777    0       0
+tmpfs                                     /var/log                 tmpfs   defaults,noexec,mode=1777     0       0
+tmpfs                                     /home/engells/downloads  tmpfs   defaults,noatime,mode=1777    0       0

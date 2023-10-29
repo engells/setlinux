@@ -50,8 +50,6 @@ _bak_data_to_local()
 
 _clean_apt()
 {
-	echo '2 秒後開始清除 APT 系統' && sleep 2
-
 	sudo apt-get autoremove --purge
   sudo apt-get remove
 	sudo apt-get autoclean
@@ -61,8 +59,6 @@ _clean_apt()
 
 _clean_bash()
 {
-	echo '2 秒後開始清除 bash 及 zsh 歷史指令' && sleep 2
-
 	[ -f $HOME/.bash_history ] && cat /dev/null > $HOME/.bash_history
 	[ -f $HOME/.config/zsh/.zhistory ] && cat /dev/null > $HOME/.config/zsh/.zhistory
 }
@@ -87,7 +83,7 @@ _rm_zfs_mnt_dir()
 	echo '2 秒後開始移除 dataset 掛載點' && sleep 2
 	for mnt_dir in ktws mmedia ktwsb mmediab virt warehouse home
 	do
-		sudo rm -rf /home/engells/mnt/$mnt_dir 2>/dev/null
+		sudo rm -rf /home/engells/mnt/k$mnt_dir 2>/dev/null
 		sudo rm -rf /home/engells/mnt/x$mnt_dir 2>/dev/null
 		sudo rm -rf /home/engells/mnt/z$mnt_dir 2>/dev/null
 	done

@@ -2,28 +2,10 @@
 # vim:tb=2
 # lib: Using to install Ubuntu 20.04
 # made by: Engells
-# date: Jun 30, 2022
+# date: Oct 28, 2023
 # content: 
 
 cfgDir="$HOME/ktws/scripts" #cfgDir="$HOME/mnt/dump3/scripts"
-
-_remove_snap()
-{
-  sudo snap remove --purge snap-store
-  sudo snap remove --purge gtk-common-themes
-  sudo snap remove --purge gnome-3-38-2004
-  sudo snap remove --purge core20
-  sudo snap remove --purge bare 
-  sudo snap remove --purge snapd
-  sudo apt remove --autoremove snapd
-  sudo rm -rf ~/snap /snap /var/snap /var/lib/snapd
-
-  [[ -f /etc/apt/preferences.d/nosnap.pref ]] || sudo touch /etc/apt/preferences.d/nosnap.pref
-  echo '## Disable snap' > /etc/apt/preferences.d/nosnap.pref
-  sudo sed -i '$a Package: snapd'    /etc/apt/preferences.d/nosnap.pref
-  sudo sed -i '$a Pin: release a=*'  /etc/apt/preferences.d/nosnap.pref
-  sudo sed -i '$a Pin-Priority: -10' /etc/apt/preferences.d/nosnap.pref
-}
 
 _mnt_dirs()
 {
@@ -96,18 +78,6 @@ _tmux_conf()
   #git clone https://github.com/jimeh/tmuxifier.git $HOME/.tmuxifier
 }
 
-_vim_conf()
-{
-  [[ -d $HOME/.vim/confs ]] || mkdir -p $HOME/.vim/confs && cp -v $cfgDir/confs_vim/exrc* $HOME/.vim/confs
-  [[ -f $HOME/.vimrc ]] ||  mv $HOME/.vimrc $HOME/.vimrc.old &&   ln -sf $HOME/.vim/confs/exrc_vim $HOME/.vim/vimrc
-  [[ -f $HOME/.gvimrc ]] || mv $HOME/.gvimrc $HOME/.gvimrc.old && ln -sf $HOME/.vim/confs/exrc_gvim $HOME/.vim/gvimrc
-
-  [[ -d $HOME/.vim/autoload ]] || mkdir -p $HOME/.vim/autoload
-  [[ -d $HOME/.vim/pack ]] || mkdir -p $HOME/.vim/pack && mkdir -p $HOME/.vim//pack/{start,opt}
-
-  #cd $HOME/.vim/autoload/ && curl -O https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-}
-
 _chg_aptsur()
 {
   sudo mv /etc/apt/sources.list /etc/apt/sources.old
@@ -142,6 +112,128 @@ _nautilus_scripts()
   done
 }
 
+_ebable_sysrq()
+{
+  sudo sed -i '$a kernel.sysrq = 1'          /etc/sysctl.d/10-console-messages.conf
+  sudo sed -i '/kernel.sysrq = 176/s/176/1/' /etc/sysctl.d/10-magic-sysrq.conf
+  sudo sed -i '/kernel.sysrq=438/s/#//'      /etc/sysctl.conf
+  sudo sed -i '/kernel.sysrq=438/s/438/1/'   /etc/sysctl.conf
+  # echo 1 > /proc/sys/kernel/sysrq  # enable sysrq right now
+  # sysctl -w kernel.sysrq=1 && echo b > /proc/sysrq-trigger # enable sysrq permanently and reboot right now
+}
+
+_set_crontab()
+{
+  crontab -e
+  crontab -l
+  #sudo cp -v $cfgDir/confs_sys/cron_engells /var/spool/cron/crontabs/engells
+  #sudo chown engells:crontab /var/spool/cron/crontabs/engells
+  #sudo chmod a+w /var/spool/cron/crontabs/engells
+}
+
+_disable_reclog()
+{
+  sudo chattr +i $HOME/.local/share/recently-used.xbel  # the file can't edited /immutable => no write, delete, link and so on
+}
+
+_lxc_conf()
+{
+  for DIR in dosbox lxcd lxcu virt storage share
+  do
+    [[ -d /zvir/$DIR ]] || sudo mkdir -p /zvir/$DIR
+    sudo chown -R engells:engells /zvir/$DIR
+  done
+
+  for DIR in discs disks blk_disks blk_parts
+  do
+    [[ -d /zvir/storage/$DIR ]] || sudo mkdir -p /zvir/storage/$DIR
+    sudo chown -R engells:engells /zvir/storage/$DIR
+  done
+
+  [[ -d "/var/lib/lxc" ]] && sudo rm -R /var/lib/lxc
+  sudo ln -sf /zvir/lxcd /var/lib/lxc
+
+  [[ -d "$HOME/.local/share/lxc" ]] && rm -R $HOME/.local/share/lxc
+  ln -sf /zvir/lxcu $HOME/.local/share/lxc
+
+  [[ -f "/etc/default/lxc-net" ]] && sudo mv /etc/default/lxc-net /etc/default/lxc-net.old
+  sudo cp -v $cfgDir/confs_sys/lxc_net  /etc/lxc/lxc-net
+
+  [[ -f "/etc/lxc/lxc-usernet" ]] && sudo mv /etc/lxc/lxc-usernet /etc/lxc/lxc-usernet.old
+  sudo cp -v $cfgDir/confs_sys/lxc_usernet /etc/lxc/lxc-usernet
+
+  [[ -d "$HOME/.config/lxc" ]] || mkdir -p $HOME/.config/lxc
+  [[ -f "$HOME/.config/lxc/default.conf" ]] && mv $HOME/.config/lxc/default.conf $HOME/.config/lxc/default.conf.old
+  cp -v $cfgDir/confs_sys/lxc_default_conf $HOME/.config/lxc/default.conf
+
+  chmod a+x $HOME/.local
+  chmod a+x $HOME/.local/share
+  chmod a+x /zvir/lxcu
+}
+
+_join_libvirt_group()
+{
+  sudo adduser $(whoami) kvm
+  sudo adduser $(whoami) libvirt
+  sudo adduser $(whoami) libvirt-qemu
+}
+
+_set_netplan()
+{
+  [[ -f /etc/netplan/01-network-manager-all.yaml ]] && sudo mv /etc/netplan/01-network-manager-all.yaml \
+     /etc/netplan/01-network-manager-all.yaml.old
+  sudo cp -v $cfgDir/confs_sys/device_01_network_manager_all_yaml /etc/netplan/01-network-manager-all.yaml
+  sudo netplan apply
+  #sudo systemctl restart NetworkManager
+}
+
+_set_gedit()
+{
+  gsettings set org.gnome.gedit.preferences.editor use-default-font false
+  gsettings set org.gnome.gedit.preferences.editor editor-font 'Monaco Regular 16'
+  gsettings set org.gnome.gedit.plugins.externaltools use-system-font false
+  gsettings set org.gnome.gedit.plugins.externaltools font 'Monaco Regular 16'
+  gsettings set org.gnome.gedit.plugins.pythonconsole use-system-font false
+  gsettings set org.gnome.gedit.plugins.pythonconsole font 'Monaco Regular 16'
+
+  gsettings set org.gnome.gedit.preferences.editor scheme 'Solarized Dark'
+  gsettings set org.gnome.gedit.preferences.editor insert-spaces true
+  gsettings set org.gnome.gedit.preferences.editor tabs-size 2
+  gsettings set org.gnome.gedit.preferences.encodings candidate-encodings "['UTF-8','BIG5','GBK','GB18030','GB2312','CURRENT','UTF-16']"
+  #gsettings set org.gnome.gedit.plugins active-plugins \
+  #  "['filebrowser', 'quickhighlight', 'modelines', 'sort', 'externaltools', 'openlinks', 'docinfo', 'pythonconsole',
+
+  #url: https://github.com/samwhelp/note-about-ubuntu/blob/gh-pages/_demo/adjustment/tool/gedit/config-install.sh
+}
+
+_set_fontconfig()
+{
+ [[ -d $HOME/.config/fontconfig ]] || mkdir -p $HOME/.config/fontconfig
+ [[ -f $HOME/.config/fontconfig/fonts.conf ]] && sudo mv $HOME/.config/fontconfig/fonts.conf $HOME/.config/fontconfig/fonts.conf.old
+ [[ -f $cfgDir/confs_sys/font_fonts.conf ]] && cp -v $cfgDir/confs_sys/font_fonts.conf $HOME/.config/fontconfig/fonts.conf
+}
+
+
+#----Back for Ubuntu---- 
+
+_remove_snap()
+{
+  sudo snap remove --purge snap-store
+  sudo snap remove --purge gtk-common-themes
+  sudo snap remove --purge gnome-3-38-2004
+  sudo snap remove --purge core20
+  sudo snap remove --purge bare 
+  sudo snap remove --purge snapd
+  sudo apt remove --autoremove snapd
+  sudo rm -rf ~/snap /snap /var/snap /var/lib/snapd
+
+  [[ -f /etc/apt/preferences.d/nosnap.pref ]] || sudo touch /etc/apt/preferences.d/nosnap.pref
+  echo '## Disable snap' > /etc/apt/preferences.d/nosnap.pref
+  sudo sed -i '$a Package: snapd'    /etc/apt/preferences.d/nosnap.pref
+  sudo sed -i '$a Pin: release a=*'  /etc/apt/preferences.d/nosnap.pref
+  sudo sed -i '$a Pin-Priority: -10' /etc/apt/preferences.d/nosnap.pref
+}
+
 _set_locale()
 {
   sudo mv /var/lib/locales/supported.d/local   /var/lib/locales/supported.d/local.old
@@ -152,6 +244,18 @@ _set_locale()
   #sudo locale-gen zh_TW.UTF-8
   sudo locale-gen --purge
   #sudo dpkg-reconfigure locales
+}
+
+_vim_conf()
+{
+  [[ -d $HOME/.vim/confs ]] || mkdir -p $HOME/.vim/confs && cp -v $cfgDir/confs_vim/exrc* $HOME/.vim/confs
+  [[ -f $HOME/.vimrc ]] ||  mv $HOME/.vimrc $HOME/.vimrc.old &&   ln -sf $HOME/.vim/confs/exrc_vim $HOME/.vim/vimrc
+  [[ -f $HOME/.gvimrc ]] || mv $HOME/.gvimrc $HOME/.gvimrc.old && ln -sf $HOME/.vim/confs/exrc_gvim $HOME/.vim/gvimrc
+
+  [[ -d $HOME/.vim/autoload ]] || mkdir -p $HOME/.vim/autoload
+  [[ -d $HOME/.vim/pack ]] || mkdir -p $HOME/.vim/pack && mkdir -p $HOME/.vim//pack/{start,opt}
+
+  #cd $HOME/.vim/autoload/ && curl -O https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 }
 
 _set_zhfonts()
@@ -198,16 +302,6 @@ _add_themes()
   # /etc/alternatives/default.plymouth
 }
 
-_ebable_sysrq()
-{
-  sudo sed -i '$a kernel.sysrq = 1'          /etc/sysctl.d/10-console-messages.conf
-  sudo sed -i '/kernel.sysrq = 176/s/176/1/' /etc/sysctl.d/10-magic-sysrq.conf
-  sudo sed -i '/kernel.sysrq=438/s/#//'      /etc/sysctl.conf
-  sudo sed -i '/kernel.sysrq=438/s/438/1/'   /etc/sysctl.conf
-  # echo 1 > /proc/sys/kernel/sysrq  # enable sysrq right now
-  # sysctl -w kernel.sysrq=1 && echo b > /proc/sysrq-trigger # enable sysrq permanently and reboot right now
-}
-
 _disable_automount()
 {
   sudo gsettings set org.gnome.desktop.media-handling automount false
@@ -215,20 +309,6 @@ _disable_automount()
   # sudo gsettings set org.gnome.desktop.media-handlingautomount true
   # sudo gsettings set org.gnome.desktop.media-handling automount-open true
 
-}
-
-_set_crontab()
-{
-  crontab -e
-  crontab -l
-  #sudo cp -v $cfgDir/confs_sys/cron_engells /var/spool/cron/crontabs/engells
-  #sudo chown engells:crontab /var/spool/cron/crontabs/engells
-  #sudo chmod a+w /var/spool/cron/crontabs/engells
-}
-
-_disable_reclog()
-{
-  sudo chattr +i $HOME/.local/share/recently-used.xbel  # the file can't edited /immutable => no write, delete, link and so on
 }
 
 _set_firewall()
@@ -247,43 +327,6 @@ _set_firewall()
   sudo chmod +x /etc/rc.local
   sudo systemctl enable rc.local.service
 }
-
-_lxc_conf()
-{
-  for DIR in dosbox lxcd lxcu virt storage share
-  do
-    [[ -d /zvir/$DIR ]] || sudo mkdir -p /zvir/$DIR
-    sudo chown -R engells:engells /zvir/$DIR
-  done
-
-  for DIR in discs disks blk_disks blk_parts
-  do
-    [[ -d /zvir/storage/$DIR ]] || sudo mkdir -p /zvir/storage/$DIR
-    sudo chown -R engells:engells /zvir/storage/$DIR
-  done
-
-  [[ -d "/var/lib/lxc" ]] && sudo rm -R /var/lib/lxc
-  sudo ln -sf /zvir/lxcd /var/lib/lxc
-
-  [[ -d "$HOME/.local/share/lxc" ]] && rm -R $HOME/.local/share/lxc
-  ln -sf /zvir/lxcu $HOME/.local/share/lxc
-
-  [[ -f "/etc/default/lxc-net" ]] && sudo mv /etc/default/lxc-net /etc/default/lxc-net.old
-  sudo cp -v $cfgDir/confs_sys/lxc_net  /etc/lxc/lxc-net
-
-  [[ -f "/etc/lxc/lxc-usernet" ]] && sudo mv /etc/lxc/lxc-usernet /etc/lxc/lxc-usernet.old
-  sudo cp -v $cfgDir/confs_sys/lxc_usernet /etc/lxc/lxc-usernet
-
-  [[ -d "$HOME/.config/lxc" ]] || mkdir -p $HOME/.config/lxc
-  [[ -f "$HOME/.config/lxc/default.conf" ]] && mv $HOME/.config/lxc/default.conf $HOME/.config/lxc/default.conf.old
-  cp -v $cfgDir/confs_sys/lxc_default_conf $HOME/.config/lxc/default.conf
-
-  chmod a+x $HOME/.local
-  chmod a+x $HOME/.local/share
-  chmod a+x /zvir/lxcu
-}
-
-# libs below are just for backup
 
 _bak_tmpfs_dir()
 {
@@ -318,41 +361,6 @@ _cp_files()
   cp -v $sDir/Microsoft/consola.ttf $tDir/Consola.ttf
   #cp -v $sDir/TW_Gov/TW-Kai-98.1.ttf $tDir/TW-Kai.ttf
   #cp -v $sDir/TW_Gov/TW-Sung-98.1.ttf $tDir/TW-Sung.ttf
-}
-
-_join_libvirt_group()
-{
-  sudo adduser $(whoami) kvm
-  sudo adduser $(whoami) libvirt
-  sudo adduser $(whoami) libvirt-qemu
-}
-
-_set_netplan()
-{
-  [[ -f /etc/netplan/01-network-manager-all.yaml ]] && sudo mv /etc/netplan/01-network-manager-all.yaml \
-     /etc/netplan/01-network-manager-all.yaml.old
-  sudo cp -v $cfgDir/confs_sys/device_01_network_manager_all_yaml /etc/netplan/01-network-manager-all.yaml
-  sudo netplan apply
-  #sudo systemctl restart NetworkManager
-}
-
-_set_gedit()
-{
-  gsettings set org.gnome.gedit.preferences.editor use-default-font false
-  gsettings set org.gnome.gedit.preferences.editor editor-font 'Monaco Regular 16'
-  gsettings set org.gnome.gedit.plugins.externaltools use-system-font false
-  gsettings set org.gnome.gedit.plugins.externaltools font 'Monaco Regular 16'
-  gsettings set org.gnome.gedit.plugins.pythonconsole use-system-font false
-  gsettings set org.gnome.gedit.plugins.pythonconsole font 'Monaco Regular 16'
-
-  gsettings set org.gnome.gedit.preferences.editor scheme 'Solarized Dark'
-  gsettings set org.gnome.gedit.preferences.editor insert-spaces true
-  gsettings set org.gnome.gedit.preferences.editor tabs-size 2
-  gsettings set org.gnome.gedit.preferences.encodings candidate-encodings "['UTF-8','BIG5','GBK','GB18030','GB2312','CURRENT','UTF-16']"
-  #gsettings set org.gnome.gedit.plugins active-plugins \
-  #  "['filebrowser', 'quickhighlight', 'modelines', 'sort', 'externaltools', 'openlinks', 'docinfo', 'pythonconsole',
-
-  #url: https://github.com/samwhelp/note-about-ubuntu/blob/gh-pages/_demo/adjustment/tool/gedit/config-install.sh
 }
 
 

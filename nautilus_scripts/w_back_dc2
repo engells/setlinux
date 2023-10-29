@@ -1,7 +1,7 @@
 #!/bin/bash
 # program: Using to dump mmedia partition to portable disk
 # made by: Engells
-# date: Mar 30, 2019
+# date: Oct 28, 2023
 # content: 
 
-gnome-terminal -e '/home/engells/ktws/scripts/avails/nautilus_lunch.sh dc2' 2>/home/engells/zz
+gnome-terminal -- bash /home/engells/ktws/scripts/avails/nautilus_lunch.sh dc2 2>/home/engells/zz

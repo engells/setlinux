@@ -12,7 +12,7 @@ ExecStop=/bin/true
 #RemainAfterExit=true
 
 [Install]
-WantedBy=graphical.target
+WantedBy=shutdown.target reboot.target halt.target
 Alias=z.mysave.service
-#WantedBy=halt.target reboot.target shutdown.target
+#WantedBy=graphical.target
 #ref: https://www.programminghunter.com/article/4176927423/

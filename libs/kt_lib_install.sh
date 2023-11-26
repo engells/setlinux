@@ -1,15 +1,15 @@
 ##!/bin/bash
 # vim:tb=2
-# lib: Using to install Ubuntu 20.04
+# lib: Using to install Limux Mint 21.2 Victoria
 # made by: Engells
-# date: Oct 28, 2023
+# date: Nov 18, 2023
 # content: 
 
 cfgDir="$HOME/ktws/scripts" #cfgDir="$HOME/mnt/dump3/scripts"
 
 _mnt_dirs()
 {
-  for DIR in bak buf cache doc dump1 dump2 dump3 dump4 iso scripts ramfs tmpfs xdg
+  for DIR in bak buf cache doc dump1 dump2 dump3 dump4 iso scripts ramfs tmpfs working xdg
   do
     [[ -d $HOME/mnt/$DIR ]] || mkdir -p $HOME/mnt/$DIR
   done
@@ -17,6 +17,8 @@ _mnt_dirs()
 
   [[ -d $HOME/.config/zz_dot_files ]] || mkdir -p $HOME/.config/zz_dot_files
   [[ -d $HOME/.local/state ]] || mkdir -p $HOME/.local/state
+  [[ -d $HOME/.local/share/themes ]] || mkdir -p $HOME/.local/share/themes
+  [[ -d $HOME/.local/share/icons ]] || mkdir -p $HOME/.local/share/icons 
 
   [[ -d $HOME/downloads ]] && rm -rv $HOME/downloads && ln -sf /tmp/z_downloads $HOME/downloads
 
@@ -136,9 +138,9 @@ _disable_reclog()
   sudo chattr +i $HOME/.local/share/recently-used.xbel  # the file can't edited /immutable => no write, delete, link and so on
 }
 
-_lxc_conf()
+_set_lxc()
 {
-  for DIR in dosbox lxcd lxcu virt storage share
+  for DIR in distrobox dosbox flatpak lxcd lxcu podman sandbox share storage virt
   do
     [[ -d /zvir/$DIR ]] || sudo mkdir -p /zvir/$DIR
     sudo chown -R engells:engells /zvir/$DIR
@@ -171,11 +173,79 @@ _lxc_conf()
   chmod a+x /zvir/lxcu
 }
 
+_set_podman()
+{
+  for DIR in podman
+  do
+    [[ -d /zvir/$DIR ]] || sudo mkdir -p /zvir/$DIR
+    sudo chown -R engells:engells /zvir/$DIR
+  done
+
+  [[ -d "$HOME/.local/share/containers" ]] && sudo rm -R $HOME/.local/share/containers
+  ln -sf /zvir/podman $HOME/.local/share/containers
+
+  [[ -d "$HOME/.config/containers" ]] && sudo mkdir -p $HOME/.config/containers
+}
+
+_set_flatpak()
+{
+  for DIR in flatpak/var flatpak/opt flatpak/mnt
+  do
+    [[ -d /zvir/$DIR ]] || sudo mkdir -p /zvir/$DIR
+    sudo chown -R engells:engells /zvir/flatpak
+  done
+
+  if [ -d "$HOME/.local/share/flatpak" ]
+  then
+    cd $HOME/.local/share/flatpak && \
+    sudo rsync -avAHX . /zvir/flatpak/opt && \
+    cd $HOME && \
+    sudo rm -R $HOME/.local/share/flatpak
+  fi
+  ln -sf /zvir/flatpak/opt $HOME/.local/share/flatpak
+
+  [[ -d "$HOME/.var" ]] && sudo rm -R $HOME/.var
+  ln -sf /zvir/flatpak/var $HOME/.var
+}
+
 _join_libvirt_group()
 {
   sudo adduser $(whoami) kvm
   sudo adduser $(whoami) libvirt
   sudo adduser $(whoami) libvirt-qemu
+}
+
+_set_firewall()
+{
+  [[ -d "/opt/security/iptables" ]] || sudo mkdir -p /opt/security/iptables
+  sudo cp -v $cfgDir/confs_sys/secure_iptables_rule  /opt/security/iptables/iptables.rule
+  sudo cp -v $cfgDir/confs_sys/secure_iptables_allow /opt/security/iptables/iptables.allow
+  sudo cp -v $cfgDir/confs_sys/secure_iptables_deny  /opt/security/iptables/iptables.deny
+  sudo chmod a+x /opt/security/iptables/iptables.*
+
+  [[ -f "/lib/systemd/system/rc.local.service" ]] && sudo mv /lib/systemd/system/rc.local.service /lib/systemd/system/rc.local.service.old
+  sudo cp -v $cfgDir/confs_sys/init_rc_local_service /lib/systemd/system/rc.local.service
+
+  [[ -f "/etc/rc.local" ]] && sudo mv /etc/rc.local /etc/rc.local.old
+  sudo cp -v $cfgDir/confs_sys/init_rc_local /etc/rc.local
+  sudo chmod +x /etc/rc.local
+  sudo systemctl enable rc.local.service
+}
+
+_bak_tmpfs_dir()
+{
+  [[ -d "/opt/engells" ]] || sudo mkdir -p /opt/engells
+  sudo cp -v $cfgDir/confs_sys/z_my_save_sh /opt/engells/zz_mysave.sh
+  sudo cp -v $cfgDir/confs_sys/z_my_load_sh /opt/engells/zz_myload.sh
+  sudo chmod +x /opt/engells/zz_my*
+
+  [[ -f "/lib/systemd/system/z_my_load_service" ]] || sudo cp -v $cfgDir/confs_sys/z_my_load_service /lib/systemd/system/zz_myload.service
+  sudo systemctl enable zz_myload.service
+
+  [[ -f "/lib/systemd/system/z_my_save_service" ]] || sudo cp -v $cfgDir/confs_sys/z_my_save_service /lib/systemd/system/zz_mysave.service
+  sudo systemctl enable zz_mysave.service
+
+  [[ -d "/var/backups/log" ]] || sudo mkdir -p /var/backups/log
 }
 
 _set_netplan()
@@ -214,7 +284,7 @@ _set_fontconfig()
 }
 
 
-#----Back for Ubuntu---- 
+#==== Back for Ubuntu ==== 
 
 _remove_snap()
 {
@@ -309,36 +379,6 @@ _disable_automount()
   # sudo gsettings set org.gnome.desktop.media-handlingautomount true
   # sudo gsettings set org.gnome.desktop.media-handling automount-open true
 
-}
-
-_set_firewall()
-{
-  [[ -d "/opt/security/iptables" ]] || sudo mkdir -p /opt/security/iptables
-  sudo cp -v $cfgDir/confs_sys/secure_iptables_rule  /opt/security/iptables/iptables.rule
-  sudo cp -v $cfgDir/confs_sys/secure_iptables_allow /opt/security/iptables/iptables.allow
-  sudo cp -v $cfgDir/confs_sys/secure_iptables_deny  /opt/security/iptables/iptables.deny
-  sudo chmod a+x /opt/security/iptables/iptables.*
-
-  [[ -f "/lib/systemd/system/rc.local.service" ]] && sudo mv /lib/systemd/system/rc.local.service /lib/systemd/system/rc.local.service.old
-  sudo cp -v $cfgDir/confs_sys/init_rc_local_service /lib/systemd/system/rc.local.service
-
-  [[ -f "/etc/rc.local" ]] && sudo mv /etc/rc.local /etc/rc.local.old
-  sudo cp -v $cfgDir/confs_sys/init_rc_local /etc/rc.local
-  sudo chmod +x /etc/rc.local
-  sudo systemctl enable rc.local.service
-}
-
-_bak_tmpfs_dir()
-{
-  [[ -d "/opt/engells" ]] || sudo mkdir -p /opt/engells
-  sudo cp -v $cfgDir/confs_sys/z_my_save_sh /opt/engells/z_mysave.sh
-  sudo cp -v $cfgDir/confs_sys/z_my_load_sh /opt/engells/z_myload.sh
-  sudo chmod +x /opt/engells/z_my*
-
-  [[ -f "/lib/systemd/system/z_my_save_service" ]] || sudo cp -v $cfgDir/confs_sys/z_my_save_service /lib/systemd/system/z.mysave.service
-  sudo systemctl enable z.mysave.service
-
-  [[ -d "/var/backups/log" ]] || sudo mkdir -p /var/backups/log
 }
 
 _shortcut_utils()

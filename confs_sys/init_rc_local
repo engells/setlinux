@@ -1,28 +1,18 @@
-#!/bin/sh -e
-#
-# rc.local
-#
-# This script is executed at the end of each multiuser runlevel.
-# Make sure that the script will “exit 0” on success or any other
-# value on error.
-#
-# In order to enable or disable this script just change the execution
-# bits.
-#
-# By default this script does nothing.
+#!/bin/bash
 
-bash /opt/security/iptables/iptables.rule
+sudo bash /opt/security/iptables/iptables.rule
 sudo systemctl restart lxc-net
 
 #bash /opt/engells/z_myload.sh
 
-for SUBDIR in z_cache z_downloads z_tmpfs z_cache_lxcb z_cache_lxcp
+for SUBDIR in z_cache z_cache/home z_cache/cntrb z_cache/cntrp z_downloads z_tmpfs z_tmpfs/cntrb z_tmpfs/cntrp z_tmpfs/firefox z_tmpfs/chromium
 do
-	[ -d /tmp/$SUBDIR ] || mkdir /tmp/$SUBDIR
-	chown -R engells:engells /tmp/$SUBDIR
+	[ -d /tmp/$SUBDIR ] || sudo mkdir -p /tmp/$SUBDIR
+	sudo chown -R engells:engells /tmp/$SUBDIR
 	chmod 1777 /tmp/$SUBDIR
 done
 
 echo "Something done while booting on $(date)" >> /home/engells/z_boot.log
 
 exit 0
+

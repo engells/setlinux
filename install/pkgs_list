@@ -1,7 +1,7 @@
 # standard Ubuntu
 # vim:ts=8
 # made by: Engells
-# date: Oct 28, 2023
+# date: Nov 6, 2023
 
 
 # to remove some packages
@@ -19,6 +19,7 @@ install_remove	grub-pc
 # cat pkgs.list | grep '^install_apt' | awk '{ print $2 }'
 #- compress utils --
 install_apt	p7zip-full
+install_apt	rar
 Install_Apt	unrar
 Install_Apt	xz-utils
 *Install_apt	squashfs-tools
@@ -33,6 +34,7 @@ install_apt	gstreamer1.0-plugins-bad
 install_apt	gstreamer1.0-libav
 install_apt	ffmpeg
 install_apt	alsa-utils
+install_apt	mcomix
 #install_apt	lame # mp3 utilities
 #install_apt	flac # flac utilities
 #install_apt	gnash
@@ -96,6 +98,8 @@ install_apt	lm-sensors # /etc/init.d/kmod start ;; sudo sensors-detect ;; sensor
 install_apt	psensor
 #-- virtual --
 install_apt	lxc
+install_apt	podman
+install_apt	distrobox # couldn't find in mint repo, may install from github
 install_apt	systemd
 install_apt	uidmap
 install_apt	qemu-kvm

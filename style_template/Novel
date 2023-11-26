@@ -8,6 +8,8 @@ body {
   font-family:'STHeiti TC', 'Monaco';
   color:#2E8B57 !important;
   background-color:#101010 !important;
-  line-height:175%;
+  line-height:200%;
+  letter-spacing: 1.1px;
+  word-spacing: 10px;
 }
 }

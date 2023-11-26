@@ -1,18 +1,18 @@
 [Unit]
 Description=Load log and download files from tmpfs
-After=zfs-mount.service
-Requires=zfs-volume-wait.service
-#After=network.target
+After=network.target
+#After=zfs-mount.service
+#Requires=zfs-volume-wait.service
 
 [Service]
 Type=oneshot
-ExecStart=/opt/engells/z_myload.sh
-ExecStop=/bin/true
+ExecStart=/opt/engells/zz_myload.sh
+#ExecStop=/bin/true
 #Type=simple
-#ExecStart=/opt/engells/z_mysave.sh
+#ExecStart=/opt/engells/zz_mysave.sh
 
 [Install]
-WantedBy=zfs.target
-Alias=z.load.service
-#WantedBy=multi.user.target
+WantedBy=multi-user.target
+#Alias=zz.myload.service
+#WantedBy=zfs.target
 #ref: https://linuxhint.com/run-script-debian-11-boot-up/

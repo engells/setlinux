@@ -1,22 +1,22 @@
 # This profile is for my customed alias
-# This file is at ~/.confog/z_my_config
+# This file is at $HOME/.confog/z_my_config
 # vim:ts=2
 
 # disk storage
-alias dfh='clear; df -h'
-alias dfm='clear; df -m'
+alias dfh='clear; df -hT'
+alias dfm='clear; df -mT'
 
 # lxc container
 alias lst='lxc-start'
 alias lsp='lxc-stop'
 alias sshp='ssh -p62 -YC4'
-alias sshpu20b='ssh -p62 -YC4 admit@172.25.3.11'
-alias sshpu20p='ssh -p62 -YC4 admit@172.25.3.12'
-alias sshpu20z='ssh -p62 -YC4 admit@172.25.3.14'
+alias sshpu22b='ssh -p62 -YC4 admit@172.25.3.11'
+alias sshpu22p='ssh -p62 -YC4 admit@172.25.3.12'
+alias sshpu22z='ssh -p62 -YC4 admit@172.25.3.14'
 
 # respberry pi
-alias sshpi3='ssh -p62 admit@192.168.1.121'
-alias sshppi3='ssh -p62 -YC4 admit@192.168.1.121'
+alias sshpi3='ssh -p62 admit@192.168.1.122'
+alias sshppi3='ssh -p62 -YC4 admit@192.168.1.122'
 alias sshpi4='ssh -p62 admit@192.168.1.125'
 alias sshppi4='ssh -p62 -YC4 admit@192.168.1.125'
 
@@ -27,5 +27,19 @@ alias cp='cp -v'
 alias rm='rm -v'
 alias mv='mv -v'
 alias dos='dosbox 1>/dev/null 2>/dev/null &'
+alias duu='sudo du -sgcx'
+alias dubfs="sudo du -shcx {/,/home,$HOME/mnt/,/zvir}"
+alias jailfox="firejail --private=/zvir/sandbox/firefox firefox --no-remote 1>/dev/null 2>/dev/null &"
+alias jailcho="firejail --private=/zvir/sandbox/chromium chromium --no-remote 1>/dev/null 2>/dev/null &"
+alias flatcho="flatpak run org.chromium.Chromium --private-window 1>/dev/null 2>/dev/null &"
+alias flatdox="flatpak run com.dosbox_x.DOSBox-X 1>/dev/null 2>/dev/null &"
+alias flatseal="flatpak run com.github.tchx84.Flatseal 1>/dev/null 2>/dev/null &"
+
+# nautilus scripts
+alias clnhis="gnome-terminal -- bash -c '/home/engells/ktws/scripts/avails/nautilus_lunch.sh ch'"
+alias clnapt="gnome-terminal -- bash -c '/home/engells/ktws/scripts/avails/nautilus_lunch.sh cs'"
+alias dumpd='bash $HOME/.local/share/nautilus/scripts/dump_d'
+alias ttmux="gnome-terminal -- bash -c '/home/engells/scripts/nautilus_scripts/terminal'"
+alias rmzdir="gnome-terminal -- bash -c '/home/engells/ktws/scripts/avails/nautilus_lunch.sh rzd'"
 #alias cbn='chromium-browser --incognito 1>/dev/null 2>/dev/null &'
 #alias cbn='google-chrome 1>/dev/null 2>/dev/null &'

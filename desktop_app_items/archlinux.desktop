@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Archlinux
+GenericName=Terminal entering Archlinux
+Comment=Terminal entering Archlinux
+Categories=Distrobox;System;Utility
+Exec=/home/engells/.local/bin/distrobox enter  archlinux
+Icon=/home/engells/.local/share/icons/distrobox/arch.png
+Keywords=distrobox;
+NoDisplay=false
+Terminal=true
+TryExec=/home/engells/.local/bin/distrobox
+Type=Application

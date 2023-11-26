@@ -49,14 +49,12 @@
 
 # 請先輸入您的相關參數，不要輸入錯誤了！
 # English: Please input your networks parameters ( including your LAN NIC )
-  EXTIF="enp2s0"	# 這個是可以連上 Public IP 的網路介面，也可能是 ppp0。需確定是 pppo 或 ppp0
-					# This is your NIC, connect to internet. Such as ppp0...
-  INIF=""			# 內部 LAN 的連接介面；若無 LAN ，填寫成 INIF=""
-					# This is your LAN NIC.  If you don't have a LAN, input INIF="" please.
-  INNET=""			# 若有兩個以上的網域，可以用 INNET="192.168.1.0/24 192.168.100.0/24"
-					# 若無內部網域介面，請填寫成 INNET=""
-					# This is your LAN's Network.  If you have to private network, 
-					# input as INNET="192.168.1.0/24 192.168.100.0/24".
+  EXTIF="enp4s0"          # 這個是可以連上 Public IP 的網路介面，也可能是 ppp0。需確定是 pppo 或 ppp0
+                          # This is your NIC, connect to internet. Such as ppp0...
+  INIF="lxcbr0"           # 內部 LAN 的連接介面；若無 LAN ，填寫成 INIF=""
+                          # This is your LAN NIC.  If you don't have a LAN, input INIF="" please.
+  INNET="172.25.3.0/24"   # 若有兩個以上的網域，可以用 INNET="192.168.1.0/24 192.168.100.0/24"， 若無內部網域介面，請填寫成 INNET=""
+                          # This is your LAN's Network.  If you have to private network, input as INNET="192.168.1.0/24 192.168.100.0/24".
   export EXTIF INIF INNET
 
 # 個人化設定啊！請自行填寫您自己想要預先啟動的一些基礎資料。
@@ -94,34 +92,24 @@
 
   # 開啟逆向路徑過濾，以符合 IP 封包與網路介面的設定；
   # 
-  for i in /proc/sys/net/ipv4/conf/*/rp_filter; do
-	echo "1" > $i
-  done
+  for i in /proc/sys/net/ipv4/conf/*/rp_filter ; do echo "1" > $i ; done
 
   # 開啟記錄有問題的封包
   # record some problems packets.
-  for i in /proc/sys/net/ipv4/conf/*/log_martians; do
-	echo "1" > $i
-  done
+  for i in /proc/sys/net/ipv4/conf/*/log_martians; do echo "1" > $i ; done
 
   # 取消來源路由，這個設定值是可以取消的；
-  for i in /proc/sys/net/ipv4/conf/*/accept_source_route; do
-	echo "0" > $i
-  done
+  for i in /proc/sys/net/ipv4/conf/*/accept_source_route ; do echo "0" > $i ; done
 
   # 取消重新宣告路徑的功能。
-  for i in /proc/sys/net/ipv4/conf/*/accept_redirects; do
-	echo "0" > $i
-  done
+  for i in /proc/sys/net/ipv4/conf/*/accept_redirects ; do echo "0" > $i ; done
 
   # 取消傳送重新宣告路徑的功能。
-  for i in /proc/sys/net/ipv4/conf/*/send_redirects; do
-	echo "0" > $i
-  done
+  for i in /proc/sys/net/ipv4/conf/*/send_redirects ; do echo "0" > $i ; done
 
 # 2. 清除規則、設定預設政策及開放 lo 與相關的設定值
 # 2. clear rule, set the policy rule and allow lo connect.
-  PATH=/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/sbin:/usr/local/bin:/opt/security/iptables/; export PATH
+  PATH=$PATH:/opt/security/iptables/; export PATH
   iptables -F
   iptables -X
   iptables -Z
@@ -134,19 +122,13 @@
 # 3. 啟動額外的防火牆 script 模組
 # 3. other shell scripts, written by VBird.
   # 預設抵擋的主機
-  if [ -f /opt/security/iptables/iptables.deny ]; then
-	sh /opt/security/iptables/iptables.deny
-  fi
+  if [ -f /opt/security/iptables/iptables.deny ] ; then sh /opt/security/iptables/iptables.deny ; fi
 
   # 預設開放的主機
-  if [ -f /opt/security/iptables/iptables.allow ]; then
-	sh /opt/security/iptables/iptables.allow
-  fi
+  if [ -f /opt/security/iptables/iptables.allow ]; then sh /opt/security/iptables/iptables.allow ; fi
 
   # 透過 WWW 砍站軟體分析的抵擋機制
-  if [ -f /opt/security/iptables.http ]; then
-        sh /opt/security/iptables.http
-  fi
+  if [ -f /opt/security/iptables.http ]; then sh /opt/security/iptables.http ; fi
 
   iptables -A INPUT -m state --state ESTABLISHED -j ACCEPT
 
@@ -172,11 +154,11 @@
 # Second, the NAT settings.
 # 1. 先載入一些有用的模組
 # 1. loading some good modules of iptables.
-  modules="ip_tables iptable_nat ip_nat_ftp ip_nat_irc ip_conntrack ip_conntrack_ftp ip_conntrack_irc"
-  for mod in $modules
+  mod_list="ip_tables iptable_nat ip_nat_ftp ip_nat_irc ip_conntrack ip_conntrack_ftp ip_conntrack_irc"
+  for mod in $mod_list
   do
-	testmod=`lsmod | grep "^${mod} " | awk '{print $1}'`
-	if [ "$testmod" == "" ]; then
+	mod_test=$(lsmod | grep "^${mod} " | awk '{print $1}')
+	if [ "$mod_test" == "" ]; then
 		modprobe $mod
 	fi
   done

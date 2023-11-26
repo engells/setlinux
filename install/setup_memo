@@ -2,7 +2,7 @@
 # vim:ts=4
 # program: Using to memo Ubuntu 18.04 installion
 # made by: Engells
-# date: Oct 26, 2023
+# date: Nov 2, 2023
 # content: Just for memo
 
 
@@ -10,7 +10,7 @@
 系統概要
 ====================
 1.將瀏覽器的快取目錄設為 tmpfs，實務上將 $HOME/.cache 掛載於 tmpfs 即可
-2.將 /var/log 及 下載目錄設為 tmpfs，並以 systemd 開機機制，關機時 tmpfs 資料存入磁碟，開機時載回 tmpfs
+2.將 /var/log 、/var/tmp 及 $HOME/downloads 設為 tmpfs，並以 systemd 開機機制，關機時 tmpfs 資料存入磁碟，開機時載回 tmpfs
 3.設置防火牆 iptables
 4.主系統盡量精簡，將高風險 、程式轉寫及排版作業轉移至 LXC。若有使用 GUI 軟體，則以 SSH X Forwarding 方式處理
 5.檔案結構及存儲設備，vpl 為日常作業，kpl 為資料存儲，xpl 及 zpl 為外接備份設備
@@ -61,7 +61,9 @@
 
 4.執行 $HOME/ktws/scripts/avails/ubuntu_install.sh c，參數 c 代表作系統微調。
  -自訂使用者目錄，包括 $HOME/mnt、/home/virt、/home/lxcu 等
- -增加佈景主題，圖示採用 MkOS_Big_Sur ，GTK 佈景採用 McOS_CTLina_Gnome_Dark_1.3.2。此部份是額外以 gnome-tweaks 程式選定
+ -增加佈景主題，設定路徑 mint menu => Themes => Advanced setting
+    Desktop : macOS Catalina or Adapta Nokto ; Icons : Mint Y Orange ; Applications : Adapta Nokto or Cinnamox Rhino
+  將應用程式 GUI 的 最大化、最小化 按鈕移至左側 mint menu => Windows => Titlebar => Buttoms => Buttoms layout => Left
  -將自定的 bash script 複製至  $HOME/.local/share/nautilus/scripts，如此在 nautilus 中可以滑鼠右鍵執行
  -將自定的 bash 設定檔複製到 $HOME/.vim，以建立 bash 使用環境
  -語系設定，取代系統設定檔後，執行 locale-gen --purge，參閱 Locale.Fonts.html in $HOME/ktws/0.know_linux/contents_bak.tar.bz2
@@ -74,27 +76,21 @@
 5.需手動處理的作業
  -設定區域語系
    Setting > Region and Languages > Regional Format > Display numbers ...
- -選定佈景主題
-   以 gnome-tweaks 選定 STHeiti 為系統字型，注意字型檔的權限
- -變更 ibus 備選清單字體大小
-   安裝 ibus font setting，gnome-tweaks > extentions > ibus font setting > 選定：STHeiti 20
-   手動安裝 GNOME Shell Extension 的方法：
-    1. 從 GNOME Shell Extension 網站下載符合 GNOME 版本（Ubuntu 20.04 為 3.36.1）的 ZIP 檔
-    2. 解壓縮後，查看裡面 metadata.json 檔所記載的 uuid 名稱，將目錄更名成同 uuid 名稱
-    3. 將更名後的目錄搬至 $HOME/.local/share/gnome-shell/extensions/
-    4. 按 Alt+F2 輸入 r ，重新啟動 GNOME Shell 。此作業不影響執行中程式
-    5.使用 gnome-shell-extension-prefs 或 gnome-tweaks 啟用及設定該 Extension 。
  -設定 SMPlayer
    對應之 Mplayer 版本 1.0rc4 ，以及取消 screenshot 功能，Options(M) / Preferences / General / Screenshots
  -設定 Gedit 
    佈景主題為 Solarized Dark，取消自動存檔，及標示游標所在行，字體選 Monaco 16。
    語系：gsettings set org.gnome.gedit.preferences.encodings candidate-encodings "['UTF-8','BIG5','GBK','GB18030','GB2312','CURRENT','UTF-16']"
  -設定 Gnome Terminal
-   佈景主題為 Gray on black，字體為 Monaco for powerline 13 + Cell spacing width 1.25 + 顏色 #2E8B57，背景色為 #101010
+   佈景主題為 Gray on black，字體為 Monaco for powerline 13 + Cell spacing width 1.25 + 顏色 #2E8B57，背景色為 #101010，參考色 鴉青#424C50
  -移除 snapd
    參見 $HOME/ktws/scripts/libs/kt_lib_install remove_snap()
 
 6.問題解決
+ -Linux Mint 21.2 無法辨識 B760M-A Wifi D4-GSM 的無線驅動
+  安裝 linux-generic-hwe-22.04-edge
+ -在 btrfs 無法跨 subvolume 使用 Trash 
+  設置 $HOME/.local/share/Trash ，作為掛載 $HOME 的 subvolume 的 trash bin
  -沒有聲音輸出
   *安裝 pavucontrol，在終端機執行 pavucontrol => Configuration => Build-in Audio => Analog Stereo Output (Unplugged)
   *若上述步驟未解決問題，
@@ -163,4 +159,22 @@ Debian
         sudo systemctl restart zfs-mount
         sudo systemctl restart zfs-share
         sudo zpool upgrade -a
+
+
+
+Backup for Ubuntu
+====================
+ -選定佈景主題
+   以 gnome-tweaks 選定 STHeiti 為系統字型，注意字型檔的權限
+ -增加佈景主題
+  Ubuntu 22.04 圖示採用 MkOS_Big_Sur ，GTK 佈景採用 McOS_CTLina_Gnome_Dark_1.3.2。此部份是額外以 gnome-tweaks 程式選定
+ -變更 ibus 備選清單字體大小
+   安裝 ibus font setting，gnome-tweaks > extentions > ibus font setting > 選定：STHeiti 20
+   手動安裝 GNOME Shell Extension 的方法：
+    1. 從 GNOME Shell Extension 網站下載符合 GNOME 版本（Ubuntu 20.04 為 3.36.1）的 ZIP 檔
+    2. 解壓縮後，查看裡面 metadata.json 檔所記載的 uuid 名稱，將目錄更名成同 uuid 名稱
+    3. 將更名後的目錄搬至 $HOME/.local/share/gnome-shell/extensions/
+    4. 按 Alt+F2 輸入 r ，重新啟動 GNOME Shell 。此作業不影響執行中程式
+    5.使用 gnome-shell-extension-prefs 或 gnome-tweaks 啟用及設定該 Extension 。
+
 

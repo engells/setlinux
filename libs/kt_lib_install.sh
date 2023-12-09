@@ -2,7 +2,7 @@
 # vim:tb=2
 # lib: Using to install Limux Mint 21.2 Victoria
 # made by: Engells
-# date: Nov 18, 2023
+# date: Dec 7, 2023
 # content: 
 
 cfgDir="$HOME/ktws/scripts" #cfgDir="$HOME/mnt/dump3/scripts"
@@ -189,7 +189,7 @@ _set_podman()
 
 _set_flatpak()
 {
-  for DIR in flatpak/var flatpak/opt flatpak/mnt
+  for DIR in flatpak/app flatpak/opt flatpak/mnt
   do
     [[ -d /zvir/$DIR ]] || sudo mkdir -p /zvir/$DIR
     sudo chown -R engells:engells /zvir/flatpak
@@ -204,8 +204,8 @@ _set_flatpak()
   fi
   ln -sf /zvir/flatpak/opt $HOME/.local/share/flatpak
 
-  [[ -d "$HOME/.var" ]] && sudo rm -R $HOME/.var
-  ln -sf /zvir/flatpak/var $HOME/.var
+  [[ -d "$HOME/.var/app" ]] && sudo rm -R $HOME/.var/app
+  ln -sf /zvir/flatpak/app $HOME/.var/app
 }
 
 _join_libvirt_group()

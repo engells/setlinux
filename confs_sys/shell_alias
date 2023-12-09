@@ -29,8 +29,8 @@ alias mv='mv -v'
 alias dos='dosbox 1>/dev/null 2>/dev/null &'
 alias duu='sudo du -sgcx'
 alias dubfs="sudo du -shcx {/,/home,$HOME/mnt/,/zvir}"
-alias jailfox="firejail --private=/zvir/sandbox/firefox firefox --no-remote 1>/dev/null 2>/dev/null &"
-alias jailcho="firejail --private=/zvir/sandbox/chromium chromium --no-remote 1>/dev/null 2>/dev/null &"
+alias jailfox="firejail --private=/zvir/sandbox/firefox -–seccomp firefox --no-remote 1>/dev/null 2>/dev/null &"
+alias jailcho="firejail --private=/zvir/sandbox/chromium -–seccomp chromium --no-remote 1>/dev/null 2>/dev/null &"
 alias flatcho="flatpak run org.chromium.Chromium --private-window 1>/dev/null 2>/dev/null &"
 alias flatdox="flatpak run com.dosbox_x.DOSBox-X 1>/dev/null 2>/dev/null &"
 alias flatseal="flatpak run com.github.tchx84.Flatseal 1>/dev/null 2>/dev/null &"

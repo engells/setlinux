@@ -3,27 +3,34 @@ exec tail -n +3 $0
 # This file provides an easy way to add custom menu entries.  Simply type the
 # menu entries you want to add after this comment.  Be careful not to change
 # the 'exec tail' line above.
-menuentry "Install Ubuntu 18.04.2 from /dev/sda" {
-  	loopback loop (hd1,9)/Bionic_x64.iso
-	linux (loop)/casper/vmlinuz boot=casper iso-scan/filename=/Bionic_x64.iso noeject nopromt
-	initrd (loop)/casper/initrd
+
+menuentry "Archlinux_20231201_x64" {
+  set gfxpayload=keep
+  insmod part_gpt
+  insmod ext2
+  search --set=root --no-floppy --fs-uuid e6afba18-d2cd-4e15-82ce-4c4592ba6390
+  loopback loop /ArchLinux.iso
+  linux (loop)/arch/boot/x86_64/vmlinuz-linux img_dev=UUID=e6afba18-d2cd-4e15-82ce-4c4592ba6390 img_loop=/ArchLinux.iso earlymodules=loop
+  initrd (loop)/arch/boot/intel-ucode.img (loop)/arch/boot/amd-ucode.img (loop)/arch/boot/x86_64/initramfs-linux.img
 }
 
-menuentry "Install Ubuntu 18.04.2 from /dev/sdb" {
-  	loopback loop (hd0,10)/Bionic_x64.iso
-	linux (loop)/casper/vmlinuz boot=casper iso-scan/filename=/Bionic_x64.iso noeject nopromt
-	initrd (loop)/casper/initrd
-}
-
-menuentry "Install Ubuntu 20.04.4 from sda5" {
-  loopback loop (hd0,5)/Focal.iso
-  linux (loop)/casper/vmlinuz boot=casper iso-scan/filename=/Focal.iso noeject nopromt
+menuentry "Install Ubuntu 22.04 from sda4" {
+  set gfxpayload=keep
+  insmod part_gpt
+  insmod ext2
+  search --set=root --no-floppy --fs-uuid e6afba18-d2cd-4e15-82ce-4c4592ba6390
+  loopback loop /Jammy.iso
+  linux (loop)/casper/vmlinuz boot=casper iso-scan/filename=/Jammy.iso noeject nopromt
   initrd (loop)/casper/initrd
 }
 
-menuentry "Install Ubuntu 20.04.4 from sdb6" {
-  loopback loop (hd1,6)/Focal.iso
-  linux (loop)/casper/vmlinuz boot=casper iso-scan/filename=/Focal.iso noeject nopromt
-  initrd (loop)/casper/initrd
+menuentry "Install Mint 21.2 from sda4" {
+  set gfxpayload=keep
+  insmod part_gpt
+  insmod ext2
+  set root=(hd0,gpt4)
+  loopback loop (hd0,gpt4)/Victoria.iso
+  linux (loop)/casper/vmlinuz boot=casper iso-scan/filename=/Victoria.iso noeject nopromt
+  initrd (loop)/casper/initrd.lz
 }
 

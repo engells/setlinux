@@ -16,6 +16,7 @@ _mnt_dirs()
   sudo chown -R engells:engells $HOME/mnt
 
   [[ -d $HOME/.config/zz_dot_files ]] || mkdir -p $HOME/.config/zz_dot_files
+  [[ -d $HOME/.config/wireplumber ]] || mkdir -p $HOME/.config/wireplumber
   [[ -d $HOME/.local/state ]] || mkdir -p $HOME/.local/state
   [[ -d $HOME/.local/share/themes ]] || mkdir -p $HOME/.local/share/themes
   [[ -d $HOME/.local/share/icons ]] || mkdir -p $HOME/.local/share/icons 

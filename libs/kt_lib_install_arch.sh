@@ -2,7 +2,7 @@
 # vim:ts=4
 # program: to download many files form internet
 # made by: Engells
-# date: Dec 21, 2023
+# date: Jan 3, 2024
 
 #====副函式======================
 
@@ -53,8 +53,7 @@ _disk_bfs()
 {
 mkfs.btrfs -f -L vpl /dev/${dname}${pnum}
 mount -t btrfs /dev/${dname}${pnum} /mnt
-btrfs subvolume create /mnt/os && btrfs subvolume create /mnt/os/archlinux && \
-for vname in pkg snapshot home virt ; do btrfs subvolume create /mnt/$vname ; done
+for vname in os os/arch homes homes/arch pkg snapshot virt ; do btrfs subvolume create /mnt/$vname ; done
 btrfs subvolume list -a /mnt
 df -Th
 }
@@ -63,9 +62,9 @@ _mnt_bfs()
 {
 umount /mnt
 mkfs.vfat -f /dev/${dname}1
-mount -o defaults,ssd,compress=zstd:3,subvol=os/archlinux /dev/${dname}${pnum} /mnt
+mount -o defaults,ssd,compress=zstd:3,subvol=os/arch /dev/${dname}${pnum} /mnt
 for fname in /mnt/boot/efi /mnt/home /mnt/var/cache/pacman/pkg /mnt/zvir ; do mkdir -p $fname ; done
-mount -o defaults,ssd,compress=zstd:3,subvol=home /dev/${dname}${pnum} /mnt/home
+mount -o defaults,ssd,compress=zstd:3,subvol=homes/arch /dev/${dname}${pnum} /mnt/home
 mount -o defaults,ssd,compress=zstd:3,subvol=pkg /dev/${dname}${pnum} /mnt/var/cache/pacman/pkg/
 mount /dev/${dname}1 /mnt/boot/efi
 btrfs subvolume list -a /mnt
@@ -75,8 +74,9 @@ df -Th
 _bld_base()
 {
 pacman -Syy
-pacstrap -K /mnt base base-devel linux linux-lts linux-firmware intel-ucode efibootmgr grub os-prober btrfs-progs networkmanager sudo zsh vim git device-mapper util-linux
+pacstrap -K /mnt base base-devel linux linux-firmware intel-ucode efibootmgr grub os-prober btrfs-progs networkmanager sudo zsh vim git device-mapper util-linux
 genfstab -U /mnt >> /mnt/etc/fstab
+# linux-lts don't support arc-a380 vga card
 }
 
 _bld_sys()
@@ -134,8 +134,9 @@ systemctl enable NetworkManager.service
 
 _bld_sys2()
 {
-pkgcols='archlinux-keyring linux-headers linux-lts-headers nvtop usbutils gdisk pacman-contrib p7zip unrar xz smplayer ecryptfs-utils cryptsetup neofetch'
+pkgcols='archlinux-keyring linux-headers nvtop usbutils gdisk pacman-contrib p7zip unrar xz ecryptfs-utils cryptsetup neofetch glances lm_sensors smplayer'
 _insall_pkgs
+# linux-lts-headers don't support arc-a380 vga card
 }
 
 _bld_gui()

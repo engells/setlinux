@@ -2,7 +2,7 @@
 # vim:ts=4
 # program: to download many files form internet
 # made by: Engells
-# date: Jan 3, 2024
+# date: Jan 10, 2024
 
 #====副函式======================
 
@@ -53,7 +53,8 @@ _disk_bfs()
 {
 mkfs.btrfs -f -L vpl /dev/${dname}${pnum}
 mount -t btrfs /dev/${dname}${pnum} /mnt
-for vname in os os/arch homes homes/arch pkg snapshot virt ; do btrfs subvolume create /mnt/$vname ; done
+for vname in os os/arch homes homes/arch pkgs pkgs/arch snapshot virt ; do btrfs subvolume create /mnt/$vname ; done
+for vname in data discs disks flatpak firejail lxcd lxcu lxdu podman ; do btrfs subvolume create /mnt/virt/$vname ; done
 btrfs subvolume list -a /mnt
 df -Th
 }
@@ -65,7 +66,7 @@ mkfs.vfat -f /dev/${dname}1
 mount -o defaults,ssd,compress=zstd:3,subvol=os/arch /dev/${dname}${pnum} /mnt
 for fname in /mnt/boot/efi /mnt/home /mnt/var/cache/pacman/pkg /mnt/zvir ; do mkdir -p $fname ; done
 mount -o defaults,ssd,compress=zstd:3,subvol=homes/arch /dev/${dname}${pnum} /mnt/home
-mount -o defaults,ssd,compress=zstd:3,subvol=pkg /dev/${dname}${pnum} /mnt/var/cache/pacman/pkg/
+mount -o defaults,ssd,compress=zstd:3,subvol=pkgs/arch /dev/${dname}${pnum} /mnt/var/cache/pacman/pkg/
 mount /dev/${dname}1 /mnt/boot/efi
 btrfs subvolume list -a /mnt
 df -Th

@@ -2,7 +2,7 @@
 # vim:ts=4
 # program: to download many files form internet
 # made by: Engells
-# date: Jan 10, 2024
+# date: Jan 20, 2024
 
 #====副函式======================
 
@@ -142,13 +142,14 @@ _insall_pkgs
 
 _bld_gui()
 {
-pkgcols='xorg xorg-server xorg-server-xephyr xdg-user-dirs pipewire pipewire-pulse pipewire-alsa pipewire-jack wireplumber sddm plasma-desktop plasma-wayland-session plasma-nm plasma-pa dolphin konsole kate kscreen okular ark systemsettings kde-gtk-config breeze-gtk qt5-imageformats kimageformats'
+pkgcols='xorg xorg-server xorg-xlogo xbitmaps xdg-user-dirs pipewire pipewire-pulse pipewire-alsa pipewire-jack wireplumber sddm plasma-desktop plasma-wayland-session plasma-nm plasma-pa dolphin konsole kate kscreen okular ark systemsettings kde-gtk-config breeze-gtk qt5-imageformats kimageformats kwalletmanager'
 _insall_pkgs
+# xorg-server-xephyr xorg-server-xvfb xpra
 }
 
 _bld_im()
 {
-pkgcols='firefox firefox-i18n-zh-tw noto-fonts-cjk noto-fonts-emoji fcitx5-im fcitx5-chewing fcitx5-chinese-addons fcitx5-qt fcitx5-gtk fcitx5-configtool'
+pkgcols='firefox firefox-i18n-zh-tw noto-fonts-cjk noto-fonts-emoji fcitx5-im fcitx5-chewing fcitx5-chinese-addons fcitx5-qt fcitx5-gtk fcitx5-configtool remmina'
 _insall_pkgs
 [ -f /etc/environment ] || sudo touch /etc/environment
 sudo echo 'XMODIFIERS=@im=fcitx' > /etc/environment

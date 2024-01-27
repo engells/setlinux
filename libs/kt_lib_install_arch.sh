@@ -1,8 +1,8 @@
 #!/bin/bash
 # vim:ts=4
-# program: to download many files form internet
+# program: to build a arch linux environmenrt
 # made by: Engells
-# date: Jan 20, 2024
+# date: Jan 25, 2024
 
 #====副函式======================
 
@@ -27,6 +27,8 @@ case $way1 in
 		_bld_im ;;
 	bld-virt)
 		_bld_virt ;;
+    bld-flatapps)
+        _bld_flatapps ;;
 	*)
 		echo "Wrong options!"
 esac
@@ -135,7 +137,7 @@ systemctl enable NetworkManager.service
 
 _bld_sys2()
 {
-pkgcols='archlinux-keyring linux-headers nvtop usbutils gdisk pacman-contrib p7zip unrar xz ecryptfs-utils cryptsetup neofetch glances lm_sensors smplayer'
+pkgcols='archlinux-keyring linux-headers nvtop usbutils gdisk pacman-contrib p7zip unrar xz ecryptfs-utils cryptsetup neofetch glances lm_sensors smplayer udisks2'
 _insall_pkgs
 # linux-lts-headers don't support arc-a380 vga card
 }
@@ -144,7 +146,7 @@ _bld_gui()
 {
 pkgcols='xorg xorg-server xorg-xlogo xbitmaps xdg-user-dirs pipewire pipewire-pulse pipewire-alsa pipewire-jack wireplumber sddm plasma-desktop plasma-wayland-session plasma-nm plasma-pa dolphin konsole kate kscreen okular ark systemsettings kde-gtk-config breeze-gtk qt5-imageformats kimageformats kwalletmanager'
 _insall_pkgs
-# xorg-server-xephyr xorg-server-xvfb xpra
+# xorg-server-xephyr xorg-server-xvfb xpra # pulseaudio
 }
 
 _bld_im()
@@ -179,6 +181,17 @@ sudo usermod -a -G kvm root
 #echo '});'                                               >> /etc/polkit-1/rules.d/50-libvirt.rules
 }
 
+_bld_flatapps()
+{
+flatpak --user install flathub com.github.tchx84.Flatseal
+flatpak --user install flathub org.libreoffice.LibreOffice
+flatpak --user install flathub com.dosbox_x.DOSBox-X
+flatpak --user install flathub org.chromium.Chromium
+flatpak --user install flathub org.remmina.Remmina
+flatpak --user install flathub com.github.marhkb.Pods
+#flatpak --user install flathub org.libretro.RetroArch
+[[ -d /tmp/z_cache/flat_chromium ]] && ln -s /tmp/z_cache/flat_chromium /zvir/flatpak/app/org.chromium.Chromium/cache
+}
 
 
 #====程式主體=====================

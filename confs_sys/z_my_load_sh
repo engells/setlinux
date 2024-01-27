@@ -1,59 +1,18 @@
-#!/bin/sh
-# vim:ts=2
-# program: To reload files to tmpfs while booting
-# made by: Engells
-# date: Jun 30, 2022
-# content: 
+#!/bin/bash
 
-_dump2bak()
-{
-rm -rf $tardir/*
-cd $surdir
-cp -R . $tardir
-}
+sudo bash /opt/security/iptables/iptables.rule
+sudo systemctl restart lxc-net
 
-_chg_owner()
-{
-chown -R engells:engells $surdir
-chown -R engells:engells $tardir
-}
+#bash /opt/engells/z_myload.sh
 
-for way in varlog userdl
+for SUBDIR in z_cache z_cache/home z_cache/cntrb z_cache/cntrp z_cache/flat_firefox z_cache/flat_chromium z_downloads z_tmpfs z_tmpfs/cntrb z_tmpfs/cntrp
 do
-	case $way in
-		varlog)
-			# to reload /var/log
-			surdir=/var/backups/log
-			tardir=/var/log
-			_dump2bak
-			;;
-		userdl)
-			# to reload ~/downloads
-			surdir=/home/engells/mnt/bak
-			tardir=/home/engells/downloads
-			_dump2bak
-			_chg_owner
-			;;
-		cache)
-			# to reload ~/.cache
-			surdir=/home/engells/mnt/cache
-			tardir=/home/engells/.cache
-			_dump2bak
-			_chg_owner
-			;;
-		samba)
-			# disable samba servive after booting
-			#service smbd stop
-			#service nmbd stop
-			;;
-		*)
-			echo '' > /dev/null
-	esac
+	[ -d /tmp/$SUBDIR ] || sudo mkdir -p /tmp/$SUBDIR
+	sudo chown -R engells:engells /tmp/$SUBDIR
+	chmod 1777 /tmp/$SUBDIR
 done
 
-unset way; unset surdir ; unset tardir
-
-echo "Load log and cache files to tmpfs on $(date)" >> /home/engells/z_boot.log
+echo "Something done while booting on $(date)" >> /home/engells/z_boot.log
 
 exit 0
 

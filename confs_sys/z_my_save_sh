@@ -2,8 +2,8 @@
 # vim:ts=2
 # program: To backup tmpfs while halting
 # made by: Engells
-# date: Jun 30, 2022
-# content: 
+# date: Jan 28, 2024
+# content: Work as /opt/utils/zz_mysave.sh
 
 _dump2bak()
 {

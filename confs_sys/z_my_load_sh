@@ -1,18 +1,24 @@
 #!/bin/bash
+# vim:ts=2
+# program: To create dirs in /tmp, set firewall, and restart lxc network
+# made by: Engells
+# date: Jan 28, 2024
+# content: Work as /opt/utils/zz_myload.sh
 
-sudo bash /opt/security/iptables/iptables.rule
+sudo bash /opt/utils/iptables/iptables.rule
 sudo systemctl restart lxc-net
 
-#bash /opt/engells/z_myload.sh
+USERID='engells'
+#bash /opt/engells/zz_myload.sh
 
-for SUBDIR in z_cache z_cache/home z_cache/cntrb z_cache/cntrp z_cache/flat_firefox z_cache/flat_chromium z_downloads z_tmpfs z_tmpfs/cntrb z_tmpfs/cntrp
+for SUBDIR in zz_cache zz_cache/default zz_cache/cntrb zz_cache/cntrp zz_cache/flat_firefox zz_cache/flat_chromium zz_downloads zz_tmpfs zz_tmpfs/cntrb zz_tmpfs/cntrp
 do
 	[ -d /tmp/$SUBDIR ] || sudo mkdir -p /tmp/$SUBDIR
-	sudo chown -R engells:engells /tmp/$SUBDIR
+	sudo chown -R ${USERID}:${USERID} /tmp/$SUBDIR
 	chmod 1777 /tmp/$SUBDIR
 done
 
-echo "Something done while booting on $(date)" >> /home/engells/z_boot.log
+echo "Something done while booting on $(date)" >> /home/${USERID}/z_boot.log
 
 exit 0
 

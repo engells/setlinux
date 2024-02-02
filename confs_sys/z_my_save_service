@@ -5,8 +5,8 @@ Before=shutdown.target reboot.target halt.target
 
 [Service]
 Type=oneshot
-ExecStart=/opt/engells/zz_mysave.sh
-#ExecStop=/opt/engells/zz_mysave.sh
+ExecStart=/opt/utils/zz_mysave.sh
+ExecStop=/opt/utils/zz_mysave.sh
 #ExecStop=/bin/true
 TimeoutStartSec=0
 #Type=simple
@@ -17,4 +17,4 @@ TimeoutStartSec=0
 WantedBy=shutdown.target reboot.target halt.target
 #Alias=zz.mysave.service
 #WantedBy=graphical.target
-#ref: https://www.programminghunter.com/article/4176927423/
+#ref: https://www.programminghunter.com/article/4176927423/ ; /usr/lib/systemd/system/zz_mysave.service

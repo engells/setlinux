@@ -1,7 +1,0 @@
-[Desktop Entry]
-Type=Application
-Exec=ibus-daemon -rd
-Hidden=false
-X-GNOME-Autostart-enabled=true
-Name=Replace ibus-daemon
-Comment=Replace ibus-daemon

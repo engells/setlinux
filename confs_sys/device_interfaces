@@ -1,0 +1,30 @@
+
+#This file is for memo only.
+
+
+#network interface 1
+
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet manual
+
+auto dsl-provider
+iface dsl-provider inet ppp
+pre-up /sbin/ifconfig eth0 up # line maintained by pppoeconf
+provider dsl-provider
+
+
+#network interface 2
+
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet manual
+
+pre-up /sbin/ifconfig eth0 up # line maintained by pppoeconf
+auto dsl-provider
+iface dsl-provider inet ppp
+provider dsl-provider

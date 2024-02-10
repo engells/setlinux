@@ -1,0 +1,21 @@
+# 自動拉取映像檔
+container_always_pull="1"
+# 自動在應用程式建立容器的捷徑
+container_generate_entry=1
+# 設定要使用的後端
+container_manager="podman"
+# distrobox create指令不加任何旗標，預設使用的發行版映像檔
+container_image_default="docker.io/library/archlinux:latest"
+# 預設容器名稱
+container_name_default="arch0"
+# 預設容器家目錄
+container_user_custom_home="$HOME/.local/share/containers"
+# 自訂的init hook指令稿
+#container_init_hook="~/.local/distrobox/a_custom_default_init_hook.sh"
+# 自訂的pre init hook指令稿
+#container_pre_init_hook="~/a_custom_default_pre_init_hook.sh"
+# distrobox create指令額外加上的旗標
+#container_manager_additional_flags="--env-file /path/to/file --custom-flag"
+#non_interactive="1"
+skip_workdir="1"
+#PATH="$PATH:/path/to/custom/podman"

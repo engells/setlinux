@@ -6,8 +6,10 @@
 # content:
 
 # mount data subvolumes
-alias mntktws="sudo mount -t btrfs -o commit=120,compress=zstd:9,subvol=ktws /dev/sda3 $HOME/ktws"
-alias mntmmedia="sudo mount -t btrfs -o commit=120,compress=zstd:9,subvol=mmedia /dev/sda3 $HOME/mmedia"
+alias mntkta="sudo mount -t btrfs -o commit=120,compress=zstd:9,subvol=ktws /dev/sda3 $HOME/ktwst"
+alias mntmma="sudo mount -t btrfs -o commit=120,compress=zstd:9,subvol=mmedia /dev/sda3 $HOME/mmediat"
+#alias mntktb="sudo mount -t btrfs -o ssd,noatime,discard=async,commit=120,compress=zstd:9,subvol="
+alias mntmmb="sudo mount -t btrfs -o ssd,noatime,discard=async,commit=120,compress=zstd:9,subvol=habs/arch /dev/sdb2 /mnt"
 
 # disk storage
 alias dfh='clear; df -hT'

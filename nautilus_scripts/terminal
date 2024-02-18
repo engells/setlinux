@@ -1,20 +1,20 @@
 #!/bin/bash
 # program: Using to open a terminal running  tumx server with one window and three panels
 # made by: Engells
-# date: Mar 30, 2019
+# date: Feb 8, 2024
 # content: 
 
 #cd $NAUTILUS_SCRIPT_SELECTED_FILE_PATHS
 #gnome-terminal --geometry=186x56+30+30  -e "tmux new -s session_0 -n 1"
-tmux new -s session_0 -n 1
-sleep 1
+#tmux new -s session_0 -n 1
+#sleep 1
 tmux new-window -t session_0:2
-sleep 1
+#sleep 1
 tmux select-window -t session_0:1
-tmux split-window -h -p 50
-tmux split-window -v -p 40
+tmux split-window -h -l 50%
+tmux split-window -v -l 40%
 tmux select-pane -t 1
-sleep 1
+#sleep 1
 tmux source-file $HOME/.config/tmux/tmux.conf
 
 #tmux split-window -h -p 30

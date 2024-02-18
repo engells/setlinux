@@ -30,3 +30,6 @@ alias la='ls -alh'
 export EDITOR=vim
 #export TERM="xterm-256color" # 設定 tmux 256 色
 
+# 設定 GunPG
+export GPG_TTY=$(tty)
+

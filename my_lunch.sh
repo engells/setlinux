@@ -1,1 +1,0 @@
-./avails/nautilus_lunch.sh

@@ -1,9 +1,0 @@
-[Unit]
-Description="Dump files form download dir to tmp dir"
-
-[Service]
-Type=oneshot
-ExecStart=/home/engells/mnt/scripts/dump_d
-
-[Install]
-WantedBy=multi-user.target

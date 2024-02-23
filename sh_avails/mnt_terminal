@@ -1,0 +1,30 @@
+#!/bin/bash
+# program: Using to open a terminal running  tumx server with one window and three panels
+# made by: Engells
+# date: Feb 20, 2024
+# content: change name of tmux_conf
+
+#cd $NAUTILUS_SCRIPT_SELECTED_FILE_PATHS
+#gnome-terminal --geometry=186x56+30+30  -e "tmux new -s session_0 -n 1"
+#tmux new -s session_0 -n 1
+#sleep 1
+tmux new-window -t session_0:2
+#sleep 1
+tmux select-window -t session_0:1
+tmux split-window -h -l 50%
+tmux split-window -v -l 40%
+tmux select-pane -t 1
+#sleep 1
+#tmux source-file $HOME/.config/tmux/tmux.conf
+
+#tmux split-window -h -p 30
+#tmux select-pane -t 1
+#gnome-terminal --maximize
+#gnome-terminal --full-screen
+#gnome-terminal --title="new title"
+#gnome-terminal --window --window			# 開啟兩個 window
+#gnome-terminal --window --tab --window --tab --tab	# 開啟兩個 window，第一個 window 兩個分頁，第二個 window 為三個分頁
+#gnome-terminal --geometry=80x25+10+10			# 寬度x長度x左側偏移x上方偏移
+#gnome-terminal -e "command 1" -e "command 2"
+#gnome-terminal -x "command"				# 開啟終端機，並執行指令，-x 參數只能使用一次，-e 參數可使用多次
+#script -qfc tmux /dev/null

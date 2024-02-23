@@ -1,0 +1,18 @@
+" vim:tabstop=8
+" made by: Engells
+" date: Feb 23, 2024
+" content: lunched configures of vim, using old style.
+
+let MY_VIM_CONFIG_DIR = "$HOME/.config/vim/confs"
+set viminfo='20,<10,s5,h
+
+" exec 'source' expand(MY_VIM_CONFIG_DIR) . '/exrc_vim_plug_add'
+" There is no difference between exe, exec, and execute. They are all the same command.
+execute 'source' expand(MY_VIM_CONFIG_DIR) . '/exrc_shared'
+execute 'source' expand(MY_VIM_CONFIG_DIR) . '/exrc_vim_kmap'
+
+" memo for load many configure files
+" for CFG_Branch in split(globpath("$HOME/.vim/confs/","*"), '\n')
+"   execute 'source' CFG_Branch
+" endfor
+

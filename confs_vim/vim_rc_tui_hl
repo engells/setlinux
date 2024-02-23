@@ -1,0 +1,20 @@
+" vim:tabstop=8
+" made by: Engells
+" date: Nov 29, 2012
+" content: highlight configures of vim
+
+highlight Comment	term=bold ctermfg=darkcyan
+highlight Constant	term=underline ctermfg=Red
+highlight Special	term=bold ctermfg=Magenta
+highlight Identifier	term=underline ctermfg=cyan
+highlight Statement	term=bold ctermfg=Brown
+highlight PreProc	term=bold ctermfg=DarkYellow
+highlight Type		term=bold ctermfg=DarkGreen
+highlight Ignore	ctermfg=white
+highlight Error		term=reverse ctermbg=Red ctermfg=White
+highlight Todo		term=standout ctermbg=Yellow ctermfg=Red
+highlight ErrorMsg	term=reverse ctermbg=Red ctermfg=White
+highlight StatusLine	ctermfg=darkblue ctermbg=gray
+highlight StatusLineNC	ctermfg=brown ctermbg=darkblue
+highlight Search	term=standout ctermbg=Yellow ctermfg=Black
+

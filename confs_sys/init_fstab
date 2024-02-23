@@ -1,0 +1,28 @@
+# <file system> <dir> <type> <options> <dump> <pass>
+UUID=204542ae-1a05-4752-80e3-64013370d594  /                      btrfs  rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=260,subvol=/os/arch               0  0
+
+UUID=204542ae-1a05-4752-80e3-64013370d594  /var/cache/pacman/pkg  btrfs  rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=262,subvol=/pkgs/arch             0  0
+
+UUID=204542ae-1a05-4752-80e3-64013370d594  /home                  btrfs  rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=261,subvol=/res/arch              0  0
+
+UUID=204542ae-1a05-4752-80e3-64013370d594  /home/engells          btrfs  rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=264,subvol=/mass/home             0  0
+
+UUID=204542ae-1a05-4752-80e3-64013370d594  /home/engells/mnt      btrfs  rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=265,subvol=/mass/mnt              0  0
+
+UUID=204542ae-1a05-4752-80e3-64013370d594  /opt/data              btrfs  rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=266,subvol=/mass/data             0  0
+
+UUID=204542ae-1a05-4752-80e3-64013370d594  /opt/imgs              btrfs  rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=267,subvol=/mass/imgs             0  0
+
+UUID=204542ae-1a05-4752-80e3-64013370d594  /opt/blks              btrfs  rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=268,subvol=/mass/blks             0  0
+
+UUID=204542ae-1a05-4752-80e3-64013370d594  /opt/flatpak           btrfs  rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=269,subvol=/mass/flatpak          0  0
+
+UUID=204542ae-1a05-4752-80e3-64013370d594  /opt/lxcu              btrfs  rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=271,subvol=/mass/lxcu             0  0
+
+UUID=204542ae-1a05-4752-80e3-64013370d594  /opt/podman            btrfs  rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=273,subvol=/mass/podman           0  0
+
+UUID=3D1E-B9A8                             /boot/efi              vfat   rw,noatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro   0  2
+
+tmpfs                                      /tmp                   tmpfs  defaults,noatime,mode=1777                                                                             0  0
+tmpfs                                      /var/tmp               tmpfs  defaults,noatime,mode=1777                                                                             0  0
+tmpfs                                      /var/log               tmpfs  defaults,noexec,mode=1777                                                                              0  0

@@ -1,0 +1,7 @@
+#!/bin/bash
+# program: Using to dump mmediab partition to portable disk
+# made by: Engells
+# date: Oct 28, 2034
+# content: 
+
+gnome-terminal -- bash /home/engells/ktws/scripts/avails/nautilus_lunch.sh dk2 2>/home/engells/zz

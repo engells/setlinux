@@ -1,0 +1,18 @@
+[Desktop Entry]
+Comment[en_US]=Replace ibus-daemon
+Comment=Replace ibus-daemon
+Exec=ibus-daemon -rd
+GenericName[en_US]=
+GenericName=
+Hidden=false
+MimeType=
+Name[en_US]=Replace ibus-daemon
+Name=Replace ibus-daemon
+Path=
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
+X-GNOME-Autostart-enabled=true
+X-KDE-SubstituteUID=false
+X-KDE-Username=

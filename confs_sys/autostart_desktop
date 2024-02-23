@@ -1,0 +1,16 @@
+# location: $HOME/.config/autostart/
+# source: /usr/share/applications or $HOME/.local/share/applications/
+# ref:  https://wiki.archlinuxcn.org/wiki/%E6%A1%8C%E9%9D%A2%E9%A1%B9
+#       https://ivonblog.com/posts/autostart-programs-on-linux/
+
+[Desktop Entry]
+Type=Application
+Name=My Script                   # 應用程式名稱
+Comment=Execute script on login  # 註解
+Path=/home/user/                 # 應用程式工作的目錄
+Exec=/bin/bash backup.sh         # 要執行的指令或執行檔，可加引數
+Terminal=false                   # 是否在終端機執行
+NoDisplay=true                   # 不顯示在應用程式列表
+Name[en_US]=autostart_deskto
+
+

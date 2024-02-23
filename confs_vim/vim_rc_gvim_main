@@ -1,0 +1,14 @@
+" vim:tabstop=8
+" made by: Engells
+" date: Nov 29, 2012
+" content: major configures of gvim
+
+set guifont=Consalas\ 10.5
+
+set mousehide			" 當輸入文字時隱藏 mouse
+map <S-Insert> <MiddleMouse>	" Shift + Insert 按鍵對應至滑鼠中鍵
+map! <S-Insert> <MiddleMouse>	" Shift + Insert 按鍵對應至滑鼠中鍵, 強制處理
+
+set imcmdline			" ex(:) mode 時啟用中文輸入法
+" set imdisable			" insert mode 禁用中文輸入法
+

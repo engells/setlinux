@@ -1,0 +1,2 @@
+noblacklist /tmp/z_tmpfs
+whitelist /tmp/z_tmpfs

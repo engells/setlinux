@@ -1,0 +1,13 @@
+[Unit]
+Description="Dump files form downloads dir to tmp dir"
+
+[Timer]
+OnCalendar=*-*-* *:00:00
+OnCalendar=*-*-* *:20:00
+OnCalendar=*-*-* *:40:00
+#OnBootSec=20min
+#OnUnitActiveSec=20min
+#AccuracySec=1min
+
+[Install]
+WantedBy=timers.target

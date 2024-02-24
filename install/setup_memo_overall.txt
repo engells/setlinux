@@ -1,7 +1,7 @@
 # vim:ts=4
 # program: Using to memo the normal environment.
 # made by: Engells
-# date: Feb 18, 2024
+# date: Feb 20, 2024
 # content: Add a secion of guidelines
 
 
@@ -14,14 +14,14 @@ guidelines
   /path/to/cntr/user_home/.cache
   /path/to/cntr/user_home/.downloads
 
-2.將 gnupg、ssh、ssl 等設定目錄移至 /run/user/$(id -u)/wind/，再連結至 home_subvol
-  /run/user/$(id -u)/wind/{gpg,ssh,ssl} => home_subvol/{.gnupg, .ssh, ssl}
-  開機時，將目錄資料由 kpl/mnt/xdg/Wind/* 複製至 /run/user/$(id -u)/wind/，後續以 mklink 進行連結
+2.將 gnupg、ssh、ssl 等設定目錄移至 mnt_subvol/xdg/w* or /run/user/$(id -u)/wind/，再連結至 home_subvol
+  mnt_subvol/xdg/w*/{gpg,ssh,ssl} softlink to home_subvol/{.gnupg, .ssh, ssl}
+  開機時，手動解密 mnt_subvol/xdg/w*
 
 3.使用 systemd 機制
-  開機時建立 /tmp tmpfs 目錄及 /run/user/$(id -u)/wind/目錄，必要時載入相關資料
-  關機時 home_subvol/.downloads tmpfs 資料存入磁碟，必要時 /run/user/$(id -u)/wind/* 資料以 rsync 存入磁碟
-  電腦使用期間，定時以 timer 機制將 home_subvol/.downloads tmpfs 資料存入磁碟，
+  開機時建立 /tmp/ tmpfs 目錄，必要時載入相關資料
+  關機時將 home_subvol/.downloads/* tmpfs 資料存入磁碟
+  電腦使用期間，定時以 timer 機制將 home_subvol/.downloads/* tmpfs 資料存入磁碟，
 
 4.在 home_subvol/man/scripts 目錄佈署 script，使用 $PATH 變數引導
   home_subvol/.config 只放置組態檔案，不放置 script
@@ -30,7 +30,7 @@ guidelines
   設置防火牆 iptable
     os_subvol/opt/u*/iptables*
   加密資料，密鑰檔案
-    mnt_subvol/xdg/*
+    mnt_subvol/xdg/w* ＋ ecryptfs ＋ home_subvol/.var/pwd/*  ＋ mnt_subvol/scripts
 
 6.主系統盡量精簡，將高風險 、程式轉寫及排版作業轉移至 LXC、Disrobox 及 Flatpak。若有使用 GUI 軟體，則以 SSH X Forwarding 方式處理
 

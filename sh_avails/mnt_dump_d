@@ -1,29 +1,32 @@
 #!/bin/bash
 # vim:ts=2
-# program:  將已經下載完成之檔案由 ~/downloads 移至 ~/mnt/buf ,注意 firefox 及 jdownload 下載中檔案附檔名為 .part , chromium 則為 .crdownload
+# program: 將已下載完成的檔案由 $HOME/downloads 移至 $HOME/mnt/buf ,注意 firefox 及 jdownload 下載中檔案附檔名為 .part , chromium 則為 .crdownload
 # made by: Engells
-# date: Feb 16, 2024
+# date: Mar 1, 2024
 # content: 
 
-SAVEIFS=$IFS  #新增變數 SAVEIFS，把原本的IFS值儲存起來。
-IFS=$'\t\n'   #將IFS的值改掉
-dname='/home/engells'
+saveifs=$IFS  # 新增變數 saveifs，把原本的 IFS 值儲存起來。
+IFS=$'\t\n'   # 將 IFS 的值改掉
+surdir='/home/engells/downloads'
+tardir='/home/buffer'
 
-if [ -d ${dname}/downloads ]
+if [ -d ${surdir}/ ]
 then
-  cd ${dname}/downloads
-  for fname in $( ls ${dname}/downloads/ | grep -v '.part$' | grep -v '.crdownload$' )
+  cd ${surdir}/
+  for fname in $( ls ${surdir}/ | grep -v '.part$' | grep -v '.crdownload$' )
   do
-    sudo chown engells:engells ${dname}/downloads/${fname}
-    sudo chmod +w ${dname}/downloads/${fname}
-    if [ ! -d ${dname}/downloads/${fname} ] ; then mv ${dname}/downloads/${fname} ${dname}/mnt/buf/${fname} ; fi
-    echo "moving ${fname} ..."
+    sudo chown engells:engells ${surdir}/${fname}
+    sudo chmod +w ${surdir}/${fname}
+    if [ ! -d ${surdir}/${fname} ] ; then mv ${surdir}/${fname} ${tardir}/${fname} && echo "moving ${fname} ..." ; fi
   done
 else
-  echo "There is no directory: ${dname}/downloads/"
+  echo "There is no directory: ${surdir}/"
 fi
 
-IFS=$SAVEIFS
-cd ${dname}
+IFS=$saveifs
+cd ${surdir}/ && cd ../
 
-exit 0
+unset saveifs ; unset surdir ; unset tardir ; unset fname
+
+#exit 0
+

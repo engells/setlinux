@@ -2,11 +2,11 @@
 # vim:ts=2
 # program: To move files in downloads dir to buffer dir. 
 # made by: Engells
-# date: Feb 19, 2024
+# date: Mar 1, 2024
 # content: Work as /opt/utils/zz_mysave.sh
 
 
-SAVEIFS=$IFS  #新增變數 SAVEIFS，把原本的IFS值儲存起來。
+saveifs=$IFS  #新增變數 SAVEIFS，把原本的IFS值儲存起來。
 IFS=$'\t\n'   #將IFS的值改掉
 dname='/home/engells'
 
@@ -17,15 +17,17 @@ then
   do
     sudo chown engells:engells ${dname}/downloads/${fname}
     sudo chmod +w ${dname}/downloads/${fname}
-    if [ ! -d ${dname}/downloads/${fname} ] ; then mv ${dname}/downloads/${fname} ${dname}/mnt/buf/${fname} ; fi
+    if [ ! -d ${dname}/downloads/${fname} ] ; then mv ${dname}/downloads/${fname} ${dname}/.buffer/${fname} ; fi
     echo "moving ${fname} ..."
   done
 else
   echo "There is no directory: ${dname}/downloads/"
 fi
 
-IFS=${SAVEIFS}
+IFS=${saveifs}
 cd ${dname}
+
+bash /opt/utils/zz_secinit.sh umte
 
 rm ${dname}/.var/pwd/ecrypt.enc
 rm ${dname}/.var/pwd/luks.enc

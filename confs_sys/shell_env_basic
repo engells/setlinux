@@ -2,7 +2,7 @@
 # vim:ts=2
 # program: This profile is for my customed sh env, locates at $HOME/.confog/zz_my_confs
 # made by: Engells
-# date: Feb 21, 2024
+# date: Mar 1, 2024
 # content:
 
 
@@ -17,7 +17,7 @@ HISTCONTROL=ignoredups:ignorespace
 
 # 設定路徑，加入 $HOME/mnt/xcripts, $HOME/.local/bin
 [[ ! $(echo $PATH | grep "$HOME/.local/bin") ]]  && [[ -d $HOME/.local/bin ]]  && export PATH=$HOME/.local/bin:$PATH
-[[ ! $(echo $PATH | grep "$HOME/mnt/xcripts") ]] && [[ -d $HOME/mnt/xcripts ]] && export PATH=$HOME/mnt/xcripts:$PATH
+[[ ! $(echo $PATH | grep "$HOME/mnt/xcmds") ]] && [[ -d $HOME/mnt/xcmds ]] && export PATH=$HOME/mnt/xcmds:$PATH
 
 # 設定提示符號，與 oh my zsh 衝突，停用
 #PS1='[\u@\h \W]\$ '

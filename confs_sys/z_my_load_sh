@@ -2,7 +2,7 @@
 # vim:ts=2
 # program: To create dirs in /tmp, set firewall, and restart lxc network
 # made by: Engells
-# date: Jan 28, 2024
+# date: Feb 29, 2024
 # content: Work as /opt/utils/zz_myload.sh
 
 
@@ -10,7 +10,6 @@ sudo bash /opt/utils/iptables.rule
 sudo systemctl restart lxc-net
 
 USERID='engells'
-#bash /opt/engells/zz_myload.sh
 
 for SUBDIR in zz_cache zz_cache/default zz_cache/cntrb zz_cache/cntrp zz_cache/flat_firefox zz_cache/flat_chromium zz_downloads zz_tmpfs zz_tmpfs/cntrb zz_tmpfs/cntrp
 do

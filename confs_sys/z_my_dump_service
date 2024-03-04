@@ -1,9 +1,0 @@
-[Unit]
-Description="Dump files form download dir to tmp dir"
-
-[Service]
-Type=oneshot
-ExecStart=/home/engells/mnt/xcmds/dumpd
-
-[Install]
-WantedBy=multi-user.target

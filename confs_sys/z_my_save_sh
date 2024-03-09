@@ -1,0 +1,18 @@
+#!/bin/bash
+# vim:ts=2
+# program: To move files in downloads dir to buffer dir. 
+# made by: Engells
+# date: Mar 3, 2024
+# content: Work as /opt/utils/zz_mysave.sh
+
+
+dname='/home/engells'
+
+bash -c '/opt/utils/zz_secinit.sh umte'
+bash -c '/opt/utils/zz_dumpd.sh'
+
+rm ${dname}/.var/pwd/ecrypt.enc
+rm ${dname}/.var/pwd/luks.enc
+
+echo "my save script on $(date)" >> ${dname}/z_boot.log
+

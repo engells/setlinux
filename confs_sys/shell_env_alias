@@ -2,12 +2,12 @@
 # vim:ts=2
 # program: This profile is for my customed alias, locates at $HOME/.confog/zz_my_confs
 # made by: Engells
-# date: Mar 1, 2024
-# content: change alias ttmux to tmuxx
+# date: Mar 16, 2024
+# content: change alias mntmmb
 
 
 # mount data subvolumes
-alias mntmmb="sudo mount -t btrfs -o ssd,noatime,discard=async,commit=120,compress=zstd:9,subvol=habs/arch /dev/sdb2 /home/mmedia"
+alias mntmmb="sudo mount -t btrfs -o ssd,noatime,discard=async,commit=120,compress=zstd:9,subvol=mass/mmedia /dev/sdb2 /home/mmedia"
 #alias mntmma="sudo mount -t btrfs -o commit=120,compress=zstd:9,subvol=mmedia /dev/sda3 $HOME/mnt/dump4"
 #alias mntktb="sudo mount -t btrfs -o ssd,noatime,discard=async,commit=120,compress=zstd:9,subvol="
 

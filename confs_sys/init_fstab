@@ -26,3 +26,4 @@ UUID=3D1E-B9A8                             /boot/efi              vfat   rw,noat
 tmpfs                                      /tmp                   tmpfs  defaults,noatime,mode=1777                                                                             0  0
 tmpfs                                      /var/tmp               tmpfs  defaults,noatime,mode=1777                                                                             0  0
 tmpfs                                      /var/log               tmpfs  defaults,noexec,mode=1777                                                                              0  0
+#efivarfs                                   /sys/firmware/efi/efivars  efivarfs  ro,nosuid,nodev,noexec                                                                           0  0

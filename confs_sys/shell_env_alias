@@ -2,7 +2,7 @@
 # vim:ts=2
 # program: This profile is for my customed alias, locates at $HOME/.confog/zz_my_confs
 # made by: Engells
-# date: Mar 16, 2024
+# date: Jul 27, 2024
 # content: change alias mntmmb
 
 
@@ -53,4 +53,4 @@ alias tmuxx="zsh $HOME/mnt/xcmds/terminal"
 #alias cbn='google-chrome 1>/dev/null 2>/dev/null &'
 #alias motx='motrix 1>/dev/null 2>/dev/null &'
 #alias jd2='java -jar /home/admit/.local/share/jd2/JDownloader.jar 1>/dev/null 2>/dev/null &'
-
+alias sensorss="clear && sensors"

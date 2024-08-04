@@ -1,0 +1,22 @@
+#!/bin/bash
+# program: Using to autostart daily work.
+# made by: Engells
+# date: Jul 27 , 2024
+# content:
+
+
+homedir='/home/engells'
+
+echo 'Cleaning shell command histroy ...'
+cat /dev/null > ${homedir}/.config/zsh/.zhistory
+
+echo 'Cleaning packages cache ...'
+sudo pacman -Sc --noconfirm && sudo paccache -rk 1
+
+echo 'Mounting $HOME/mnt/buf ...'
+[[ $(df | grep '/dev/sda3' | grep '/home/buffer') ]] || sudo mount -t btrfs -o compress=zstd:9,subvol=warehouse /dev/sda3 /home/buffer
+
+echo 'Starting tmux ...'
+clear ; tmux new -s session_0 -n 1
+
+unset dirname

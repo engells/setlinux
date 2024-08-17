@@ -2,7 +2,7 @@
 # vim:ts=2
 # program: Using to mount and umount ecryptfs dir
 # made by: Engells
-# date: Mar 1, 2024
+# date: Aug 17, 2024
 # content:
 
 
@@ -46,7 +46,7 @@ _umt_ecryptfs()
   echo "卸載目錄 ..." && sleep 2
   sudo umount -t ecryptfs ${emntdir}
   sudo modprobe -r ecryptfs
-  echo "刪除密鑰"
+  echo "刪除密鑰 ..."
   sudo rm ${epasswd}
   echo "卸載完成 ..."
 }
@@ -78,7 +78,7 @@ _umt_luks()
   sudo umount ${lmntdir} && \
   sudo cryptsetup close ${luksname} && \
   sudo losetup -d /dev/${luksloop} && \
-  echo "刪除密鑰"
+  echo "刪除密鑰 ..."
   sudo rm ${lpasswd}
   echo "卸載完成 ..."
 }

@@ -2,7 +2,7 @@
 # vim:ts=4
 # program: to build a arch linux environmenrt
 # made by: Engells
-# date: Dec 27, 2024
+# date: Feb 17, 2025
 # content: Add jdownloader and vinegar in list of flatpak
 
 
@@ -157,7 +157,7 @@ sed -i '/#ParallelDownloads = 5/s/#//' /etc/pacman.conf
 
 _bld_sys2()
 {
-pkgcols='linux-headers linux-lts-headers nvtop usbutils gdisk pacman-contrib 7zip unrar xz ecryptfs-utils cryptsetup neofetch glances lm_sensors smplayer udisks2 tmux smartmontools perl-rename'
+pkgcols='linux-headers linux-lts-headers nvtop usbutils gdisk pacman-contrib p7zip unrar xz ecryptfs-utils cryptsetup neofetch glances lm_sensors smplayer udisks2 tmux smartmontools perl-rename'
 _insall_pkgs
 # optional: archlinux-keyring(seems don't support arc-a380 vga card)
 }
@@ -189,7 +189,7 @@ sudo chmod 644 /etc/environment
 
 _bld_virt()
 {
-pkgcols='qemu-full swtpm virt-manager virt-viewer edk2-ovmf dnsmasq vde2 bridge-utils iptables-nft openbsd-netcat libguestfs multipath-tools lxc podman distrobox flatpak'
+pkgcols='qemu-full swtpm virt-manager virt-viewer edk2-ovmf dnsmasq vde2 bridge-utils iptables-nft openbsd-netcat libguestfs guestfs-tools multipath-tools lxc podman distrobox flatpak'
 _insall_pkgs
 
 # optional: android-tools dosbox

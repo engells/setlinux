@@ -2,8 +2,8 @@
 # vim:ts=4
 # program: to build a arch linux environmenrt
 # made by: Engells
-# date: Feb 17, 2025
-# content: Add jdownloader and vinegar in list of flatpak
+# date: Jun 25, 2025
+# content: Add libwebp in list of installation.
 
 
 #====副函式======================
@@ -164,7 +164,7 @@ _insall_pkgs
 
 _bld_gui()
 {
-pkgcols='xorg xorg-server xorg-xlogo xbitmaps xdg-user-dirs pipewire pipewire-pulse pipewire-alsa pipewire-jack wireplumber sddm plasma-desktop plasma-nm plasma-pa dolphin konsole okular gwenview kate kscreen ark systemsettings kde-gtk-config breeze-gtk qt6-imageformats kimageformats kwalletmanager'
+pkgcols='xorg xorg-server xorg-xlogo xbitmaps xdg-user-dirs pipewire pipewire-pulse pipewire-alsa pipewire-jack wireplumber sddm plasma-desktop plasma-nm plasma-pa dolphin konsole okular gwenview kate kscreen ark systemsettings kde-gtk-config breeze-gtk libwebp qt6-imageformats kimageformats kwalletmanager'
 _insall_pkgs
 sudo systemctl enable sddm.service
 # optional: xorg-server-xephyr xorg-server-xvfb xpra ;; steghide imagemagick => distrobox # pulseaudio
@@ -227,7 +227,7 @@ _bld_flatapps()
 flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak --user install flathub com.github.tchx84.Flatseal
 flatpak --user install flathub org.libreoffice.LibreOffice
-flatpak --user install flathub com.dosbox_x.DOSBox-X
+#flatpak --user install flathub com.dosbox_x.DOSBox-X
 flatpak --user install flathub com.dosbox.DOSBox
 flatpak --user install flathub org.chromium.Chromium
 flatpak --user install flathub org.remmina.Remmina

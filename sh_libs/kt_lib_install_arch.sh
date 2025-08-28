@@ -2,8 +2,8 @@
 # vim:ts=4
 # program: to build a arch linux environmenrt
 # made by: Engells
-# date: Jun 25, 2025
-# content: Add libwebp in list of installation.
+# date: Aug 18, 2025
+# content: Replace p7zip with 7zip, and replace DOSBox Staging with DOSBox in flatpak
 
 
 #====副函式======================
@@ -157,14 +157,14 @@ sed -i '/#ParallelDownloads = 5/s/#//' /etc/pacman.conf
 
 _bld_sys2()
 {
-pkgcols='linux-headers linux-lts-headers nvtop usbutils gdisk pacman-contrib p7zip unrar xz ecryptfs-utils cryptsetup neofetch glances lm_sensors smplayer udisks2 tmux smartmontools perl-rename'
+pkgcols='linux-headers linux-lts-headers nvtop usbutils gdisk pacman-contrib 7zip unrar xz ecryptfs-utils cryptsetup neofetch glances lm_sensors smplayer udisks2 tmux smartmontools perl-rename'
 _insall_pkgs
 # optional: archlinux-keyring(seems don't support arc-a380 vga card)
 }
 
 _bld_gui()
 {
-pkgcols='xorg xorg-server xorg-xlogo xbitmaps xdg-user-dirs pipewire pipewire-pulse pipewire-alsa pipewire-jack wireplumber sddm plasma-desktop plasma-nm plasma-pa dolphin konsole okular gwenview kate kscreen ark systemsettings kde-gtk-config breeze-gtk libwebp qt6-imageformats kimageformats kwalletmanager'
+pkgcols='xorg xorg-server xorg-xlogo xbitmaps xdg-user-dirs pipewire pipewire-pulse pipewire-alsa pipewire-jack wireplumber sddm plasma-desktop plasma-nm plasma-pa dolphin konsole okular gwenview kate kscreen ark systemsettings kde-gtk-config breeze-gtk qt6-imageformats kimageformats kwalletmanager'
 _insall_pkgs
 sudo systemctl enable sddm.service
 # optional: xorg-server-xephyr xorg-server-xvfb xpra ;; steghide imagemagick => distrobox # pulseaudio
@@ -227,13 +227,14 @@ _bld_flatapps()
 flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak --user install flathub com.github.tchx84.Flatseal
 flatpak --user install flathub org.libreoffice.LibreOffice
-#flatpak --user install flathub com.dosbox_x.DOSBox-X
-flatpak --user install flathub com.dosbox.DOSBox
+flatpak --user install flathub com.dosbox_x.DOSBox-X
+flatpak --user install flathub io.github.dosbox-staging
 flatpak --user install flathub org.chromium.Chromium
 flatpak --user install flathub org.remmina.Remmina
 flatpak --user install flathub com.github.marhkb.Pods
 flatpak --user install flathub org.pipewire.Helvum
 flatpak --user install flathub org.rncbc.qpwgraph
+#flatpak --user install flathub com.dosbox.DOSBox
 #flatpak --user install flathub org.libretro.RetroArch
 #flatpak --user install flathub net.agalwood.Motrix
 #flatpak --user install flathub org.jdownloader.JDownloader

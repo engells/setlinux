@@ -1,4 +1,0 @@
-LABEL=writable     /                    ext4    defaults                0   0
-LABEL=system-boot  /boot/firmware       vfat    defaults                0   1
-tmp                /tmp                 tmpfs   defaults,mode=1777      0   0
-log                /var/log             tmpfs   defaults,mode=1777      0   0

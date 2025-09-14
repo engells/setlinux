@@ -2,26 +2,28 @@
 # vim:ts=4
 # program: to download many files form internet
 # made by: Engells
-# date: Sep 7, 2025
-# content: to download photos form http://cdn.eroluv.com/
+# date: Sep 11, 2025
+# content: $2 => url of photo, $3 => type of photos, $4 => qty of photos, $5 => length of num
+#          $6 => path of directory, $7 => path to sub-directory
 
 #====副函式======================
 
 _init_dl()
 {
-work_dir="/home/engells/downloads"	#"/home/engells/mnt/buf/photos"
-file_prefix="a4"
-url_prefix="https://img5.qy0.ru/data/3190/57/"
-photo_type=".webp"
-file_zero_num="00"
+[[ -z $6 ]] && work_dir="$HOME/downloads" || work_dir=$6
+[[ -z $7 ]] && file_prefix="a4" || file_prefix=$7
+[[ -z $2 ]] && url_prefix="https://img5.qy0.ru/data/3190/57/" || url_prefix=$2
+[[ -z $3 ]] && photo_type=".webp" || photo_type=$3
+[[ -z $4 ]] && num_max=101 || num_max=$4
+[[ -z $5 ]] && num_len=4 || num_len=$5
 _build_sur
 _mode_select
 }
 
 _build_sur()
 {
-[ -d $work_dir ] || mkdir -p $work_dir
-[ -d $work_dir/$file_prefix ] || mkdir -p $work_dir/$file_prefix
+[[ -d $work_dir ]] || mkdir -p $work_dir
+[[ -d $work_dir/$file_prefix ]] || mkdir -p $work_dir/$file_prefix
 cd $work_dir/$file_prefix
 }
 
@@ -37,27 +39,33 @@ case $way1 in
 esac
 }
 
+_build_num()
+{
+# 使用 ${#num_now} 計算字串長度，搭配要求位數，拼出數字字串。如數字編號 1，需四位數字，則拼出 0001 字串。
+
+num_str=${num_now}
+
+for ((j=1; j<=$((num_len - ${#num_now})); j++))
+do
+    num_str="0"${num_str}
+done
+}
+
 _dl_files()
 {
-for ((i=0; i<=153; i=i+1))
+for ((i=0; i<=$((num_max)); i=i+1))
 do
-  if (($i<10)); then
-    url_full=${url_prefix}${file_zero_num}00${i}${photo_type}
-  elif (($i<100)); then
-    url_full=${url_prefix}${file_zero_num}0${i}${photo_type}
-  elif (($i<1000)); then
-    url_full=${url_prefix}${file_zero_num}${i}${photo_type}
-  else
-    url_full=${url_prefix}${i}${photo_type}
-  fi
-
+  num_now=${i}
+  _build_num
+  url_full=${url_prefix}${num_str}${photo_type}
   wget $url_full
   # curl -O $url_full
 done
 
-#rename 's/pics//' *.jpg
-#rename 's/0//' *.jpg
-#rename 's/^0//' *.jpg
+#  if (($i<10)); then
+#  elif (($i<100)); then
+#  else
+#  fi
 }
 
 _dl_list()
@@ -107,5 +115,6 @@ fi
 _init_dl
 #_rename_file_digit
 
-unset work_dir; unset file_prefix; unset url_prefix; unset url_full; unset photo_type; unset file_zero_num
-unset f; unset i
+unset work_dir; unset file_prefix; unset url_prefix; unset url_full; unset photo_type
+unset num_len; unset num_max; unset num_now; unset num_str
+unset f; unset i; unset j

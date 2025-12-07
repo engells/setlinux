@@ -161,7 +161,7 @@ _bld_sys2()
 {
 pkgcols='linux-headers linux-lts-headers nvtop usbutils gdisk pacman-contrib 7zip unrar xz ecryptfs-utils cryptsetup neofetch glances lm_sensors smplayer udisks2 tmux smartmontools perl-rename'
 _insall_pkgs
-# optional: archlinux-keyring(seems don't support arc-a380 vga card)
+# optional: vlc-plugin-all ;; archlinux-keyring(seems don't support arc-a380 vga card)
 }
 
 _bld_gui()

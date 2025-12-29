@@ -2,12 +2,13 @@
 # vim:ts=2
 # program: This profile is for my customed alias, locates at $HOME/.confog/zz_my_confs
 # made by: Engells
-# date: Jul 27, 2024
-# content: change alias mntmmb
+# date: Dec 22, 2025
+# content: add alias mntosx
 
 
 # mount data subvolumes
 alias mntmmb="sudo mount -t btrfs -o ssd,noatime,discard=async,commit=120,compress=zstd:9,subvol=mass/mmedia /dev/sdb2 /home/mmedia"
+alias mntosx="sudo mount -t btrfs -o ssd,noatime,discard=async,commit=120,compress=zstd:9,subvol=mass/macos /dev/sdb2 /home/hackintosh"
 #alias mntmma="sudo mount -t btrfs -o commit=120,compress=zstd:9,subvol=mmedia /dev/sda3 $HOME/mnt/dump4"
 #alias mntktb="sudo mount -t btrfs -o ssd,noatime,discard=async,commit=120,compress=zstd:9,subvol="
 
@@ -53,4 +54,4 @@ alias tmuxx="zsh $HOME/mnt/xcmds/terminal"
 #alias cbn='google-chrome 1>/dev/null 2>/dev/null &'
 #alias motx='motrix 1>/dev/null 2>/dev/null &'
 #alias jd2='java -jar /home/admit/.local/share/jd2/JDownloader.jar 1>/dev/null 2>/dev/null &'
-alias sensorss="clear && sensors"
+

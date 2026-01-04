@@ -48,7 +48,7 @@ _mnt_ecryptfs()
 
   else
 
-    echo "Nothing to do!"
+    echo "There is nothing to do!"
 
  fi
 }
@@ -65,8 +65,8 @@ _umt_ecryptfs()
     sudo umount -t ecryptfs ${emntdir}
     sudo modprobe -r ecryptfs
 
-    echo "刪除密鑰"
-    sudo rm ${epasswd}
+    echo "刪除密鑰..."
+    [[ -f ${epasswd} ]] && sudo rm ${epasswd}
 
     mv ${gpgdir}  ${linkdir}
     mv ${trigdir} ${gpgdir}
@@ -75,7 +75,7 @@ _umt_ecryptfs()
 
   else
 
-    echo "Nothing to do!"
+    echo "There is nothing to do!"
 
  fi
 }
@@ -86,6 +86,7 @@ _umt_ecryptfs()
 homedir="/home/engells"
 realdir="${homedir}/mnt/xcfgs"
 emntdir="${homedir}/mnt/xcfgs"
+keysdir="${homedir}/.var/pwd"
 epasswd="${homedir}/.var/pwd/wind.enc"
 gpgdir="${homedir}/.gnupg"
 linkdir="${homedir}/.var/tmp/gnupg_link"
@@ -103,7 +104,7 @@ fi
 
 _mode_select
 
-unset way1 ; unset homedir
-unset realdir ; unset emntdir ; unset epasswd
+unset way1 ; unset homedir ; unset realdir
+unset emntdir ; unset keysdir ; unset epasswd
 unset gpgdir ; unset linkdir ; unset trigdir
 

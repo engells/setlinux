@@ -1,0 +1,7 @@
+#! /bin/bash
+# program: Using to clean bash and zsh histroy commands
+# made by: Engells
+# date: Oct 28, 2023
+# content: 
+
+gnome-terminal -- bash /home/engells/ktws/scripts/avails/nautilus_lunch.sh ch

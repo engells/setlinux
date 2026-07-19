@@ -1,0 +1,120 @@
+#!/bin/bash
+# vim:ts=4
+# program: to download many files form internet
+# made by: Engells
+# date: Sep 11, 2025
+# content: $2 => url of photo, $3 => type of photos, $4 => qty of photos, $5 => length of num
+#          $6 => path of directory, $7 => path to sub-directory
+
+#====副函式======================
+
+_init_dl()
+{
+[[ -z $6 ]] && work_dir="$HOME/downloads" || work_dir=$6
+[[ -z $7 ]] && file_prefix="a4" || file_prefix=$7
+[[ -z $2 ]] && url_prefix="https://img5.qy0.ru/data/3190/57/" || url_prefix=$2
+[[ -z $3 ]] && photo_type=".webp" || photo_type=$3
+[[ -z $4 ]] && num_max=101 || num_max=$4
+[[ -z $5 ]] && num_len=4 || num_len=$5
+_build_sur
+_mode_select
+}
+
+_build_sur()
+{
+[[ -d $work_dir ]] || mkdir -p $work_dir
+[[ -d $work_dir/$file_prefix ]] || mkdir -p $work_dir/$file_prefix
+cd $work_dir/$file_prefix
+}
+
+_mode_select()
+{
+case $way1 in
+  a)
+    _dl_files ;;
+  b)
+    _dl_list ;;
+  *)
+    echo " " > /dev/null
+esac
+}
+
+_build_num()
+{
+# 使用 ${#num_now} 計算字串長度，搭配要求位數，拼出數字字串。如數字編號 1，需四位數字，則拼出 0001 字串。
+
+num_str=${num_now}
+
+for ((j=1; j<=$((num_len - ${#num_now})); j++))
+do
+    num_str="0"${num_str}
+done
+}
+
+_dl_files()
+{
+for ((i=0; i<=$((num_max)); i=i+1))
+do
+  num_now=${i}
+  _build_num
+  url_full=${url_prefix}${num_str}${photo_type}
+  wget $url_full
+  # curl -O $url_full
+done
+
+#  if (($i<10)); then
+#  elif (($i<100)); then
+#  else
+#  fi
+}
+
+_dl_list()
+{
+# for http://setsdb.org/ NudeTeensArt
+sed 's/<\/a>\ /\n/g' /home/engells/mnt/buf/photos/dlp_list | sed 's/<a.*ank>//' | sed 's/<img\ src=\"http:\/\/t/http:\/\/i/' | sed 's/\"\ .*$//' | sed 's/\.com/\.net/' > /home/engells/mnt/buf/photos/dl
+
+for ii in $(cat /home/engells/mnt/buf/photos/dl)
+do
+  wget $ii
+done
+}
+
+_rename_file_digit()
+{
+echo ''; echo 'start to add digit to file name ...'; echo ''; sleep 2
+
+cd $work_dir/$file_prefix
+
+for f in $(ls ./)
+do
+  pre_fix=${f%.*}	# 取 1.jpg 的 1
+  suf_fix=${f#*.}	# 取 1.jpg 的 jpg
+
+  if (( $pre_fix < 10)); then
+    mv $f $file_prefix-000$pre_fix.$suf_fix
+  else
+    mv $f $file_prefix-00$pre_fix.$suf_fix
+  fi
+done
+cd $work_dir
+}
+
+#====程式主體=====================
+
+if [ -z $1 ]; then 
+  Des1='請輸入處理方式 a:路徑下載 b:清單下載'
+  printf "%s\n" "$Des1"
+  read way1
+  if [ -z "$way1" ]; then way1='a' ; fi
+
+else
+  way1=$1
+fi
+
+
+_init_dl
+#_rename_file_digit
+
+unset work_dir; unset file_prefix; unset url_prefix; unset url_full; unset photo_type
+unset num_len; unset num_max; unset num_now; unset num_str
+unset f; unset i; unset j

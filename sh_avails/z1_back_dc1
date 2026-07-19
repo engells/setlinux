@@ -1,0 +1,7 @@
+#!/bin/bash
+# program: Using to dump ktws partition to portable disk
+# made by: Engells
+# date: OCt 28, 2023
+# content: 
+
+gnome-terminal -- bash /home/engells/ktws/scripts/avails/nautilus_lunch.sh dc1 2>/home/engells/zz
